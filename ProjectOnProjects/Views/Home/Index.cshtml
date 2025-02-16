@@ -267,6 +267,14 @@
 
         updateTimer();
         setInterval(updateTimer, 1000);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const markers = document.querySelectorAll(".timeline-marker");
+
+            markers.forEach((marker, index) => {
+                marker.style.animationDelay = `${index * 300}ms`;
+            });
+        });
     </script>
 </body>
 </html>

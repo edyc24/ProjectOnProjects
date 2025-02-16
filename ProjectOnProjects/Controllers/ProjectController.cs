@@ -36,10 +36,11 @@ namespace ProjectOnProjects.Controllers
             if (ModelState.IsValid)
             {
                  _service.CreateAsync(model);
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("Index","Home");
+            return View(model);
         }
 
         [HttpGet]
