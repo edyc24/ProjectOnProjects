@@ -1,5 +1,4 @@
-﻿﻿
-@model IEnumerable<ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models.ProjectModel>
+﻿﻿@model IEnumerable<ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models.ProjectModel>
 
 @{
     ViewData["Title"] = "Home";
@@ -175,8 +174,14 @@
             display: none;
         }
 
-        .start-marker:hover .project-info {
+        .timeline-marker:hover .project-info,
+        .project-info:hover {
             display: block;
+        }
+
+        .timeline-marker:hover {
+            opacity: 1;
+            transform: scaleY(1);
         }
 
         @@keyframes expandTimeline {
