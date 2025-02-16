@@ -1,0 +1,273 @@
+﻿@model IEnumerable<ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models.ProjectModel>
+
+@{
+    ViewData["Title"] = "Home";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project on Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: serif;
+            text-decoration: underline;
+        }
+
+        .timer {
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: #374151;
+        }
+
+        .main-content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .timeline-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .timeline-wrapper {
+            position: relative;
+            margin: 4rem auto;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            padding: 3rem 4rem;
+        }
+
+        .corner-button {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #e5e7eb;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+            .corner-button:hover {
+                background-color: #f3f4f6;
+                transform: scale(1.05);
+            }
+
+        .account-button {
+            top: -20px;
+            left: -20px;
+        }
+
+        .cv-button {
+            bottom: -20px;
+            left: -20px;
+            font-weight: bold;
+        }
+
+        .add-button {
+            top: -20px;
+            right: -20px;
+            background-color: #22c55e;
+            border-color: #22c55e;
+            color: white;
+            font-weight: bold;
+        }
+
+        .save-button {
+            bottom: -20px;
+            right: -20px;
+        }
+
+        .add-button:hover {
+            background-color: #16a34a;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding: 3rem 0;
+        }
+
+        .timeline-bar {
+            height: 4px;
+            background-color: #e5e7eb;
+            position: relative;
+            margin: 0 2rem;
+            transform-origin: left;
+            animation: expandTimeline 2s ease-out forwards;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            width: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0;
+            transform: scaleY(0);
+            animation: showMarker 0.3s ease-out forwards;
+        }
+
+        .start-marker {
+            height: 24px;
+            background-color: #22c55e;
+            bottom: 0;
+            transform-origin: bottom;
+        }
+
+        .end-marker {
+            height: 24px;
+            background-color: #ef4444;
+            top: 0;
+            transform-origin: top;
+        }
+
+        .project-info {
+            position: absolute;
+            background-color: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            width: 300px;
+            bottom: 40px;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: none;
+        }
+
+        .start-marker:hover .project-info {
+            display: block;
+        }
+
+        @@keyframes expandTimeline {
+            0% {
+                transform: scaleX(0.1);
+            }
+
+            100% {
+                transform: scaleX(1);
+            }
+        }
+
+        @@keyframes showMarker {
+            0% {
+                opacity: 0;
+                transform: scaleY(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="page-header">
+    <img src="~/images/logo.png" alt="Logo" height="50" class="top-left" />
+    <div class="timer" id="timer">00:00:00 09.02.2025</div>
+</header>
+
+    <main class="main-content">
+        <h1 class="timeline-title">Your Timeline for Projects</h1>
+
+        <div class="timeline-wrapper">
+            <button class="corner-button account-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+            </button>
+
+            <button class="corner-button cv-button">
+                <img src="~/images/cv.png" alt="CV" height="100" />
+            </button>
+            <a asp-controller="Projects" asp-action="Create" class="corner-button add-button"><img src="~/images/add.png" alt="Add" height="100" /></a>
+            <button class="corner-button save-button">
+                <img src="~/images/saved.png" alt="Saved" height="100" />
+            </button>
+
+            <div class="timeline-container">
+                <div class="timeline-bar">
+                    @{
+                        var startDate = Model.Any() ? Model.Min(p => p.DataStart) : DateTime.Today;
+                        var endDate = Model.Any() ? Model.Max(p => p.DataSfarsit) : DateTime.Today.AddMonths(1);
+                        var totalDays = Math.Max((endDate - startDate).TotalDays, 1); // Prevent division by zero
+                    }
+
+                    @foreach (var project in Model.OrderBy(p => p.DataStart))
+                    {
+                        var startPosition = ((project.DataStart - startDate).TotalDays / totalDays * 100);
+                        var endPosition = ((project.DataSfarsit - startDate).TotalDays / totalDays * 100);
+
+                        <div class="timeline-marker start-marker" style="left: @(startPosition)%">
+                            <div class="project-info">
+                                <h3>@project.NumeProiect</h3>
+                                <p>Start date: @project.DataStart.ToShortDateString()</p>
+                                <p>End date: @project.DataSfarsit.ToShortDateString()</p>
+                                <div class="project-status">
+                                    <span class="status-dot"></span>
+                                    <span>@(DateTime.Now < project.DataStart ? "scheduled" : (DateTime.Now > project.DataSfarsit ? "completed" : "in progress"))</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-marker end-marker" style="left: @(endPosition)%"></div>
+                    }
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function updateTimer() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-GB', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const dateStr = now.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }).replace(/\//g, '.');
+
+            document.getElementById('timer').textContent = `${timeStr} ${dateStr}`;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
