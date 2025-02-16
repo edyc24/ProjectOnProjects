@@ -19,6 +19,10 @@ public partial class Utilizatori : IEntity
     public string? Parola { get; set; }
 
     public string? NumarTelefon { get; set; }
+    
+    public string? Skills { get; set; }
+
+    public string? Description { get; set; }
 
     public DateTime? DataIncepere { get; set; }
 
@@ -29,6 +33,7 @@ public partial class Utilizatori : IEntity
     public bool? IsDeleted { get; set; }
 
     public virtual ICollection<Proiecte> Proiectes { get; set; } = new List<Proiecte>();
+    public virtual ICollection<Favorites> Favorites { get; set; } = new List<Favorites>();
 
     public virtual ICollection<SavedProject> SavedProjects { get; set; } = new List<SavedProject>();
 }

@@ -153,6 +153,27 @@ namespace ProjectOnProjects.WebApp.Controllers
             return RedirectToAction("ProfilePage");
         }
 
+        [HttpPost]
+        public IActionResult SaveProfile(string skills, string description)
+        {
+            Service.SaveProfile(CurrentUser.Id, skills, description);
+            return RedirectToAction("ProfilePage");
+        }
+
+        [HttpPost]
+        public IActionResult AddToFavoriteList(int projectId, string listName)
+        {
+            Service.AddProjectToFavorites(CurrentUser.Id, projectId, listName);
+            return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult FavoriteLists()
+        {
+            var favoriteLists = Service.GetFavoriteLists(CurrentUser.Id);
+            return View(favoriteLists);
+        }
+
         private async Task LogIn(CurrentUserDto user)
         {
             var claims = new List<Claim>

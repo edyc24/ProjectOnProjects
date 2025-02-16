@@ -27,6 +27,9 @@ namespace ProjectOnProjects.DataAccess
         private IRepository<BacDocument>? bacDocuments;
         public IRepository<BacDocument> BacDocuments => bacDocuments ?? (bacDocuments = new BaseRepository<BacDocument>(Context));
 
+        private IRepository<Favorites>? favorites;
+        public IRepository<Favorites> Favorites => favorites ?? (favorites = new BaseRepository<Favorites>(Context));
+
 
         public void SaveChanges()
         {

@@ -27,6 +27,8 @@ public partial class ProjectOnProjectsContext : DbContext
 
     public virtual DbSet<Utilizatori> Utilizatoris { get; set; }
 
+    public virtual DbSet<Favorites> Favorites { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=ROG-STRIX-G16;Database=ProjectOnProjects;Trusted_Connection=True;TrustServerCertificate=True");
@@ -102,6 +104,21 @@ public partial class ProjectOnProjectsContext : DbContext
             entity.Property(e => e.Parola).HasMaxLength(255);
             entity.Property(e => e.Prenume).HasMaxLength(255);
             entity.Property(e => e.Username).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<Favorites>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.HasOne(d => d.User)
+                .WithMany(p => p.Favorites)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Project)
+                .WithMany(p => p.Favorites)
+                .HasForeignKey(d => d.ProjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         OnModelCreatingPartial(modelBuilder);

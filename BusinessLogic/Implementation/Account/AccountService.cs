@@ -13,6 +13,7 @@ using ProjectOnProjects.Common.DTOs;
 using ProjectOnProjects.Common.Extensions;
 using ProjectOnProjects.DataAccess;
 using ProjectOnProjects.Entities.Entities;
+using ProjectOnProjects.Models;
 
 namespace ProjectOnProjects.BusinessLogic.Implementation.Account
 {
@@ -222,13 +223,53 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.Account
             };
         }
 
-        
+        public void SaveProfile(int userId, string skills, string description)
+        {
+            var user = UnitOfWork.Users.Get().FirstOrDefault(u => u.IdUtilizator == userId);
+            if (user != null)
+            {
+                user.Skills = skills;
+                user.Description = description;
+                UnitOfWork.Users.Update(user);
+                UnitOfWork.SaveChanges();
+            }
+        }
+
         static string GenerateRandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public void AddProjectToFavorites(int userId, int projectId, string listName)
+        {
+            var favoriteList = UnitOfWork.Favorites.Get()
+                .FirstOrDefault(fl => fl.UserId == userId && fl.ListName == listName);
+
+            if (favoriteList == null)
+            {
+                favoriteList = new Favorites { UserId = userId, ListName = listName };
+                UnitOfWork.Favorites.Insert(favoriteList);
+            }
+
+            var favorite = new Favorites { ProjectId = projectId, Id = favoriteList.Id };
+            UnitOfWork.Favorites.Insert(favorite);
+            UnitOfWork.SaveChanges();
+        }
+
+        public List<FavoriteListModels> GetFavoriteLists(int userId)
+        {
+            return UnitOfWork.Favorites.Get()
+                .Where(fl => fl.UserId == userId)
+                .GroupBy(fl => fl.ListName)
+                .Select(g => new FavoriteListModels
+                {
+                    ListName = g.Key,
+                    Projects = g.Select(f => f.Project).ToList()
+                })
+                .ToList();
         }
     }
 }

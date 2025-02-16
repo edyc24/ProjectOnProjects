@@ -29,4 +29,8 @@
     <ProjectReference Include="..\Common\ProjectOnProjects.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

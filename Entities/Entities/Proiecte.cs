@@ -25,4 +25,5 @@ public partial class Proiecte : IEntity
     public DateTime TimeStamp { get; set; }
 
     public virtual ICollection<SavedProject> SavedProjects { get; set; } = new List<SavedProject>();
+    public virtual ICollection<Favorites> Favorites { get; set; } = new List<Favorites>();
 }
