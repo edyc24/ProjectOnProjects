@@ -1,4 +1,6 @@
-﻿@{
+﻿@model UserProfileModel
+
+@{
     Layout = null;
 }
 
@@ -262,7 +264,7 @@
                         <div class="skills-container">
                             <select class="skills-dropdown" id="skillsSelect">
                                 <option value="">Selectează un skill...</option>
-                                
+
                                 <optgroup label="Academic">
                                     <option value="matematica">Matematică</option>
                                     <option value="fizica">Fizică</option>
@@ -278,7 +280,7 @@
                                     <option value="economie">Economie</option>
                                     <option value="filosofie">Filosofie</option>
                                 </optgroup>
-                                
+
                                 <optgroup label="Soft Skills">
                                     <option value="leadership">Leadership</option>
                                     <option value="comunicare">Comunicare</option>
@@ -291,7 +293,7 @@
                                     <option value="adaptability">Adaptabilitate</option>
                                     <option value="organization">Organizare</option>
                                 </optgroup>
-                                
+
                                 <optgroup label="Arte și Sport">
                                     <option value="desen">Desen/Artă</option>
                                     <option value="muzica">Muzică</option>
@@ -304,7 +306,7 @@
                                     <option value="volleyball">Volei</option>
                                     <option value="swimming">Înot</option>
                                 </optgroup>
-                                
+
                                 <optgroup label="Digital">
                                     <option value="computer_basic">Utilizare PC - Nivel Basic</option>
                                     <option value="computer_advanced">Utilizare PC - Nivel Avansat</option>
@@ -314,7 +316,7 @@
                                     <option value="graphic_design">Design Grafic Basic</option>
                                     <option value="video_editing">Editare Video Basic</option>
                                 </optgroup>
-                                
+
                                 <optgroup label="Voluntariat & Leadership">
                                     <option value="volunteering">Voluntariat</option>
                                     <option value="project_management">Managementul Proiectelor</option>
@@ -323,13 +325,13 @@
                                     <option value="debate">Dezbateri</option>
                                     <option value="mentoring">Mentoring</option>
                                 </optgroup>
-                                
+
                                 <optgroup label="Competiții">
                                     <option value="olimpiade">Participare Olimpiade</option>
                                     <option value="concursuri">Participare Concursuri</option>
                                     <option value="cercetare">Cercetare/Documentare</option>
                                 </optgroup>
-                                
+
                                 <optgroup label="Dezvoltare Personală">
                                     <option value="first_aid">Prim Ajutor</option>
                                     <option value="financial_literacy">Educație Financiară</option>
@@ -337,7 +339,7 @@
                                     <option value="environmental">Conștiință Ecologică</option>
                                     <option value="mental_health">Sănătate Mentală</option>
                                 </optgroup>
-                                
+
                                 <optgroup label="Extra">
                                     <option value="cooking">Gătit</option>
                                     <option value="gardening">Grădinărit</option>
@@ -350,10 +352,11 @@
                             </select>
                             <div class="selected-skills" id="selectedSkills"></div>
                         </div>
+
                     </div>
                     <div class="section">
                         <h2>Description</h2>
-                        <textarea class="description-area" name="Description" placeholder="Adaugă o descriere..."></textarea>
+                        <textarea name="Description" placeholder="Adaugă o descriere...">@Model.Description</textarea>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>

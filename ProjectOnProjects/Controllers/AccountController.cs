@@ -154,9 +154,10 @@ namespace ProjectOnProjects.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveProfile(string skills, string description)
+        public IActionResult SaveProfile(string[] skills, string description)
         {
-            Service.SaveProfile(CurrentUser.Id, skills, description);
+            var skillsString = string.Join(",", skills);
+            Service.SaveProfile(CurrentUser.Id, skillsString, description);
             return RedirectToAction("ProfilePage");
         }
 

@@ -172,13 +172,14 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.Account
         //    else
         //        return false;
         //}
-        public UserModel DisplayProfile()
+        public UserProfileModel DisplayProfile()
         {
-            UserRoles users = new UserRoles();
-            Dictionary<int, string> userRoles = users.CreateUserRolesDictionary();
-            var user = UnitOfWork.Users.Where(u => u.IdUtilizator == CurrentUser.Id).SingleOrDefault();
-            var userProfile = Mapper.Map<Utilizatori, UserModel>(user);
-            return userProfile;
+            var user = UnitOfWork.Users.Get().FirstOrDefault(u => u.IdUtilizator == CurrentUser.Id);
+            return new UserProfileModel
+            {
+                Skills = user.Skills?.Split(',') ?? new string[0],
+                Description = user.Description
+            };
         }
 
         public UserModelEdit GetUserById()
