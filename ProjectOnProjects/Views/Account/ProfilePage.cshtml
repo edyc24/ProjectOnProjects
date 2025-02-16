@@ -1,161 +1,243 @@
-﻿@model ProjectOnProjects.BusinessLogic.Implementation.Account.Models.UserModel
+﻿
+@{
+    Layout = null;
+}
+
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="~/css/Account/ProfilePage.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project on Projects</title>
     <style>
-        /* Container pentru centrul paginii */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-            
-        /* Imaginea de profil */
-        .profile-image {
-            text-align: center;
-            margin-bottom: 20px;
+
+        body {
+            min-height: 100vh;
+            background-color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .timer {
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: #374151;
+        }
+
+        .main-content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .profile-wrapper {
+            position: relative;
+            margin: 4rem auto;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            padding: 3rem 4rem;
+        }
+
+        .corner-button {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #00ff00;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+            .corner-button:hover {
+                transform: scale(1.05);
+            }
+
+        .left-button {
+            left: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .right-button {
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .user-added-info {
+            position: absolute;
+            background: #ff69b4;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+        }
+
+        .left-info {
+            left: 20px;
+            top: 20px;
+        }
+
+        .right-info {
+            right: 20px;
+            top: 20px;
+        }
+
+        .content-container {
+            display: flex;
+            gap: 40px;
+            padding: 20px;
             position: relative;
         }
 
-        #profile-pic {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
-            cursor: pointer; /* Adăugat pentru a indica că imaginea este clicabilă */
+        .vertical-divider {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            transform: translateX(-50%);
+            background-image: url('/api/placeholder/2/600');
+            background-repeat: repeat-y;
         }
 
-        #file-upload {
-            display: none; /* Ascunde inputul de fișier */
+        .section {
+            flex: 1;
         }
 
-        /* Titlul detaliilor profilului */
-        .profile-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+            .section h2 {
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+                color: #374151;
+            }
 
-        /* Tabelul cu detalii în format vertical */
-        .details-table {
+        textarea {
             width: 100%;
-            margin-bottom: 20px;
-            border-collapse: collapse;
+            min-height: 200px;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.25rem;
+            padding: 10px;
+            resize: vertical;
+            font-family: inherit;
         }
 
-            .details-table th, .details-table td {
-                padding: 10px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .details-table th {
-                width: 30%;
-                font-weight: bold;
-                background-color: #f9f9f9;
-            }
-
-            .details-table td {
-                width: 70%;
-            }
-
-        /* Butoanele */
-        .btn {
-            display: inline-block;
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            margin: 10px 0;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
         }
 
-            .btn:hover {
-                background-color: #0056b3;
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .joined-date {
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+            .joined-date span {
+                color: #ff0066;
             }
     </style>
 </head>
 <body>
+    <header class="page-header">
+        <div class="logo">Project to Projects</div>
+        <div class="timer" id="timer">00:00:00 16.02.2025</div>
+    </header>
 
-    <div class="header">
-        <h1>Profil</h1>
+    <div class="main-content">
+        <div class="profile-wrapper">
+            <div class="user-added-info left-info">User added information</div>
+            <div class="user-added-info right-info">User added information</div>
+
+            <button class="corner-button left-button">&#8249;</button>
+            <button class="corner-button right-button">&#8250;</button>
+
+            <div class="profile-header">
+                <div class="user-profile">
+                    <span>example.com</span>
+                    <div class="avatar">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="joined-date">Joined <span>DD/MM/2Y</span></div>
+                </div>
+            </div>
+
+            <div class="content-container">
+                <div class="vertical-divider"></div>
+                <div class="section">
+                    <h2>Skills</h2>
+                    <textarea placeholder="Enter your skills..."></textarea>
+                </div>
+                <div class="section">
+                    <h2>Description</h2>
+                    <textarea placeholder="Enter description..."></textarea>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="container">
+    <script>
+        function updateTimer() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-GB', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const dateStr = now.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            }).replace(/\//g, '.');
 
-        <!-- Profile Picture -->
-        <div class="profile-image">
-            @if (Model.ProfilePicture != null)
-            {
-                <img src="data:image;base64,@Convert.ToBase64String(Model.ProfilePicture)" alt="Profile Picture" id="profile-pic" onclick="document.getElementById('file-upload').click();" />
-            }
-            else
-            {
-                <img src="~/images/profile-placeholder.png" alt="Profile Picture" id="profile-pic" onclick="document.getElementById('file-upload').click();" />
-            }
-            <form asp-action="UploadProfilePicture" method="post" enctype="multipart/form-data">
-                <input id="file-upload" type="file" name="ProfilePicture" onchange="this.form.submit()" />
-            </form>
-        </div>
+            document.getElementById('timer').textContent = `${timeStr} ${dateStr}`;
+        }
 
-        <div class="profile-title">
-            Detalii Profil
-        </div>
-
-        <table class="details-table">
-            <tr>
-                <th>Prenume</th>
-                <td>@Model.FirstName</td>
-            </tr>
-            <tr>
-                <th>Nume</th>
-                <td>@Model.LastName</td>
-            </tr>
-            <tr>
-                <th>Descriere Profil</th>
-                <td>
-                    @if (string.IsNullOrEmpty(Model.ProfileDescription))
-                    {
-                        <span>N/A</span>
-                    }
-                    else
-                    {
-                        <span title="@Model.ProfileDescription">@Model.ProfileDescription.Substring(0, 5)</span>
-                    }
-                </td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>@Model.Email</td>
-            </tr>
-            <tr>
-                <th>Data Nașterii</th>
-                <td>@Model.BirthDay.ToString("dd/MM/yyyy")</td>
-            </tr>
-            <tr>
-                <th>Data Înregistrării</th>
-                <td>@Model.RegistrationDay.ToString("dd/MM/yyyy")
-            </tr>
-            <tr>
-                <th>Rol</th>
-                <td>@Model.Role</td>
-            </tr>
-        </table>
-
-        <p class="text-center">
-            <a class="btn" asp-action="Edit">Editează Profil</a>
-        </p>
-    </div>
-
-    <!-- Include jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
 </body>
 </html>
