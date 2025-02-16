@@ -39,7 +39,7 @@ namespace ProjectOnProjects.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(model);
+            return RedirectToAction("Index","Home");
         }
 
         [HttpGet]

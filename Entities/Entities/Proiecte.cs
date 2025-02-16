@@ -24,7 +24,5 @@ public partial class Proiecte : IEntity
     public bool IsActive { get; set; }
     public DateTime TimeStamp { get; set; }
 
-    public virtual Utilizatori IdUtilizatorNavigation { get; set; } = null!;
-
     public virtual ICollection<SavedProject> SavedProjects { get; set; } = new List<SavedProject>();
 }

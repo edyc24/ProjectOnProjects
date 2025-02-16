@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectOnProjects.DataAccess.EntityFramework;
 
@@ -11,9 +12,11 @@ using ProjectOnProjects.DataAccess.EntityFramework;
 namespace ProjectOnProjects.DataAccess.Migrations
 {
     [DbContext(typeof(ProjectOnProjectsContext))]
-    partial class ProjectOnProjectsContextModelSnapshot : ModelSnapshot
+    [Migration("20250216110455_remove fk")]
+    partial class removefk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
