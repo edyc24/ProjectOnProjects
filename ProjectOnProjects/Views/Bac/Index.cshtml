@@ -1,0 +1,37 @@
+@model List<ProjectOnProjects.Models.BacDocumentModel>
+
+<h2>Bac Documents</h2>
+
+<div class="subject-section">
+    <h3>Romana</h3>
+    @foreach (var doc in Model.Where(d => d.SubjectType == "Romana"))
+    {
+        <button>@doc.Name</button>
+    }
+</div>
+
+<div class="vertical-divider">
+    <img src="~/images/line.png" alt="Divider" />
+</div>
+
+<div class="subject-section">
+    <h3>Mate</h3>
+    @foreach (var doc in Model.Where(d => d.SubjectType == "Mate"))
+    {
+        <button>@doc.Name</button>
+    }
+</div>
+
+<div class="vertical-divider">
+    <img src="~/images/line.png" alt="Divider" />
+</div>
+
+<div class="subject-section">
+    <h3>Fizica & Info</h3>
+    @foreach (var doc in Model.Where(d => d.SubjectType == "Fizica & Info"))
+    {
+        <button>@doc.Name</button>
+    }
+</div>
+
+<a href="@Url.Action("AddDocument", "Bac")">Add Document</a> 
