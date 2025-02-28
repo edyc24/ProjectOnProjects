@@ -8,6 +8,7 @@ using ProjectOnProjects.BusinessLogic.Implementation.Account;
 using ProjectOnProjects.BusinessLogic.Implementation.BacDocumentService;
 using ProjectOnProjects.BusinessLogic.Implementation.ProjectService;
 using ProjectOnProjects.Code.Base;
+using ProjectOnProjects.BusinessLogic.Implementation.Bac;
 
 namespace ProjectOnProjects.WebApp.Code.ExtensionMethods
 {
@@ -26,6 +27,7 @@ namespace ProjectOnProjects.WebApp.Code.ExtensionMethods
             services.AddScoped<BacDocumentService>();
             services.AddScoped<AccountService>();
             services.AddScoped<ProjectService>();
+            services.AddScoped<BacService>();
             return services;
         }
 
