@@ -31,7 +31,6 @@
         align-items: center;
         padding: 1.5rem 2rem;
         background-color: white;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
     .logo {
@@ -45,6 +44,7 @@
         font-family: monospace;
         font-size: 1.2rem;
         color: #374151;
+        font-weight: bold;
     }
 
     .timeline-container {
@@ -151,6 +151,17 @@
         border-radius: 4px;
         margin-bottom: 1rem;
     }
+
+    .btn-success {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+    }
+
+        .btn-success:hover {
+            background-color: black;
+            color: white;
+        }
 </style>
 
 <header class="page-header">
@@ -379,7 +390,7 @@
 </script>
 
 @section Scripts {
-    
+
 
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

@@ -23,7 +23,6 @@
         align-items: center;
         padding: 1.5rem 2rem;
         background-color: white;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
     .logo {
@@ -37,12 +36,25 @@
         font-family: monospace;
         font-size: 1.2rem;
         color: #374151;
+        font-weight: bold;
     }
 
     .main-content {
         padding: 4rem;
         max-width: 1400px;
         margin: 0 auto;
+    }
+
+    .bac-title {
+        width: 50px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background: purple;
+        margin: 1rem auto;
+        text-align: center;
     }
 
     .add-button {
@@ -74,8 +86,13 @@
     }
 
         .divider img {
-            width: 100%;
+            width: 90%;
         }
+
+    .subject-section {
+        display: flex;
+        justify-content: center;
+    }
 
     .subject-section h3 {
         font-size: 1.5rem;
@@ -100,11 +117,13 @@
             background-color: grey;
         }
 </style>
+
 <header class="page-header">
     <img src="~/images/logo.png" alt="Logo" height="50" class="top-left" />
     <div class="timer" id="timer">00:00:00 09.02.2025</div>
 </header>
 
+<span class="bac-title">BAC</span>
 <a href="@Url.Action("AddDocument", "Bac")" src="~/images/add.png" class="add-button"></a>
 
 <div class="container">

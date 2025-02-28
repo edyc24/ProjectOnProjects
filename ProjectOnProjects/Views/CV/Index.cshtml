@@ -28,7 +28,6 @@
             align-items: center;
             padding: 1.5rem 2rem;
             background-color: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .logo {
@@ -50,6 +49,17 @@
             padding: 2rem;
             max-width: 1400px;
             margin: 0 auto;
+        }
+
+        .cv-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 65px;
+            height: 75px;
+            background: url('/images/cv.png') no-repeat center center;
+            background-size: contain;
+            margin: 2rem auto;
         }
 
         .cv-form {
@@ -132,6 +142,8 @@
         <img src="~/images/logo.png" alt="Logo" height="50" class="top-left" />
         <div class="timer" id="timer">00:00:00 09.02.2025</div>
     </header>
+
+    <div class="cv-logo"></div>
 
     <div class="main-content">
         <div class="cv-form">
