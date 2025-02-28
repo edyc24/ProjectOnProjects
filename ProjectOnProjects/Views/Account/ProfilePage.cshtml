@@ -35,7 +35,6 @@
             align-items: center;
             padding: 1.5rem 2rem;
             background-color: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .logo {
@@ -49,6 +48,7 @@
             font-family: monospace;
             font-size: 1.2rem;
             color: #374151;
+            font-weight: bold;
         }
 
         .main-content {
@@ -62,7 +62,6 @@
             margin: 0rem auto;
             background-color: white;
             border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             padding: 3rem 4rem;
         }
 
@@ -95,12 +94,12 @@
             flex-direction: column;
         }
 
-        .section h2 {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            color: #374151;
-            font-weight: 600;
-        }
+            .section h2 {
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+                color: #374151;
+                font-weight: 600;
+            }
 
         .description-area {
             flex: 1;
@@ -132,15 +131,15 @@
             background-color: white;
         }
 
-        .skills-dropdown:focus {
-            outline: none;
-            border-color: #00ff00;
-            box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.1);
-        }
+            .skills-dropdown:focus {
+                outline: none;
+                border-color: #00ff00;
+                box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.1);
+            }
 
-        .skills-dropdown option {
-            padding: 8px;
-        }
+            .skills-dropdown option {
+                padding: 8px;
+            }
 
         .selected-skills {
             display: flex;
@@ -178,10 +177,10 @@
             background-color: #f3f4f6;
         }
 
-        .remove-skill:hover {
-            color: #ef4444;
-            background-color: #fee2e2;
-        }
+            .remove-skill:hover {
+                color: #ef4444;
+                background-color: #fee2e2;
+            }
 
         .profile-header {
             display: flex;
@@ -226,6 +225,17 @@
             color: #ef4444;
             font-weight: 500;
         }
+
+        .btn-primary {
+            background-color: white;
+            color: black;
+            border: 1px solid black;
+        }
+
+            .btn-primary:hover {
+                background-color: black;
+                color: white;
+            }
     </style>
 </head>
 <body>
@@ -394,7 +404,7 @@
             if (this.value && !selectedSkillsSet.has(this.value)) {
                 const skillText = this.options[this.selectedIndex].text;
                 selectedSkillsSet.add(this.value);
-                
+
                 const skillTag = document.createElement('div');
                 skillTag.className = 'skill-tag';
                 skillTag.textContent = skillText;

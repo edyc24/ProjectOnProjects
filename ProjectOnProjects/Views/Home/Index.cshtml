@@ -13,119 +13,119 @@
     <title>Project on Projects</title>
     <style>
         * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-        min-height: 100vh;
-        background-color: white;
-        font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            background-color: white;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.5rem 2rem;
-        background-color: white;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: white;
         }
 
         .logo {
-        font-size: 1.5rem;
-        font-weight: bold;
-        font-family: serif;
-        text-decoration: underline;
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: serif;
+            text-decoration: underline;
         }
 
         .timer {
-        font-family: monospace;
-        font-size: 1.2rem;
-        color: #374151;
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: #374151;
+            font-weight: bold;
         }
 
         .main-content {
-        padding: 4rem;
-        max-width: 1400px;
-        margin: 0 auto;
+            padding: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .timeline-title {
-        font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 2rem;
-        text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
         .timeline-wrapper {
-        position: relative;
-        margin: 12rem auto;
-        background-color: white;
-        border-radius: 0.5rem;
-        padding: 3rem 4rem;
+            position: relative;
+            margin: 12rem auto;
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 3rem 4rem;
         }
 
         .corner-button {
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        border: none;
-        background: transparent;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.2s;
-        background-color: #f2f2f2;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: none;
+            background: transparent;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            /* border: 2px solid #222; */
         }
 
-        .corner-button:hover {
-        background-color: #f3f4f6;
-        transform: scale(1.05);
-        }
+            .corner-button:hover {
+                /* background-color: #f3f4f6; */
+                transform: scale(1.05);
+            }
 
-        .corner-button img {
-        width: 4rem;
-        height: 4rem;
-        }
+            .corner-button img {
+                width: 4rem;
+                height: 4rem;
+            }
 
         .account-button {
-        top: -20px;
-        left: -20px;
+            top: -20px;
+            left: -20px;
         }
 
         .account-icon {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2' /%3E%3Ccircle cx='12' cy='7' r='4' /%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 4rem;
-        height: 4rem;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2' /%3E%3Ccircle cx='12' cy='7' r='4' /%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 4rem;
+            height: 4rem;
         }
 
         .cv-button {
-        bottom: -20px;
-        left: -20px;
-        font-weight: bold;
+            bottom: -20px;
+            left: -20px;
+            font-weight: bold;
         }
 
         .add-button {
-        top: -20px;
-        right: -20px;
-        color: white;
-        font-weight: bold;
+            top: -20px;
+            right: -20px;
+            color: white;
+            font-weight: bold;
         }
 
         .save-button {
-        bottom: -20px;
-        right: -20px;
+            bottom: -20px;
+            right: -20px;
         }
 
         .timeline-container {
-        position: relative;
-        padding: 3rem 0;
+            position: relative;
+            padding: 3rem 0;
         }
 
         .button-purple {
@@ -154,81 +154,81 @@
         }
 
         .timeline-bar {
-        height: 4px;
-        background-color: #e5e7eb;
-        position: relative;
-        margin: 0 2rem;
-        transform-origin: left;
+            height: 4px;
+            background-color: #e5e7eb;
+            position: relative;
+            margin: 0 2rem;
+            transform-origin: left;
         }
 
         .timeline-marker {
-        position: absolute;
-        width: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-        opacity: 0;
-        transform: scaleY(0);
-        animation: showMarker 0.3s ease-out forwards;
-        padding: 10px;
+            position: absolute;
+            width: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            opacity: 0;
+            transform: scaleY(0);
+            animation: showMarker 0.3s ease-out forwards;
+            padding: 10px;
         }
 
         .start-marker {
-        height: 24px;
-        background-color: #22c55e;
-        bottom: 0;
-        transform-origin: bottom;
+            height: 24px;
+            background-color: #22c55e;
+            bottom: 0;
+            transform-origin: bottom;
         }
 
         .end-marker {
-        height: 24px;
-        background-color: #ef4444;
-        top: 0;
-        transform-origin: top;
+            height: 24px;
+            background-color: #ef4444;
+            top: 0;
+            transform-origin: top;
         }
 
         .project-info {
-        position: absolute;
-        background-color: #f3f4f6;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.25rem;
-        padding: 1rem;
-        width: 300px;
-        bottom: 40px;
-        transform: translateX(-50%);
-        z-index: 20;
-        display: none;
-        margin-top:-50px;
+            position: absolute;
+            background-color: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            width: 300px;
+            bottom: 40px;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: none;
+            margin-top: -50px;
         }
 
         .start-marker:hover .project-info {
-        display: block;
+            display: block;
         }
 
         .timeline-marker:hover .project-info,
         .project-info:hover {
-        display: block;
+            display: block;
         }
 
         @@keyframes expandTimeline {
-        0% {
-        transform: scaleX(0.1);
-        }
+            0% {
+                transform: scaleX(0.1);
+            }
 
-        100% {
-        transform: scaleX(1);
-        }
+            100% {
+                transform: scaleX(1);
+            }
         }
 
         @@keyframes showMarker {
-        0% {
-        opacity: 0;
-        transform: scaleY(0);
-        }
+            0% {
+                opacity: 0;
+                transform: scaleY(0);
+            }
 
-        100% {
-        opacity: 1;
-        transform: scaleY(1);
-        }
+            100% {
+                opacity: 1;
+                transform: scaleY(1);
+            }
         }
     </style>
 </head>
@@ -243,7 +243,7 @@
 
         <div class="timeline-wrapper">
             <a asp-controller="Account" asp-action="ProfilePage" class="corner-button account-button"><div class="account-icon"></div></a>
-            
+
             <a asp-controller="CV" asp-action="Index" class="corner-button cv-button"><img src="~/images/cv.png" alt="CV" height="100" /></a>
             <a asp-controller="Projects" asp-action="Create" class="corner-button add-button"><img src="~/images/add.png" alt="Add" height="100" /></a>
             <button class="corner-button save-button">
