@@ -2,6 +2,7 @@
 
 @{
     Layout = null;
+    var x = Model.DataIncepere;
 }
 
 <head>
@@ -237,7 +238,6 @@
         <div class="profile-wrapper">
             <div class="profile-header">
                 <div class="website-info">
-                    <span class="website-url">example.com</span>
                     <div class="avatar">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -245,7 +245,7 @@
                         </svg>
                     </div>
                     <div class="join-info">
-                        Joined <span class="join-date">DD/MM/2Y</span>
+                        Joined <span class="join-date">@x</span>
                     </div>
                 </div>
             </div>

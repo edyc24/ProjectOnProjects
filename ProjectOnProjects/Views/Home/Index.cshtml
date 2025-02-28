@@ -1,5 +1,4 @@
-﻿﻿
-@model IEnumerable<ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models.ProjectModel>
+﻿@model IEnumerable<ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models.ProjectModel>
 
 @{
     ViewData["Title"] = "Home";
@@ -80,7 +79,6 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
-            z-index: 10;
             background-color: #f2f2f2;
         }
 
@@ -90,8 +88,8 @@
             }
 
             .corner-button img {
-                max-width: 3rem;
-                max-height: 3rem;
+                width: 4rem;
+                height: 4rem;
             }
 
         .account-button {
@@ -100,11 +98,11 @@
         }
 
         .account-icon {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2' /%3E%3Ccircle cx='12' cy='7' r='4' /%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2' /%3E%3Ccircle cx='12' cy='7' r='4' /%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: center;
-            width: 2rem;
-            height: 2rem;
+            width: 4rem;
+            height: 4rem;
         }
 
         .cv-button {
@@ -138,32 +136,15 @@
             transform-origin: left;
         }
 
-        .timeline-marker-container {
-            position: absolute;
-            width: 300px;
-            transform: translateX(-50%);
-            z-index: 20;
-        }
-
         .timeline-marker {
+            position: absolute;
             width: 8px;
-            height: 24px;
-            background-color: #22c55e;
             cursor: pointer;
             transition: all 0.2s;
-        }
-
-        .project-info {
-            background-color: #f3f4f6;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.25rem;
-            padding: 1rem;
-            width: 300px;
-            display: none;
-        }
-
-        .timeline-marker-container:hover .project-info {
-            display: block;
+            opacity: 0;
+            transform: scaleY(0);
+            animation: showMarker 0.3s ease-out forwards;
+            padding: 10px;
         }
 
         .start-marker {
@@ -178,6 +159,29 @@
             background-color: #ef4444;
             top: 0;
             transform-origin: top;
+        }
+
+        .project-info {
+            position: absolute;
+            background-color: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.25rem;
+            padding: 1rem;
+            width: 300px;
+            bottom: 40px;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: none;
+            margin-top:-50px;
+        }
+
+        .start-marker:hover .project-info {
+            display: block;
+        }
+
+        .timeline-marker:hover .project-info,
+        .project-info:hover {
+            display: block;
         }
 
         @@keyframes expandTimeline {
@@ -216,11 +220,11 @@
             <a asp-controller="Account" asp-action="ProfilePage" class="corner-button account-button"><div class="account-icon"></div></a>
 
             <button class="corner-button cv-button">
-                <img src="~/images/cv.png" alt="CV" height="100" />
+                <img src="~/images/cv.png" alt="CV"/>
             </button>
             <a asp-controller="Projects" asp-action="Create" class="corner-button add-button"><img src="~/images/add.png" alt="Add" height="100" /></a>
             <button class="corner-button save-button">
-                <img src="~/images/saved.png" alt="Saved" height="100" />
+                <img src="~/images/saved.png" alt="Save" />
             </button>
 
             <div class="timeline-container">
@@ -236,9 +240,8 @@
                         var startPosition = ((project.DataStart - startDate).TotalDays / totalDays * 100);
                         var endPosition = ((project.DataSfarsit - startDate).TotalDays / totalDays * 100);
 
-                        <div class="timeline-marker-container" style="left: @(startPosition)%">
-                            <div class="timeline-marker"></div>
-                            <div class="project-info">
+                        <div class="timeline-marker start-marker" id="marker-@project.IdProiect" style="left: @(startPosition)%">
+                            <div class="project-info" id="info-@project.IdProiect">
                                 <h3>@project.NumeProiect</h3>
                                 <p>Start date: @project.DataStart.ToShortDateString()</p>
                                 <p>End date: @project.DataSfarsit.ToShortDateString()</p>
@@ -270,20 +273,39 @@
                 month: '2-digit',
                 year: 'numeric'
             }).replace(/\//g, '.');
-
             document.getElementById('timer').textContent = `${timeStr} ${dateStr}`;
         }
-
         updateTimer();
         setInterval(updateTimer, 1000);
-
         document.addEventListener("DOMContentLoaded", function () {
             const markers = document.querySelectorAll(".timeline-marker");
-
             markers.forEach((marker, index) => {
                 marker.style.animationDelay = `${index * 300}ms`;
             });
         });
+
+                document.addEventListener("DOMContentLoaded", function () {
+            const markers = document.querySelectorAll(".timeline-marker");
+            markers.forEach(marker => {
+                const projectId = marker.id.split('-')[1];
+                const projectInfo = document.getElementById(`info-${projectId}`);
+
+                marker.addEventListener("mouseover", () => {
+                    projectInfo.style.display = "block";
+                });
+
+                marker.addEventListener("mouseout", () => {
+                    projectInfo.style.display = "none";
+                });
+
+                projectInfo.addEventListener("mouseover", () => {
+                    projectInfo.style.display = "block";
+                });
+
+                projectInfo.addEventListener("mouseout", () => {
+                    projectInfo.style.display = "none";
+                });
+            });
+        });
     </script>
 </body>
-</html>

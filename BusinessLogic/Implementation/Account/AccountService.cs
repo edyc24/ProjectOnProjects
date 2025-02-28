@@ -178,7 +178,8 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.Account
             return new UserProfileModel
             {
                 Skills = user.Skills?.Split(',') ?? new string[0],
-                Description = user.Description
+                Description = user.Description,
+                DataIncepere = user.DataIncepere
             };
         }
 
