@@ -115,6 +115,7 @@ namespace ProjectOnProjects.WebApp.Controllers
         //    return Json(Service.ValidatePassword(model));
         //}
 
+        [Authorize]
         public IActionResult ProfilePage()
         {
             var currentUserDetails = Service.DisplayProfile();

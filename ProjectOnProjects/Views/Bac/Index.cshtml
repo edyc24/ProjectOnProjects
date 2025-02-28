@@ -1,37 +1,168 @@
 @model List<ProjectOnProjects.Models.BacDocumentModel>
 
-<h2>Bac Documents</h2>
-
-<div class="subject-section">
-    <h3>Romana</h3>
-    @foreach (var doc in Model.Where(d => d.SubjectType == "Romana"))
-    {
-        <button>@doc.Name</button>
+@{
+    ViewData["Title"] = "Home";
+    Layout = null;
+}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-</div>
 
-<div class="vertical-divider">
-    <img src="~/images/line.png" alt="Divider" />
-</div>
-
-<div class="subject-section">
-    <h3>Mate</h3>
-    @foreach (var doc in Model.Where(d => d.SubjectType == "Mate"))
-    {
-        <button>@doc.Name</button>
+    body {
+        min-height: 100vh;
+        background-color: white;
+        font-family: system-ui, -apple-system, sans-serif;
     }
-</div>
 
-<div class="vertical-divider">
-    <img src="~/images/line.png" alt="Divider" />
-</div>
-
-<div class="subject-section">
-    <h3>Fizica & Info</h3>
-    @foreach (var doc in Model.Where(d => d.SubjectType == "Fizica & Info"))
-    {
-        <button>@doc.Name</button>
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        font-family: serif;
+        text-decoration: underline;
+    }
+
+    .timer {
+        font-family: monospace;
+        font-size: 1.2rem;
+        color: #374151;
+    }
+
+    .main-content {
+        padding: 4rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .add-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: url('/images/add.png') no-repeat center center;
+        background-size: cover;
+        margin: 2rem auto; /* Center the button and add space */
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem; /* Add margin to create space between header and container */
+    }
+
+    .column {
+        flex: 1;
+        margin: 0 130px;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+    }
+
+        .divider img {
+            width: 100%;
+        }
+
+    .subject-section h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .subject-section button {
+        display: block;
+        width: 25%;
+        padding: 0.25rem; /* Reduced padding */
+        margin-bottom: 0.25rem; /* Reduced margin */
+        font-size: 1rem; /* Reduced font size */
+        color: black;
+        background-color: whitesmoke;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .subject-section button:hover {
+            background-color: grey;
+        }
+</style>
+<header class="page-header">
+    <img src="~/images/logo.png" alt="Logo" height="50" class="top-left" />
+    <div class="timer" id="timer">00:00:00 09.02.2025</div>
+</header>
+
+<a href="@Url.Action("AddDocument", "Bac")" src="~/images/add.png" class="add-button"></a>
+
+<div class="container">
+    <div class="column subject-section">
+        <h3>Romana</h3>
+        @foreach (var doc in Model.Where(d => d.SubjectType == "Romana"))
+        {
+            <button>@doc.Name</button>
+        }
+    </div>
+
+    <div class="divider">
+        <img src="~/images/line.png" alt="Divider" />
+    </div>
+
+    <div class="column subject-section">
+        <h3>Mate</h3>
+        @foreach (var doc in Model.Where(d => d.SubjectType == "Mate"))
+        {
+            <button>@doc.Name</button>
+        }
+    </div>
+
+    <div class="divider">
+        <img src="~/images/line.png" alt="Divider" />
+    </div>
+
+    <div class="column subject-section">
+        <h3>Fizica & Info</h3>
+        @foreach (var doc in Model.Where(d => d.SubjectType == "Fizica & Info"))
+        {
+            <button>@doc.Name</button>
+        }
+    </div>
 </div>
 
-<a href="@Url.Action("AddDocument", "Bac")">Add Document</a> 
+<script>
+    function updateTimer() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('en-GB', {
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+        const dateStr = now.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        }).replace(/\//g, '.');
+        document.getElementById('timer').textContent = `${timeStr} ${dateStr}`;
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+    document.addEventListener("DOMContentLoaded", function () {
+        const markers = document.querySelectorAll(".timeline-marker");
+        markers.forEach((marker, index) => {
+            marker.style.animationDelay = `${index * 300}ms`;
+        });
+    });
+</script>

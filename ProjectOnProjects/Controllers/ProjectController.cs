@@ -4,6 +4,7 @@ using ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models;
 using ProjectOnProjects.Code.Base;
 using ProjectOnProjects.WebApp.Code.Base;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectOnProjects.Controllers
 {
@@ -24,6 +25,7 @@ namespace ProjectOnProjects.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Create()
         {
             var model = new ProjectModel();
