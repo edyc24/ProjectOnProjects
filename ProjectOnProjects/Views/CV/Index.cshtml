@@ -66,12 +66,18 @@
         .cv-form {
             flex: 1;
             margin-right: 2rem;
+            height: 60vh;
+            overflow-y: auto;
         }
+
+            .cv-form h2 {
+                margin-bottom: 2rem;
+            }
 
             .cv-form form {
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 2rem;
             }
 
             .cv-form label {
@@ -101,6 +107,24 @@
                     background-color: #0056b3;
                 }
 
+        .cv-input {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        #projects-container h3 {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        #projects-container .project {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
         .divider {
             display: flex;
             align-items: center;
@@ -108,7 +132,7 @@
         }
 
             .divider img {
-                width: 100%;
+                width: 80%;
             }
 
         .info-sections {
@@ -150,41 +174,49 @@
         <div class="cv-form">
             <h2>CV Form</h2>
             <form action="/download-cv" method="post">
-                <div>
+                <div class="cv-input">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required />
                 </div>
-                <div>
+                <div class="cv-input">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required />
                 </div>
-                <div>
+                <div class="cv-input">
                     <label for="phone">Phone</label>
                     <input type="tel" id="phone" name="phone" required />
                 </div>
-                <div>
+                <div class="cv-input">
                     <label for="address">Address</label>
                     <input type="text" id="address" name="address" required />
                 </div>
-                <div>
+                <div class="cv-input">
                     <label for="education">Education</label>
                     <textarea id="education" name="education" required></textarea>
                 </div>
-                <div>
+                <div class="cv-input">
                     <label for="experience">Experience</label>
                     <textarea id="experience" name="experience" required></textarea>
                 </div>
                 <div id="projects-container">
                     <h3>Projects</h3>
                     <div class="project">
-                        <label for="project-name">Project Name</label>
-                        <input type="text" id="project-name" name="project-name[]" required />
-                        <label for="project-period">Project Period</label>
-                        <input type="text" id="project-period" name="project-period[]" required />
-                        <label for="project-details">Project Details</label>
-                        <textarea id="project-details" name="project-details[]" required></textarea>
-                        <label for="personal-contribution">Personal Contribution</label>
-                        <textarea id="personal-contribution" name="personal-contribution[]" required></textarea>
+                        <div class="cv-input">
+                            <label for="project-name">Project Name</label>
+                            <input type="text" id="project-name" name="project-name[]" required />
+                        </div>
+                        <div class="cv-input">
+                            <label for="project-period">Project Period</label>
+                            <input type="text" id="project-period" name="project-period[]" required />
+                        </div>
+                        <div class="cv-input">
+                            <label for="project-details">Project Details</label>
+                            <textarea id="project-details" name="project-details[]" required></textarea>
+                        </div>
+                        <div class="cv-input">
+                            <label for="personal-contribution">Personal Contribution</label>
+                            <textarea id="personal-contribution" name="personal-contribution[]" required></textarea>
+                        </div>
                     </div>
                 </div>
                 <button type="button" onclick="addProject()">Add Another Project</button>
