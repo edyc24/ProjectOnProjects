@@ -271,8 +271,8 @@
                         var startPosition = ((project.DataStart - startDate).TotalDays / totalDays * 100);
                         var endPosition = ((project.DataSfarsit - startDate).TotalDays / totalDays * 100);
 
-                        <div class="timeline-marker start-marker" id="marker-@project.IdProiect" style="left: @(startPosition)%">
-                            <div class="project-info" id="info-@project.IdProiect">
+                        <div class="timeline-marker start-marker" id="@project.IdProiect" style="left: @(startPosition)%" onClick="showProjectDetails('@project.IdProiect')">
+                            <div class="project-info">
                                 <h3>@project.NumeProiect</h3>
                                 <p>Start date: @project.DataStart.ToShortDateString()</p>
                                 <p>End date: @project.DataSfarsit.ToShortDateString()</p>
@@ -288,8 +288,9 @@
                 <!-- Add the Bac button over the timeline -->
                 <a asp-controller="Bac" asp-action="Index" class="button-purple bac-button">Bac</a>
             </div>
-        </div>
 
+        </div>
+        
         <!-- Project Details Box -->
         <div id="project-details-box" class="project-details-box" style="display: none;">
             <h3 id="project-name"></h3>
@@ -301,13 +302,16 @@
             <p><strong>Organization:</strong> <span id="organization"></span></p>
             <p><strong>Website:</strong> <a id="website-link" href="#" target="_blank"></a></p>
             <p><strong>Contest Rules:</strong> <span id="contest-rules"></span></p>
+
+            <button id="add-to-favorites" class="button-purple" onclick="addToFavorites()">Add to Favorites</button>
         </div>
+
     </main>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const projects = @Html.Raw(Json.Serialize(Model));
-
+            console.log(projects);
             function updateTimer() {
                 const now = new Date();
                 const timeStr = now.toLocaleTimeString('en-GB', {
@@ -326,6 +330,8 @@
             updateTimer();
             setInterval(updateTimer, 1000);
 
+
+
             const markers = document.querySelectorAll(".timeline-marker");
             markers.forEach((marker, index) => {
                 marker.style.animationDelay = `${index * 300}ms`;
@@ -341,34 +347,77 @@
                     projectInfo.style.display = "none";
                 });
 
-                projectInfo.addEventListener("mouseover", () => {
-                    projectInfo.style.display = "block";
-                });
+                if (projectInfo) {
+                    projectInfo.addEventListener("mouseover", () => {
+                        projectInfo.style.display = "block";
+                    });
 
-                projectInfo.addEventListener("mouseout", () => {
-                    projectInfo.style.display = "none";
-                });
+                    projectInfo.addEventListener("mouseout", () => {
+                        projectInfo.style.display = "none";
+                    });
+                } else {
+                    console.error(`Element with ID info-${projectId} not found.`);
+                }
             });
 
-            window.showProjectDetails = function(projectId) {
-                const project = projects.find(p => p.IdProiect === projectId);
+                window.showProjectDetails = function(projectId) {
+                    console.log(projectId);
+                    let project = null;
+                    console.log(projects);
+                    for (let i = 0; i < projects.length; i++) {
+                        console.log(projects[i].idProiect);
+                        if (projects[i].idProiect == projectId) {
+                            project = projects[i];
+                            break;
+                        }
+                    }
 
-                if (project) {
-                    document.getElementById('project-name').textContent = project.NumeProiect;
-                    document.getElementById('project-start-date').textContent = new Date(project.DataStart).toLocaleDateString();
-                    document.getElementById('project-deadline').textContent = new Date(project.DataSfarsit).toLocaleDateString();
-                    document.getElementById('project-details').textContent = project.ProjectDetails || 'N/A';
-                    document.getElementById('project-file').textContent = project.ProjectFile || 'N/A';
-                    document.getElementById('contest-creator').textContent = project.ContestCreator || 'N/A';
-                    document.getElementById('organization').textContent = project.Organization || 'N/A';
-                    document.getElementById('website-link').textContent = project.WebsiteLink || 'N/A';
-                    document.getElementById('website-link').href = project.WebsiteLink || '#';
-                    document.getElementById('contest-rules').textContent = project.ContestRules || 'N/A';
+                    console.log(project);
 
-                    document.getElementById('project-details-box').style.display = 'block';
-                }
-            }
+                    if (project) {
+                        document.getElementById('project-name').textContent = project.numeProiect;
+                        document.getElementById('project-start-date').textContent = new Date(project.dataStart).toLocaleDateString();
+                        document.getElementById('project-deadline').textContent = new Date(project.dataSfarsit).toLocaleDateString();
+                        document.getElementById('project-details').textContent = project.projectDetails || 'N/A';
+                        document.getElementById('project-file').textContent = project.projectFile || 'N/A';
+                        document.getElementById('organization').textContent = project.organization || 'N/A';
+                        document.getElementById('website-link').textContent = project.websiteLink || 'N/A';
+                        document.getElementById('website-link').href = project.websiteLink || '#';
+                        document.getElementById('contest-rules').textContent = project.contestRules || 'N/A';
+
+                        document.getElementById('project-details-box').style.display = 'block';
+                    }
+        }
         });
+
+               function addToFavorites() {
+            const projectNameElement = document.getElementById('project-name');
+            const projectId = projectNameElement ? projectNameElement.textContent.trim() : null;
+
+            if (!projectId) {
+                alert('Project ID is invalid. Please try again.');
+                return;
+            }
+
+            fetch('/Account/AddToFavoriteList', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ projectId: projectId, listName: "Proiectele Mele" })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Project added to favorites successfully!');
+                } else {
+                    alert('Failed to add project to favorites.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding the project to favorites.');
+            });
+        }
     </script>
 
 </body>

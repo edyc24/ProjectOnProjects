@@ -111,8 +111,9 @@ namespace ProjectOnProjects.DataAccess.Migrations
                     b.Property<string>("ProjectDetails")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProjectFile")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ProjectFile")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ProjectName")
                         .IsRequired()

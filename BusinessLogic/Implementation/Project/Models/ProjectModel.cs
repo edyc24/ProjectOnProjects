@@ -7,7 +7,7 @@
         public DateTime DataStart { get; set; }
         public DateTime DataSfarsit { get; set; }
         public string? DetaliiProiect { get; set; }
-        public string? FisierProiect { get; set; }
+        public byte[] FisierProiect { get; set; }
         public string? FileFormat { get; set; }
 
         // Contest Information

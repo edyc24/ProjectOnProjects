@@ -33,15 +33,36 @@ namespace ProjectOnProjects.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ProjectModel model)
+        public async Task<IActionResult> Create(ProjectModel model, IFormFile FisierProiect)
         {
-            if (ModelState.IsValid)
+            if (FisierProiect != null && FisierProiect.Length > 0)
             {
-                 _service.CreateAsync(model);
-                 return RedirectToAction("Index", "Home");
+                // Validate file type
+                if (FisierProiect.ContentType != "application/pdf")
+                {
+                    ModelState.AddModelError("Imagine", "Only PDF files are allowed.");
+                    return View(model);
+                }
+
+                // Limit file size (e.g., max 10 MB)
+                if (FisierProiect.Length > 10 * 1024 * 1024)
+                {
+                    ModelState.AddModelError("Imagine", "File size must be less than 10 MB.");
+                    return View(model);
+                }
+
+                // Read the PDF file into a byte array
+                using (var ms = new MemoryStream())
+                {
+                    await FisierProiect.CopyToAsync(ms);
+                    model.FisierProiect = ms.ToArray();
+                }
+
             }
 
-            return View(model);
+                 _service.CreateAsync(model);
+                 return RedirectToAction("Index", "Home");
+
         }
 
         [HttpGet]

@@ -11,7 +11,7 @@ public partial class Proiecte : IEntity
     public DateTime StartDate { get; set; }
     public DateTime Deadline { get; set; }
     public string? ProjectDetails { get; set; }
-    public string? ProjectFile { get; set; }
+    public byte[] ProjectFile { get; set; }
     public string? FileFormat { get; set; }
 
     // Contest Information
