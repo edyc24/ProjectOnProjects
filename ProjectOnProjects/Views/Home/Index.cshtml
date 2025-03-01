@@ -209,6 +209,14 @@
             display: block;
         }
 
+        .project-details-box {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
         @@keyframes expandTimeline {
             0% {
                 transform: scaleX(0.1);
@@ -268,11 +276,6 @@
                                 <h3>@project.NumeProiect</h3>
                                 <p>Start date: @project.DataStart.ToShortDateString()</p>
                                 <p>End date: @project.DataSfarsit.ToShortDateString()</p>
-                                <div class="project-status">
-                                    <span class="status-dot"></span>
-                                    <span>@(DateTime.Now < project.DataStart ? "scheduled" : (DateTime.Now > project.DataSfarsit ? "completed" : "in progress"))</span>
-                                </div>
-                                <button class="btn btn-secondary" onclick="addToFavorites('@project.IdProiect')">Add to Favorites</button>
                             </div>
                         </div>
                         @if (endPosition <= 100)
@@ -286,36 +289,47 @@
                 <a asp-controller="Bac" asp-action="Index" class="button-purple bac-button">Bac</a>
             </div>
         </div>
+
+        <!-- Project Details Box -->
+        <div id="project-details-box" class="project-details-box" style="display: none;">
+            <h3 id="project-name"></h3>
+            <p><strong>Start Date:</strong> <span id="project-start-date"></span></p>
+            <p><strong>Deadline:</strong> <span id="project-deadline"></span></p>
+            <p><strong>Details:</strong> <span id="project-details"></span></p>
+            <p><strong>File:</strong> <span id="project-file"></span></p>
+            <p><strong>Contest Creator:</strong> <span id="contest-creator"></span></p>
+            <p><strong>Organization:</strong> <span id="organization"></span></p>
+            <p><strong>Website:</strong> <a id="website-link" href="#" target="_blank"></a></p>
+            <p><strong>Contest Rules:</strong> <span id="contest-rules"></span></p>
+        </div>
     </main>
 
     <script>
-        function updateTimer() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('en-GB', {
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            const dateStr = now.toLocaleDateString('en-GB', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            }).replace(/\//g, '.');
-            document.getElementById('timer').textContent = `${timeStr} ${dateStr}`;
-        }
-        updateTimer();
-        setInterval(updateTimer, 1000);
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
+            const projects = @Html.Raw(Json.Serialize(Model));
+
+            function updateTimer() {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString('en-GB', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                const dateStr = now.toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                }).replace(/\//g, '.');
+                document.getElementById('timer').textContent = `${timeStr} ${dateStr}`;
+            }
+            updateTimer();
+            setInterval(updateTimer, 1000);
+
             const markers = document.querySelectorAll(".timeline-marker");
             markers.forEach((marker, index) => {
                 marker.style.animationDelay = `${index * 300}ms`;
-            });
-        });
 
-                document.addEventListener("DOMContentLoaded", function () {
-            const markers = document.querySelectorAll(".timeline-marker");
-            markers.forEach(marker => {
                 const projectId = marker.id.split('-')[1];
                 const projectInfo = document.getElementById(`info-${projectId}`);
 
@@ -335,6 +349,26 @@
                     projectInfo.style.display = "none";
                 });
             });
+
+            window.showProjectDetails = function(projectId) {
+                const project = projects.find(p => p.IdProiect === projectId);
+
+                if (project) {
+                    document.getElementById('project-name').textContent = project.NumeProiect;
+                    document.getElementById('project-start-date').textContent = new Date(project.DataStart).toLocaleDateString();
+                    document.getElementById('project-deadline').textContent = new Date(project.DataSfarsit).toLocaleDateString();
+                    document.getElementById('project-details').textContent = project.ProjectDetails || 'N/A';
+                    document.getElementById('project-file').textContent = project.ProjectFile || 'N/A';
+                    document.getElementById('contest-creator').textContent = project.ContestCreator || 'N/A';
+                    document.getElementById('organization').textContent = project.Organization || 'N/A';
+                    document.getElementById('website-link').textContent = project.WebsiteLink || 'N/A';
+                    document.getElementById('website-link').href = project.WebsiteLink || '#';
+                    document.getElementById('contest-rules').textContent = project.ContestRules || 'N/A';
+
+                    document.getElementById('project-details-box').style.display = 'block';
+                }
+            }
         });
     </script>
+
 </body>

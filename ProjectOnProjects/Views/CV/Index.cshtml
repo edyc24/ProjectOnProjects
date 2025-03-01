@@ -174,29 +174,20 @@
                     <label for="experience">Experience</label>
                     <textarea id="experience" name="experience" required></textarea>
                 </div>
-                <div>
-                    <label for="projects">Projects</label>
-                    <select id="projects" name="projects" onchange="showProjectDetails()">
-                        <option value="">Select a project</option>
-                        <option value="project1">Project 1</option>
-                        <option value="project2">Project 2</option>
-                        <option value="project3">Project 3</option>
-                    </select>
-                </div>
-                <div id="project-details" class="project-details">
-                    <div>
+                <div id="projects-container">
+                    <h3>Projects</h3>
+                    <div class="project">
+                        <label for="project-name">Project Name</label>
+                        <input type="text" id="project-name" name="project-name[]" required />
                         <label for="project-period">Project Period</label>
-                        <input type="text" id="project-period" name="project-period" readonly />
-                    </div>
-                    <div>
+                        <input type="text" id="project-period" name="project-period[]" required />
                         <label for="project-details">Project Details</label>
-                        <textarea id="project-details-text" name="project-details" readonly></textarea>
-                    </div>
-                    <div>
+                        <textarea id="project-details" name="project-details[]" required></textarea>
                         <label for="personal-contribution">Personal Contribution</label>
-                        <textarea id="personal-contribution" name="personal-contribution"></textarea>
+                        <textarea id="personal-contribution" name="personal-contribution[]" required></textarea>
                     </div>
                 </div>
+                <button type="button" onclick="addProject()">Add Another Project</button>
                 <button type="submit">Download CV</button>
             </form>
         </div>
@@ -245,35 +236,21 @@
         updateTimer();
         setInterval(updateTimer, 1000);
 
-        function showProjectDetails() {
-            const projectDetails = document.getElementById('project-details');
-            const projectSelect = document.getElementById('projects');
-            const selectedProject = projectSelect.value;
-
-            if (selectedProject) {
-                projectDetails.style.display = 'flex';
-
-                // Example project details
-                const projectData = {
-                    project1: {
-                        period: 'January 2021 - December 2021',
-                        details: 'Details about Project 1...'
-                    },
-                    project2: {
-                        period: 'March 2020 - November 2020',
-                        details: 'Details about Project 2...'
-                    },
-                    project3: {
-                        period: 'June 2019 - August 2019',
-                        details: 'Details about Project 3...'
-                    }
-                };
-
-                document.getElementById('project-period').value = projectData[selectedProject].period;
-                document.getElementById('project-details-text').value = projectData[selectedProject].details;
-            } else {
-                projectDetails.style.display = 'none';
-            }
+               function addProject() {
+            const projectsContainer = document.getElementById('projects-container');
+            const newProject = document.createElement('div');
+            newProject.classList.add('project');
+            newProject.innerHTML = `
+                <label for="project-name">Project Name</label>
+                <input type="text" id="project-name" name="project-name[]" required />
+                <label for="project-period">Project Period</label>
+                <input type="text" id="project-period" name="project-period[]" required />
+                <label for="project-details">Project Details</label>
+                <textarea id="project-details" name="project-details[]" required></textarea>
+                <label for="personal-contribution">Personal Contribution</label>
+                <textarea id="personal-contribution" name="personal-contribution[]" required></textarea>
+            `;
+            projectsContainer.appendChild(newProject);
         }
     </script>
 </body>
