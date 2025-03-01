@@ -27,14 +27,35 @@ namespace ProjectOnProjects.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddDocument(BacDocumentModel model)
+        public async Task<IActionResult> AddDocument(BacDocumentModel model, IFormFile FisierProiect)
         {
-            if (ModelState.IsValid)
+            if (FisierProiect != null && FisierProiect.Length > 0)
             {
-                _bacService.AddBacDocument(model);
-                return RedirectToAction("Index");
+                // Validate file type
+                if (FisierProiect.ContentType != "application/pdf")
+                {
+                    ModelState.AddModelError("Imagine", "Only PDF files are allowed.");
+                    return View(model);
+                }
+
+                // Limit file size (e.g., max 10 MB)
+                if (FisierProiect.Length > 10 * 1024 * 1024)
+                {
+                    ModelState.AddModelError("Imagine", "File size must be less than 10 MB.");
+                    return View(model);
+                }
+
+                // Read the PDF file into a byte array
+                using (var ms = new MemoryStream())
+                {
+                    await FisierProiect.CopyToAsync(ms);
+                    model.Content = ms.ToArray();
+                }
+
             }
-            return View(model);
+
+            _bacService.AddBacDocument(model);
+            return RedirectToAction("Index", "Home");
         }
     }
 } 

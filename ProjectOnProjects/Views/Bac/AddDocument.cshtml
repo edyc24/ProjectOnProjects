@@ -106,9 +106,9 @@
                 <option value="Fizica & Info">Fizica & Info</option>
             </select>
         </div>
-        <div>
-            <label for="Content">Content</label>
-            <textarea id="Content" name="Content" required></textarea>
+        <div class="form-group">
+            <label for="FisierProiect" class="futuristic-label">PDF:</label>
+            <input type="file" id="FisierProiect" name="FisierProiect" class="futuristic-input" accept=".pdf" required />
         </div>
         <button type="submit">Add</button>
     </form>
@@ -122,7 +122,7 @@
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit'
-        });
+        }).split(':').reverse().join(':');
         const dateStr = now.toLocaleDateString('en-GB', {
             day: '2-digit',
             month: '2-digit',

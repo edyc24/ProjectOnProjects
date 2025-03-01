@@ -91,31 +91,47 @@
 
     .subject-section {
         display: flex;
-        justify-content: center;
+        flex-wrap: wrap;
+        justify-content: flex-start; /* Align items to the left */
+        align-items: flex-start; /* Align items to the top */
     }
 
-    .subject-section h3 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .subject-section button {
-        display: block;
-        width: 25%;
-        padding: 0.25rem; /* Reduced padding */
-        margin-bottom: 0.25rem; /* Reduced margin */
-        font-size: 1rem; /* Reduced font size */
-        color: black;
-        background-color: whitesmoke;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-        .subject-section button:hover {
-            background-color: grey;
+        .subject-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            text-align: center;
         }
+
+        .subject-section button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 30%; /* Adjust width to fit three per row */
+            padding: 0.05rem; /* Smaller padding */
+            margin: 0.1rem; /* Smaller margin */
+            font-size: 0.5rem; /* Smaller font size */
+            color: black;
+            background-color: whitesmoke;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            height: 1.5rem; /* Set a fixed height */
+            margin-top:-17rem;
+        }
+
+            .subject-section button:hover {
+                background-color: grey;
+            }
+
+    .favorite-icon {
+        margin-left: 0.5rem;
+        width: 15px;
+        height: 15px;
+        background: url('/images/favorite.png') no-repeat center center;
+        background-size: cover;
+    }
 </style>
 
 <header class="page-header">
@@ -130,7 +146,10 @@
         <h3>Romana</h3>
         @foreach (var doc in Model.Where(d => d.SubjectType == "Romana"))
         {
-            <button>@doc.Name</button>
+            <button>
+                @doc.Name
+                <span class="favorite-icon" onclick="addToFavorites('@doc.Id')"></span>
+            </button>
         }
     </div>
 
@@ -142,7 +161,10 @@
         <h3>Mate</h3>
         @foreach (var doc in Model.Where(d => d.SubjectType == "Mate"))
         {
-            <button>@doc.Name</button>
+            <button>
+                @doc.Name
+                <span class="favorite-icon" onclick="addToFavorites('@doc.Id')"></span>
+            </button>
         }
     </div>
 
@@ -154,11 +176,10 @@
         <h3>Fizica & Info</h3>
         @foreach (var doc in Model.Where(d => d.SubjectType == "Fizica & Info"))
         {
-            <button>@doc.Name</button>
+            <button id="add-to-favorites" class="button-purple" onclick="addToFavorites('@doc.Id')">@doc.Name</button>
         }
     </div>
 </div>
-
 
 <a href="@Url.Action("AddDocument", "Bac")" src="~/images/add.png" class="add-button"></a>
 
@@ -170,7 +191,7 @@
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit'
-        });
+        }).split(':').reverse().join(':');
         const dateStr = now.toLocaleDateString('en-GB', {
             day: '2-digit',
             month: '2-digit',
@@ -180,10 +201,31 @@
     }
     updateTimer();
     setInterval(updateTimer, 1000);
-    document.addEventListener("DOMContentLoaded", function () {
-        const markers = document.querySelectorAll(".timeline-marker");
-        markers.forEach((marker, index) => {
-            marker.style.animationDelay = `${index * 300}ms`;
-        });
-    });
+
+    function addToFavorites(docId) {
+
+            if (!docId) {
+                alert('Project ID is invalid. Please try again.');
+                return;
+            }
+            console.log(docId);
+            fetch('/Account/AddToFavoriteList', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ projectId: docId, listName: "Documentele Mele" })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Project added to favorites successfully!');
+                } else {
+                    alert('Failed to add project to favorites.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding the project to favorites.');
+            });
+    }
 </script>

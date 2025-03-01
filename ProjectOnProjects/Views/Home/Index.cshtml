@@ -88,7 +88,7 @@
             }
 
             .corner-button img {
-                width: 4rem;
+                width: 3.5rem;
                 height: 4rem;
             }
 
@@ -108,7 +108,7 @@
         .cv-button {
             bottom: -20px;
             left: -20px;
-            font-weight: bold;
+            font-weight: bold !important;
         }
 
         .add-button {
@@ -252,7 +252,7 @@
         <div class="timeline-wrapper">
             <a asp-controller="Account" asp-action="ProfilePage" class="corner-button account-button"><div class="account-icon"></div></a>
 
-            <a asp-controller="CV" asp-action="Index" class="corner-button cv-button"><img src="~/images/cv.png" alt="CV" height="100" /></a>
+            <a asp-controller="CV" asp-action="Index" class="corner-button cv-button"><img src="~/images/cv.png" alt="CV" height="60" width="50"/></a>
             <a asp-controller="Projects" asp-action="Create" class="corner-button add-button"><img src="~/images/add.png" alt="Add" height="100" /></a>
             <a asp-controller="Account" asp-action="FavoriteLists" class="corner-button save-button"><img src="~/images/saved.png" alt="Save" height="100" /></a>
            
@@ -285,7 +285,7 @@
                 </div>
 
                 <!-- Add the Bac button over the timeline -->
-                <a asp-controller="Bac" asp-action="Index" class="button-purple bac-button">Bac</a>
+                <a asp-controller="Bac" asp-action="Index" class="button-purple bac-button">BAC</a>
             </div>
 
         </div>
@@ -319,7 +319,7 @@
                     hour: '2-digit',
                     minute: '2-digit',
                     second: '2-digit'
-                });
+                }).split(':').reverse().join(':');
                 const dateStr = now.toLocaleDateString('en-GB', {
                     day: '2-digit',
                     month: '2-digit',

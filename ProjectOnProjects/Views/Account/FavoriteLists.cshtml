@@ -41,103 +41,105 @@
 
     .main-content {
         padding: 4rem;
-        max-width: 1400px;
+        max-width:1400px;
+        height: 650px;
         margin: 0 auto;
-    }
-
-    .bac-title {
-        width: 80px;
-        height: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        background: purple;
-        margin: 1rem auto;
-        text-align: center;
-    }
-
-    .add-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: url('/images/add.png') no-repeat center center;
-        background-size: cover;
-        margin: 2rem auto; /* Center the button and add space */
-    }
-
-    .container {
         display: flex;
         justify-content: space-between;
-        margin-top: 2rem; /* Add margin to create space between header and container */
     }
 
     .column {
         flex: 1;
-        margin: 0 130px;
+        margin: 0 1rem;
     }
 
     .divider {
         display: flex;
         align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
     }
 
         .divider img {
-            width: 90%;
+            width: 50px; /* Make the divider larger */
+            height: 100%;
         }
 
     .subject-section {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        text-align: center; /* Center the text within the section */
     }
 
-        .subject-section h3 {
+        .subject-section h2 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
+            width: 100%; /* Ensure the title takes the full width */
         }
 
-        .subject-section button {
-            display: block;
-            width: 25%;
-            padding: 0.25rem; /* Reduced padding */
-            margin-bottom: 0.25rem; /* Reduced margin */
-            font-size: 1rem; /* Reduced font size */
-            color: black;
-            background-color: whitesmoke;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    .doc {
+        display: inline-block;
+        width: 30%; /* Adjust width to fit three per line */
+        padding: 0.5rem;
+        margin: 0.1rem; /* Smaller margin */
+        font-size: 1rem;
+        color: black;
+        background-color: whitesmoke;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        height: 1.5rem; /* Set a fixed height */
+    }
 
-            .subject-section button:hover {
-                background-color: grey;
-            }
+        .doc:hover {
+            background-color: grey;
+        }
 </style>
 
 <header class="page-header">
     <img src="~/images/logo.png" alt="Logo" height="50" class="top-left" />
     <div class="timer" id="timer">00:00:00 09.02.2025</div>
 </header>
+
 <body>
-<div class="d-flex justify-content-between align-items-center mb-4" style="transform: translateX(50%)">
-    <img src="~/images/saved.png" alt="Saved" height="70" />
-</div>
+    <div class="d-flex justify-content-between align-items-center mb-4" style="transform: translateX(48.7%)">
+        <img src="~/images/saved.png" alt="Saved" height="60" />
+    </div>
     <div class="main-content">
-        @foreach (var list in Model)
-        {
-            <div class="folder">
-                <h2>@list.ListName</h2>
-                @foreach (var project in list.Projects)
+        <div class="column subject-section">
+            <h2>Proiectele Mele</h2>
+            @{
+                var proiecteleMele = Model.FirstOrDefault(l => l.ListName == "Proiectele Mele");
+                if (proiecteleMele != null)
                 {
-                    <div class="doc">@project.ProjectName</div>
+                    foreach (var project in proiecteleMele.Projects)
+                    {
+                        <div class="doc">@project.ProjectName</div>
+                    }
                 }
-            </div>
-            <div class="vertical-divider"></div>
-        }
+            }
+        </div>
+
+        <div class="divider">
+            <img src="~/images/line.png" alt="Divider" />
+        </div>
+
+        <div class="column subject-section">
+            <h2>Documentele Mele</h2>
+            @{
+                var documenteleMele = Model.FirstOrDefault(l => l.ListName == "Documentele Mele");
+                if (documenteleMele != null)
+                {
+                    foreach (var project in documenteleMele.Projects)
+                    {
+                        <div class="doc">@project.ProjectName</div>
+                    }
+                }
+            }
+        </div>
     </div>
 
     <script>
@@ -148,7 +150,7 @@
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
-            });
+            }).split(':').reverse().join(':');
             const dateStr = now.toLocaleDateString('en-GB', {
                 day: '2-digit',
                 month: '2-digit',

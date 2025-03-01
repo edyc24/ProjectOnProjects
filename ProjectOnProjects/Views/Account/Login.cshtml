@@ -278,10 +278,10 @@
         </form>
 
         <div>
-            <a asp-action="ResetPassword" class="link">Resetare Parolă</a>
+            <a asp-action="Register" class="link">Register</a>
         </div>
         <div>
-            <a asp-action="Index" class="link">Înapoi la Listă</a>
+            <a asp-action="Index" class="link">Back</a>
         </div>
     </div>
 
@@ -300,7 +300,7 @@
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
-            });
+            }).split(':').reverse().join(':');
             const dateStr = now.toLocaleDateString('en-GB', {
                 day: '2-digit',
                 month: '2-digit',

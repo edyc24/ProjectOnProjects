@@ -62,50 +62,76 @@
             background-size: contain;
             margin: 2rem auto;
         }
+.cv-form {
+        flex: 1;
+        margin-right: 2rem;
+        height: 60vh;
+        overflow-y: auto;
+    }
 
-        .cv-form {
-            flex: 1;
-            margin-right: 2rem;
-            height: 60vh;
-            overflow-y: auto;
+        .cv-form h2 {
+            margin-bottom: 2rem;
         }
 
-            .cv-form h2 {
-                margin-bottom: 2rem;
+        .cv-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .cv-form label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            width: 150px; /* Set a fixed width for labels */
+        }
+
+        .cv-form input, .cv-form textarea, .cv-form select {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%; /* Set a fixed width for all inputs and textareas */
+            max-width: 100%; /* Ensure inputs and textareas don't exceed the container width */
+        }
+
+        .cv-form textarea {
+            height: 100px; /* Set a fixed height for textareas */
+            resize: none; /* Disable resizing */
+        }
+
+        .add-project-btn {
+            padding: 0.25rem; /* Make the button much shorter */
+            font-size: 0.8rem; /* Smaller font size */
+            color: black; /* Black text */
+            width: 40px;
+            background-color: white; /* White background */
+            border: 1px solid black; /* Add a border */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .add-project-btn:hover {
+                background-color: #f0f0f0; /* Slightly darker on hover */
             }
 
-            .cv-form form {
-                display: flex;
-                flex-direction: column;
-                gap: 2rem;
+        .download-cv-btn {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            background-color: transparent; /* No background color */
+            border: none;
+            cursor: pointer;
+        }
+
+            .download-cv-btn:hover .download-icon {
+                filter: brightness(0.8); /* Darken the icon on hover */
             }
 
-            .cv-form label {
-                font-weight: bold;
-                margin-bottom: 0.5rem;
-            }
-
-            .cv-form input, .cv-form textarea, .cv-form select {
-                padding: 0.5rem;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                font-size: 1rem;
-            }
-
-            .cv-form button {
-                padding: 0.75rem;
-                font-size: 1rem;
-                color: white;
-                background-color: #007bff;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
-
-                .cv-form button:hover {
-                    background-color: #0056b3;
-                }
+        .download-icon {
+            width: 60px; /* Adjust the size of the icon */
+            height: 60px;
+        }
 
         .cv-input {
             display: flex;
@@ -219,8 +245,10 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" onclick="addProject()">Add Another Project</button>
-                <button type="submit">Download CV</button>
+                <button type="button" onclick="addProject()" class="add-project-btn">Add</button>
+                <button type="submit" class="download-cv-btn">
+                    <img src="~/images/download.png" alt="Download Icon" class="download-icon" />
+                </button>
             </form>
         </div>
 
@@ -235,16 +263,16 @@
             </div>
             <div class="info-section">
                 <h3>Interests</h3>
-                <select>
-                    <option value="tech">Technology</option>
-                    <option value="science">Science</option>
-                    <option value="art">Art</option>
-                    <option value="music">Music</option>
-                </select>
+                <div class="search-container">
+                    <input type="text" id="interest-search" placeholder="Search interests..." />
+                    <button type="button" onclick="searchProjects()" class="search-btn">Search</button>
+                </div>
             </div>
             <div class="info-section">
                 <h3>Might Join</h3>
-                <p>List of potential groups or projects...</p>
+                <div id="project-results">
+                    <!-- Search results will be displayed here -->
+                </div>
             </div>
         </div>
     </div>
@@ -257,7 +285,7 @@
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
-            });
+            }).split(':').reverse().join(':');
             const dateStr = now.toLocaleDateString('en-GB', {
                 day: '2-digit',
                 month: '2-digit',
@@ -283,6 +311,22 @@
                 <textarea id="personal-contribution" name="personal-contribution[]" required></textarea>
             `;
             projectsContainer.appendChild(newProject);
+        }
+             function searchProjects() {
+            const searchTerm = document.getElementById("interest-search").value.toLowerCase();
+            const resultsContainer = document.getElementById("project-results");
+            resultsContainer.innerHTML = "";
+
+            fetch(`/search-projects?searchTerm=${searchTerm}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(project => {
+                        const projectElement = document.createElement("div");
+                        projectElement.className = "project";
+                        projectElement.textContent = project.numeProiect;
+                        resultsContainer.appendChild(projectElement);
+                    });
+                });
         }
     </script>
 </body>

@@ -2,11 +2,24 @@
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
+using ProjectOnProjects.BusinessLogic.Implementation.Account;
+using ProjectOnProjects.BusinessLogic.Implementation.ProjectService;
+using ProjectOnProjects.Code.Base;
+using ProjectOnProjects.WebApp.Code.Base;
+using ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models;
 
 namespace ProjectOnProjects.Controllers
 {
-    public class CVController : Controller
+    public class CVController : BaseController
     {
+        private readonly ProjectService Service;
+
+        public CVController(ControllerDependencies dependencies, ProjectService service)
+            : base(dependencies)
+        {
+            this.Service = service;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -30,11 +43,12 @@ namespace ProjectOnProjects.Controllers
                 };
                 document.Add(title);
 
-                // Add logo
-                var logo = Image.GetInstance("C:\\Users\\eduardcr\\source\\repos\\ProjectOnProjects\\ProjectOnProjects\\wwwroot\\images\\logo.png");
+                var logoPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "logo.png");
+                var logo = Image.GetInstance(logoPath);
                 logo.Alignment = Image.ALIGN_RIGHT;
                 logo.ScaleToFit(100f, 100f);
                 document.Add(logo);
+
 
                 // Add a line separator
                 document.Add(new Paragraph("\n"));
@@ -69,6 +83,24 @@ namespace ProjectOnProjects.Controllers
 
                 return File(ms.ToArray(), "application/pdf", "CV.pdf");
             }
+        }
+
+        [HttpGet]
+        [Route("search-projects")]
+        public async Task<IActionResult> SearchProjects(string searchTerm)
+        {
+            var projects = await Service.GetAllAsync();
+            var matchingProjects = projects.Where(p => p.DetaliiProiect.ToLower().Contains(searchTerm.ToLower())).Take(2).ToList();
+            var randomProject = projects.FirstOrDefault(p => !p.DetaliiProiect.ToLower().Contains(searchTerm.ToLower()));
+
+            var result = new List<ProjectModel>();
+            result.AddRange(matchingProjects);
+            if (randomProject != null)
+            {
+                result.Add(randomProject);
+            }
+
+            return Json(result);
         }
     }
 }
