@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjectOnProjects.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class project : Migration
+    public partial class test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,10 +48,12 @@ namespace ProjectOnProjects.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nume = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Prenume = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Mail = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Parola = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     NumarTelefon = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Skills = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DataIncepere = table.Column<DateTime>(type: "datetime", nullable: true),
                     DataNastere = table.Column<DateTime>(type: "datetime", nullable: true),
                     IdRol = table.Column<int>(type: "int", nullable: false),
@@ -72,7 +74,7 @@ namespace ProjectOnProjects.DataAccess.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Deadline = table.Column<DateTime>(type: "datetime", nullable: false),
                     ProjectDetails = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProjectFile = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectFile = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     FileFormat = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContestCreator = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Organization = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -81,17 +83,41 @@ namespace ProjectOnProjects.DataAccess.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdUtilizatorNavigationIdUtilizator = table.Column<int>(type: "int", nullable: false)
+                    UtilizatoriIdUtilizator = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK__Proiecte__187B9AAFDE323DC0", x => x.IdProject);
                     table.ForeignKey(
-                        name: "FK_Proiecte_Utilizatori_IdUtilizatorNavigationIdUtilizator",
-                        column: x => x.IdUtilizatorNavigationIdUtilizator,
+                        name: "FK_Proiecte_Utilizatori_UtilizatoriIdUtilizator",
+                        column: x => x.UtilizatoriIdUtilizator,
                         principalTable: "Utilizatori",
-                        principalColumn: "IdUtilizator",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdUtilizator");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Favorites",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    ListName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favorites", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Favorites_Proiecte_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Proiecte",
+                        principalColumn: "IdProject");
+                    table.ForeignKey(
+                        name: "FK_Favorites_Utilizatori_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Utilizatori",
+                        principalColumn: "IdUtilizator");
                 });
 
             migrationBuilder.CreateTable(
@@ -120,9 +146,19 @@ namespace ProjectOnProjects.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Proiecte_IdUtilizatorNavigationIdUtilizator",
+                name: "IX_Favorites_ProjectId",
+                table: "Favorites",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorites_UserId",
+                table: "Favorites",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proiecte_UtilizatoriIdUtilizator",
                 table: "Proiecte",
-                column: "IdUtilizatorNavigationIdUtilizator");
+                column: "UtilizatoriIdUtilizator");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SavedProjects_IdProiect",
@@ -138,7 +174,8 @@ namespace ProjectOnProjects.DataAccess.Migrations
                 name: "UQ__Utilizat__536C85E4B4BA6916",
                 table: "Utilizatori",
                 column: "Username",
-                unique: true);
+                unique: true,
+                filter: "[Username] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -146,6 +183,9 @@ namespace ProjectOnProjects.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BacDocuments");
+
+            migrationBuilder.DropTable(
+                name: "Favorites");
 
             migrationBuilder.DropTable(
                 name: "Roluri");

@@ -163,10 +163,21 @@ namespace ProjectOnProjects.WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToFavoriteList(int projectId, string listName)
+        public IActionResult AddToFavoriteList([FromBody] FavoriteRequest request)
         {
-            Service.AddProjectToFavorites(CurrentUser.Id, projectId, listName);
+            if (request == null || request.ProjectId == 0 || string.IsNullOrEmpty(request.ListName))
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            Service.AddProjectToFavorites(CurrentUser.Id, request.ProjectId, request.ListName);
             return Ok();
+        }
+
+        public class FavoriteRequest
+        {
+            public int ProjectId { get; set; }
+            public string ListName { get; set; }
         }
 
         [HttpGet]

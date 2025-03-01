@@ -247,16 +247,9 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.Account
 
         public void AddProjectToFavorites(int userId, int projectId, string listName)
         {
-            var favoriteList = UnitOfWork.Favorites.Get()
-                .FirstOrDefault(fl => fl.UserId == userId && fl.ListName == listName);
 
-            if (favoriteList == null)
-            {
-                favoriteList = new Favorites { UserId = userId, ListName = listName };
-                UnitOfWork.Favorites.Insert(favoriteList);
-            }
 
-            var favorite = new Favorites { ProjectId = projectId, Id = favoriteList.Id };
+            var favorite = new Favorites { ProjectId = projectId, UserId = userId, ListName = listName};
             UnitOfWork.Favorites.Insert(favorite);
             UnitOfWork.SaveChanges();
         }

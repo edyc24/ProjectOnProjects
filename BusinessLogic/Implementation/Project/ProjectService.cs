@@ -78,7 +78,7 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.ProjectService
                 Deadline = model.DataSfarsit,
                 ProjectDetails = model.DetaliiProiect,
                 ProjectFile = model.FisierProiect,
-                FileFormat = model.FisierProiect,
+                FileFormat = "pdf",
                 ContestCreator = model.ContestCreator,
                 Organization = model.OrganizatieInstitutie,
                 WebsiteLink = model.LinkSite,

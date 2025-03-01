@@ -197,10 +197,9 @@
                         <textarea asp-for="DetaliiProiect" class="form-control" rows="3"></textarea>
                         <span asp-validation-for="DetaliiProiect" class="text-danger"></span>
                     </div>
-                    <div class="form-group mt-3">
-                        <label asp-for="FisierProiect" class="control-label">Project File</label>
-                        <input type="file" asp-for="FisierProiect" class="form-control" />
-                        <span asp-validation-for="FisierProiect" class="text-danger"></span>
+                    <div class="form-group">
+                        <label for="FisierProiect" class="futuristic-label">Fișier PDF:</label>
+                        <input type="file" id="FisierProiect" name="FisierProiect" class="futuristic-input" accept=".pdf" required />
                     </div>
                 </div>
             </div>

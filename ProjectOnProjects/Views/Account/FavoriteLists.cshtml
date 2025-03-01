@@ -1,87 +1,131 @@
 @model IEnumerable<ProjectOnProjects.Models.FavoriteListModels>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favorite Lists</title>
-    <style>
-        body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background-color: white;
-            margin: 0;
-            padding: 0;
+@{
+    ViewData["Title"] = "Home";
+    Layout = null;
+}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        background-color: white;
+        font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        background-color: white;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        font-family: serif;
+        text-decoration: underline;
+    }
+
+    .timer {
+        font-family: monospace;
+        font-size: 1.2rem;
+        color: #374151;
+        font-weight: bold;
+    }
+
+    .main-content {
+        padding: 4rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .bac-title {
+        width: 80px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background: purple;
+        margin: 1rem auto;
+        text-align: center;
+    }
+
+    .add-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: url('/images/add.png') no-repeat center center;
+        background-size: cover;
+        margin: 2rem auto; /* Center the button and add space */
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem; /* Add margin to create space between header and container */
+    }
+
+    .column {
+        flex: 1;
+        margin: 0 130px;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+    }
+
+        .divider img {
+            width: 90%;
         }
 
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
-            background-color: white;
-        }
+    .subject-section {
+        display: flex;
+        justify-content: center;
+    }
 
-        .logo {
+        .subject-section h3 {
             font-size: 1.5rem;
-            font-weight: bold;
-            font-family: serif;
-            text-decoration: underline;
-        }
-
-        .timer {
-            font-family: monospace;
-            font-size: 1.2rem;
-            color: #374151;
-            font-weight: bold;
-        }
-
-        .main-content {
-            display: flex;
-            justify-content: space-between;
-            padding: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .folder {
-            flex: 1;
-            padding: 1rem;
-        }
-
-        .folder h2 {
-            text-align: center;
             margin-bottom: 1rem;
         }
 
-        .doc {
-            display: inline-block;
-            margin: 0.5rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #f9f9f9;
+        .subject-section button {
+            display: block;
+            width: 25%;
+            padding: 0.25rem; /* Reduced padding */
+            margin-bottom: 0.25rem; /* Reduced margin */
+            font-size: 1rem; /* Reduced font size */
+            color: black;
+            background-color: whitesmoke;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.3s ease;
         }
 
-        .doc:hover {
-            background-color: #e2e8f0;
-        }
+            .subject-section button:hover {
+                background-color: grey;
+            }
+</style>
 
-        .vertical-divider {
-            width: 2px;
-            background-color: #ccc;
-            margin: 0 2rem;
-        }
-    </style>
-</head>
+<header class="page-header">
+    <img src="~/images/logo.png" alt="Logo" height="50" class="top-left" />
+    <div class="timer" id="timer">00:00:00 09.02.2025</div>
+</header>
 <body>
-    <header class="page-header">
-        <div class="logo">Project on Projects</div>
-        <div class="timer" id="timer">00:00:00 09.02.2025</div>
-    </header>
-
+<div class="d-flex justify-content-between align-items-center mb-4" style="transform: translateX(50%)">
+    <img src="~/images/saved.png" alt="Saved" height="70" />
+</div>
     <div class="main-content">
         @foreach (var list in Model)
         {
@@ -118,4 +162,3 @@
         setInterval(updateTimer, 1000);
     </script>
 </body>
-</html> 

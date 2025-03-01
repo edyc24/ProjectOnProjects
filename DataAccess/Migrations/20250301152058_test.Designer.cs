@@ -12,7 +12,7 @@ using ProjectOnProjects.DataAccess.EntityFramework;
 namespace ProjectOnProjects.DataAccess.Migrations
 {
     [DbContext(typeof(ProjectOnProjectsContext))]
-    [Migration("20250216132026_test")]
+    [Migration("20250301152058_test")]
     partial class test
     {
         /// <inheritdoc />
@@ -114,8 +114,9 @@ namespace ProjectOnProjects.DataAccess.Migrations
                     b.Property<string>("ProjectDetails")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProjectFile")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ProjectFile")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ProjectName")
                         .IsRequired()
