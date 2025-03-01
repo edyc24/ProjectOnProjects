@@ -254,9 +254,8 @@
 
             <a asp-controller="CV" asp-action="Index" class="corner-button cv-button"><img src="~/images/cv.png" alt="CV" height="100" /></a>
             <a asp-controller="Projects" asp-action="Create" class="corner-button add-button"><img src="~/images/add.png" alt="Add" height="100" /></a>
-            <button class="corner-button save-button">
-                <img src="~/images/saved.png" alt="Save" />
-            </button>
+            <a asp-controller="Account" asp-action="FavoriteLists" class="corner-button save-button"><img src="~/images/saved.png" alt="Save" height="100" /></a>
+           
 
             <div class="timeline-container">
                 <div class="timeline-bar">
@@ -294,6 +293,7 @@
         <!-- Project Details Box -->
         <div id="project-details-box" class="project-details-box" style="display: none;">
             <h3 id="project-name"></h3>
+            <p><strong>Id</strong> <span id="project-id" style="visibility:hidden; width:0px;height:0px;"></span></p>
             <p><strong>Start Date:</strong> <span id="project-start-date"></span></p>
             <p><strong>Deadline:</strong> <span id="project-deadline"></span></p>
             <p><strong>Details:</strong> <span id="project-details"></span></p>
@@ -375,6 +375,7 @@
                     console.log(project);
 
                     if (project) {
+                        document.getElementById('project-id').textContent = project.idProiect;
                         document.getElementById('project-name').textContent = project.numeProiect;
                         document.getElementById('project-start-date').textContent = new Date(project.dataStart).toLocaleDateString();
                         document.getElementById('project-deadline').textContent = new Date(project.dataSfarsit).toLocaleDateString();
@@ -391,14 +392,13 @@
         });
 
                function addToFavorites() {
-            const projectNameElement = document.getElementById('project-name');
-            const projectId = projectNameElement ? projectNameElement.textContent.trim() : null;
+            const projectId = document.getElementById('project-id').textContent;
 
             if (!projectId) {
                 alert('Project ID is invalid. Please try again.');
                 return;
             }
-
+            console.log(projectId);
             fetch('/Account/AddToFavoriteList', {
                 method: 'POST',
                 headers: {
