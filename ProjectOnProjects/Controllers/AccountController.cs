@@ -143,6 +143,12 @@ namespace ProjectOnProjects.WebApp.Controllers
             return RedirectToAction("ProfilePage");
         }
 
+        [HttpGet]
+        public IActionResult Test()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Edit(UserModelEdit userModelEdit)
         {
