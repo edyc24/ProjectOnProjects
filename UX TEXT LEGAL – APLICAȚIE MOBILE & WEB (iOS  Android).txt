@@ -1,0 +1,58 @@
+ECRAN 1 – Mandat ANAF & Biroul de Credit
+Titlu:
+🔒 Mandat temporar – analiză eligibilitate credit
+Text principal:
+Pentru a putea analiza eligibilitatea ta de credit, MoneyShop are nevoie de acordul tău expres pentru a interoga veniturile la ANAF și situația ta financiară la Biroul de Credit.
+Mandatul este:
+•	limitat la maximum 30 de zile
+•	folosit exclusiv pentru analiza creditului
+•	inițiat la solicitarea ta
+Checkbox obligatoriu:
+☑ Mandatez MoneyShop să interogheze ANAF și Biroul de Credit pentru maximum 30 de zile, exclusiv în scopul analizei eligibilității de credit.
+________________________________________
+🟦 ECRAN 2 – Informare costuri
+Titlu:
+💳 Costuri interogare și analiză
+Text:
+Interogările ANAF și Biroul de Credit, precum și analiza MoneyShop, implică costuri operaționale care nu sunt gratuite.
+Aceste costuri sunt suportate de către tine și sunt afișate transparent înainte de confirmare.
+Checkbox obligatoriu:
+☑ Confirm că am fost informat despre costurile interogărilor și ale analizei MoneyShop și sunt de acord cu acestea.
+________________________________________
+🟦 ECRAN 3 – Alegerea brokerului
+Titlu:
+🏦 Alege brokerul tău autorizat
+Text:
+Poți alege să trimiți analiza ta financiară către un broker de credite autorizat, selectat din lista publică ANPC.
+Doar brokerii verificați (KYC) sunt afișați în platformă.
+________________________________________
+🟦 ECRAN 4 – Transmitere date către broker
+Titlu:
+📤 Transmitere analiză către broker
+Text:
+Prin confirmare, soliciți transmiterea analizei MoneyShop și a copiilor rapoartelor ANAF și/sau Biroul de Credit către brokerul ales de tine.
+MoneyShop transmite datele exclusiv la cererea ta.
+Checkbox obligatoriu:
+☑ Solicit transmiterea analizei și a copiilor rapoartelor către brokerul ales de mine și îmi asum această transmitere.
+________________________________________
+🟦 ECRAN 5 – Confirmare finală
+Titlu:
+✅ Confirmare mandat
+Text scurt:
+Mandatul tău este activ pentru 30 de zile.
+Îl poți revoca oricând din contul tău.
+Buton:
+🔒 Confirm și continuă
+________________________________________
+🧠 NOTĂ IMPORTANTĂ (pentru dev & audit)
+✔️ toate checkbox-urile sunt mandatory
+✔️ fără bifare → nu există interogare
+✔️ timestamp + IP + device = dovadă legală
+✔️ UI este Apple / Google compliant
+________________________________________
+🔒 CONCLUZIE FINALĂ
+Cu aceste două livrabile:
+•	ai probă clară pentru ANAF & Biroul de Credit
+•	ai UX legal blindat
+•	ai zero risc de interpretare ca reseller de date
+

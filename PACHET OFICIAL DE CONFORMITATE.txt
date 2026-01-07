@@ -1,0 +1,113 @@
+________________________________________
+🧾 PACHET OFICIAL DE CONFORMITATE
+MoneyShop® – POPIX BROKERAGE CONSULTING S.R.L.
+(pentru ANAF & Biroul de Credit)
+________________________________________
+📄 PAGINA 1 – COPERTĂ OFICIALĂ
+MoneyShop®
+Platformă digitală de intermediere credite
+Operator:
+POPIX BROKERAGE CONSULTING S.R.L.
+CUI: 50477260
+ONRC: J2024018340008
+EUID: ROONRC.J2024018340008
+Adresă:
+Mun. Râmnicu Vâlcea, Str. Constantin Brâncuși nr. 8, Bl. H5, Sc. A, Et. 4, Ap. 17
+Contact:
+📞 031 434 0940
+📧 office@moneyshop.ro
+📧 gdpr@moneyshop.ro
+Scop document:
+Prezentarea cadrului juridic și tehnic prin care MoneyShop intermediază, la solicitarea expresă a utilizatorilor, interogarea datelor ANAF și Biroul de Credit, exclusiv în scopul analizei eligibilității de credit.
+________________________________________
+📄 PAGINA 2 – DECLARAȚIE OFICIALĂ MONEYSHOP
+Declarație de poziție juridică
+MoneyShop®, operată de POPIX BROKERAGE CONSULTING S.R.L., declară următoarele:
+1.	MoneyShop NU este instituție de credit și NU este instituție financiară nebancară (IFN).
+2.	MoneyShop NU este participant în sistemul Biroului de Credit S.A.
+3.	MoneyShop NU este afiliat, controlat sau reprezentant al:
+o	Agenției Naționale de Administrare Fiscală (ANAF);
+o	Biroului de Credit S.A.
+4.	MoneyShop NU vinde, nu comercializează și nu revinde rapoarte emise de ANAF sau Biroul de Credit.
+5.	MoneyShop acționează exclusiv ca mandatar, în baza unui mandat expres, temporar și revocabil acordat de utilizator.
+________________________________________
+📄 PAGINA 3 – DESCRIEREA FLUXULUI OPERAȚIONAL (PE SCURT)
+Flux standard utilizator – MoneyShop – ANAF / BC
+1.	Utilizatorul solicită analiza eligibilității de credit.
+2.	Utilizatorul acordă mandat expres, limitat la maximum 30 de zile.
+3.	MoneyShop interoghează:
+o	ANAF – venituri declarate;
+o	Biroul de Credit – istoric de credit.
+4.	Datele sunt utilizate exclusiv pentru analiza eligibilității de credit.
+5.	Transmiterea către broker sau instituție financiară are loc doar cu consimțământ distinct, dacă utilizatorul solicită acest lucru.
+________________________________________
+📄 PAGINA 4 – POLITICA DE MANDATARE (EXTRAS OFICIAL)
+Elemente-cheie ale mandatului
+•	Mandat expres, individual, acordat electronic;
+•	Durată maximă: 30 zile calendaristice;
+•	Scop unic: analiză eligibilitate credit;
+•	Mandatul:
+o	nu este permanent;
+o	nu este general;
+o	nu produce efecte după expirare;
+•	Revocabil oricând de utilizator.
+👉 Fără mandat valid → nicio interogare nu este efectuată.
+________________________________________
+📄 PAGINA 5 – GDPR – STRUCTURĂ DUAL CONSENT (EXTRAS)
+Nivel 1 – Prelucrare în baza mandatului ANAF / BC
+•	fără transmitere către broker;
+•	temei: art. 6 alin. (1) lit. b, c, f GDPR;
+•	date utilizate exclusiv intern pentru analiză.
+Nivel 2 – Transmitere către broker ales de utilizator
+•	consimțământ separat, voluntar;
+•	temei: art. 6 alin. (1) lit. a GDPR;
+•	utilizatorul poate refuza fără consecințe.
+👉 Cele două consimțăminte sunt distincte, necondiționate între ele.
+________________________________________
+📄 PAGINA 6 – COSTURI ȘI RESPONSABILITATE
+•	Interogările ANAF și Biroul de Credit nu sunt gratuite.
+•	Costurile sunt:
+o	afișate transparent;
+o	acceptate expres de utilizator;
+o	suportate de utilizator.
+•	MoneyShop nu obține venituri din comercializarea rapoartelor, ci din serviciile de analiză și intermediere.
+________________________________________
+📄 PAGINA 7 – LOG JURIDIC DE CONSIMȚĂMÂNT (DESCRIERE)
+MoneyShop utilizează un log juridic de consimțământ, care înregistrează:
+•	identitatea utilizatorului;
+•	textul exact al consimțământului;
+•	data și ora;
+•	IP, device, sesiune;
+•	durata mandatului;
+•	evenimentul de confirmare.
+Logul este:
+•	nealterabil;
+•	stocat securizat;
+•	disponibil ca probă în caz de control.
+________________________________________
+📄 PAGINA 8 – SECURITATE ȘI RETENȚIE DATE
+•	Datele KYC (selfie, documente):
+o	sunt stocate securizat;
+o	sunt șterse automat după 30 zile.
+•	Datele de consimțământ:
+o	sunt păstrate conform obligațiilor legale;
+o	utilizate exclusiv ca probă juridică.
+•	Infrastructura:
+o	Microsoft Azure;
+o	criptare;
+o	acces controlat;
+o	logare audit.
+________________________________________
+📄 PAGINA 9 – DECLARAȚIE FINALĂ
+MoneyShop declară pe propria răspundere că:
+•	respectă legislația română și europeană aplicabilă;
+•	utilizează datele ANAF și Biroul de Credit exclusiv în interesul utilizatorului;
+•	nu desfășoară activități de comercializare a datelor;
+•	aplică principii de legalitate, transparență și minimizare.
+________________________________________
+📄 PAGINA 10 – DATE DE CONTACT OFICIALE
+Pentru orice clarificări suplimentare:
+📧 office@moneyshop.ro
+📧 gdpr@moneyshop.ro
+📞 031 434 0940
+

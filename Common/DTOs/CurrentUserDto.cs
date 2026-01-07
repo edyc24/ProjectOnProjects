@@ -1,4 +1,4 @@
-﻿namespace ProjectOnProjects.Common.DTOs;
+﻿namespace MoneyShop.Common.DTOs;
 
 public class CurrentUserDto
 {

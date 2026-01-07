@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Acasă - MoneyShop";
+    Layout = "_Layout";
+}
+
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1>MoneyShop<sup>®</sup></h1>
+                <p class="tagline">Simplu. Rapid. Transparent.</p>
+                <p class="lead mb-4">
+                    Platformă digitală de intermediere credite. Analizează eligibilitatea ta de credit 
+                    în câteva minute, cu transparență totală.
+                </p>
+                @if (User.Identity?.IsAuthenticated != true)
+                {
+                    <div class="d-flex gap-3">
+                        <a href="@Url.Action("Register", "Account")" class="btn btn-success btn-lg">Începe Acum</a>
+                        <a href="@Url.Action("Login", "Account")" class="btn btn-outline-light btn-lg">Autentificare</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="@Url.Action("Step1", "Mandate")" class="btn btn-success btn-lg">Acordă Mandat ANAF/BC</a>
+                        <a href="@Url.Action("Index", "Applications")" class="btn btn-outline-light btn-lg">Vezi Aplicațiile Mele</a>
+                        <a href="@Url.Action("Index", "Simulator")" class="btn btn-outline-light btn-lg">Simulator Credit</a>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="mt-4 mt-lg-0">
+                    <i class="fas fa-chart-line" style="font-size: 8rem; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="mb-4">De ce să alegi MoneyShop?</h2>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-shield-alt text-moneyshop-blue" style="font-size: 3rem;"></i>
+                    </div>
+                    <h4 class="card-title">Securitate Totală</h4>
+                    <p class="card-text">
+                        Datele tale sunt protejate conform GDPR. Mandat temporar de maximum 30 zile, 
+                        revocabil oricând.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-bolt text-moneyshop-green" style="font-size: 3rem;"></i>
+                    </div>
+                    <h4 class="card-title">Rapid și Simplu</h4>
+                    <p class="card-text">
+                        Analiză completă în câteva minute. Fără birocrație, fără așteptări. 
+                        Totul digital și transparent.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-eye text-moneyshop-blue" style="font-size: 3rem;"></i>
+                    </div>
+                    <h4 class="card-title">Transparență Completă</h4>
+                    <p class="card-text">
+                        Vezi exact ce date sunt folosite, pentru ce scop și când. 
+                        Fără surprize, fără ascunzături.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Cum funcționează?</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 text-center mb-3 mb-md-0">
+                            <div class="badge bg-moneyshop-blue rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">1</div>
+                            <h5 class="mt-3">Înregistrare</h5>
+                            <p>Creează contul tău în câteva secunde</p>
+                        </div>
+                        <div class="col-md-3 text-center mb-3 mb-md-0">
+                            <div class="badge bg-moneyshop-green rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">2</div>
+                            <h5 class="mt-3">Mandatare</h5>
+                            <p>Acordă mandat temporar pentru interogare ANAF/BC</p>
+                        </div>
+                        <div class="col-md-3 text-center mb-3 mb-md-0">
+                            <div class="badge bg-moneyshop-blue rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">3</div>
+                            <h5 class="mt-3">Analiză</h5>
+                            <p>Obține analiza completă de eligibilitate</p>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="badge bg-moneyshop-green rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">4</div>
+                            <h5 class="mt-3">Alegere</h5>
+                            <p>Alege brokerul și continuă procesul</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+}

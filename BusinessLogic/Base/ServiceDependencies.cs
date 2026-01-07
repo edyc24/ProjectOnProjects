@@ -1,6 +1,6 @@
 ﻿
-using ProjectOnProjects.Common.DTOs;
-using ProjectOnProjects.DataAccess;
+using MoneyShop.Common.DTOs;
+using MoneyShop.DataAccess;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectOnProjects.BusinessLogic.Base
+namespace MoneyShop.BusinessLogic.Base
 {
     public class ServiceDependencies
     {

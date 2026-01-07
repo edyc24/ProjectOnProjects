@@ -1,6 +1,6 @@
-﻿using ProjectOnProjects.BusinessLogic.Base;
-using ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models;
-using ProjectOnProjects.Entities.Entities;
+﻿using MoneyShop.BusinessLogic.Base;
+using MoneyShop.BusinessLogic.Implementation.ProjectService.Models;
+using MoneyShop.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace ProjectOnProjects.BusinessLogic.Implementation.ProjectService
+namespace MoneyShop.BusinessLogic.Implementation.ProjectService
 {
     public class ProjectService : BaseService
     {

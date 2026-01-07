@@ -1,10 +1,10 @@
-﻿using ProjectOnProjects.BusinessLogic.Implementation.Account.Models;
-using ProjectOnProjects.DataAccess;
+﻿using MoneyShop.BusinessLogic.Implementation.Account.Models;
+using MoneyShop.DataAccess;
 using FluentValidation;
-using ProjectOnProjects.BusinessLogic.Implementation.Account.Models;
-using ProjectOnProjects.DataAccess;
+using MoneyShop.BusinessLogic.Implementation.Account.Models;
+using MoneyShop.DataAccess;
 
-namespace ProjectOnProjects.BusinessLogic.Implementation.Account
+namespace MoneyShop.BusinessLogic.Implementation.Account
 {
     public class UserValidator : AbstractValidator<UserModelEdit>
     {

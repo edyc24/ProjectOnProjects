@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace ProjectOnProjects.BusinessLogic.Implementation.Account
+namespace MoneyShop.BusinessLogic.Implementation.Account
 {
     public class RegisterUserValidator : AbstractValidator<RegisterModel>
     {

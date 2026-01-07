@@ -1,0 +1,50 @@
+@{
+    ViewData["Title"] = "Transmitere Date către Broker";
+    Layout = "_Layout";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">📤 Transmitere analiză către broker</h2>
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        Prin confirmare, soliciți transmiterea analizei MoneyShop și a copiilor rapoartelor ANAF și/sau Biroul de Credit către brokerul ales de tine.
+                    </p>
+
+                    <div class="alert alert-info">
+                        <strong>ℹ️ MoneyShop transmite datele exclusiv la cererea ta.</strong>
+                    </div>
+
+                    <form method="post" asp-action="Step4">
+                        <div class="consent-checkbox required">
+                            <label>
+                                <input type="checkbox" name="acceptTransfer" id="acceptTransfer" required>
+                                <span>Solicit transmiterea analizei și a copiilor rapoartelor către brokerul ales de mine și îmi asum această transmitere.</span>
+                            </label>
+                        </div>
+
+                        <div class="mt-4">
+                            <a href="@Url.Action("Step3", "Mandate")" class="btn btn-outline-secondary">Înapoi</a>
+                            <button type="submit" class="btn btn-primary float-end">Continuă</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('acceptTransfer').addEventListener('change', function() {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.disabled = !this.checked;
+        });
+        
+        document.querySelector('button[type="submit"]').disabled = true;
+    </script>
+}

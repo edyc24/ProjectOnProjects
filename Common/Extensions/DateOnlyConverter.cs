@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ProjectOnProjects.Common.Extensions;
+namespace MoneyShop.Common.Extensions;
 
 public class DateOnlyConverter : ValueConverter<DateOnly, DateTime>
 {

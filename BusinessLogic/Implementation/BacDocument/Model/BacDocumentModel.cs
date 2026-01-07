@@ -1,4 +1,4 @@
-namespace ProjectOnProjects.Models
+namespace MoneyShop.Models
 {
     public class BacDocumentModel
     {

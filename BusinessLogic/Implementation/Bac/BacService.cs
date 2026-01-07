@@ -1,12 +1,12 @@
-using ProjectOnProjects.BusinessLogic.Base;
-using ProjectOnProjects.BusinessLogic.Implementation.Account;
-using ProjectOnProjects.DataAccess;
-using ProjectOnProjects.Entities.Entities;
-using ProjectOnProjects.Models;
+using MoneyShop.BusinessLogic.Base;
+using MoneyShop.BusinessLogic.Implementation.Account;
+using MoneyShop.DataAccess;
+using MoneyShop.Entities.Entities;
+using MoneyShop.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProjectOnProjects.BusinessLogic.Implementation.Bac
+namespace MoneyShop.BusinessLogic.Implementation.Bac
 {
     public class BacService : BaseService
     {

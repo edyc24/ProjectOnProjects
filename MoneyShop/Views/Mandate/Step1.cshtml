@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Mandat ANAF & Biroul de Credit";
+    Layout = "_Layout";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">🔒 Mandat temporar – analiză eligibilitate credit</h2>
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        Pentru a putea analiza eligibilitatea ta de credit, MoneyShop are nevoie de acordul tău expres pentru a interoga veniturile la ANAF și situația ta financiară la Biroul de Credit.
+                    </p>
+
+                    <div class="alert alert-info">
+                        <h5>Mandatul este:</h5>
+                        <ul class="mb-0">
+                            <li><strong>limitat la maximum 30 de zile</strong></li>
+                            <li><strong>folosit exclusiv pentru analiza creditului</strong></li>
+                            <li><strong>inițiat la solicitarea ta</strong></li>
+                        </ul>
+                    </div>
+
+                    <form method="post" asp-action="Step1">
+                        <div class="consent-checkbox required">
+                            <label>
+                                <input type="checkbox" name="acceptMandate" id="acceptMandate" required>
+                                <span>Mandatez MoneyShop să interogheze ANAF și Biroul de Credit pentru maximum 30 de zile, exclusiv în scopul analizei eligibilității de credit.</span>
+                            </label>
+                        </div>
+
+                        <div class="mt-4">
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">Anulează</a>
+                            <button type="submit" class="btn btn-primary float-end">Continuă</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('acceptMandate').addEventListener('change', function() {
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.disabled = !this.checked;
+        });
+        
+        // Disable submit initially
+        document.querySelector('button[type="submit"]').disabled = true;
+    </script>
+}

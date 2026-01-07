@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ProjectOnProjects.Common;
+using MoneyShop.Common;
 
-namespace ProjectOnProjects.Entities.Entities;
+namespace MoneyShop.Entities.Entities;
 
 public partial class Utilizatori : IEntity
 {
@@ -20,6 +20,10 @@ public partial class Utilizatori : IEntity
 
     public string? NumarTelefon { get; set; }
     
+    public bool EmailVerified { get; set; } = false;
+    
+    public bool PhoneVerified { get; set; } = false;
+    
     public string? Skills { get; set; }
 
     public string? Description { get; set; }
@@ -36,4 +40,11 @@ public partial class Utilizatori : IEntity
     public virtual ICollection<Favorites> Favorites { get; set; } = new List<Favorites>();
 
     public virtual ICollection<SavedProject> SavedProjects { get; set; } = new List<SavedProject>();
+    
+    // OTP & Session navigation
+    public virtual ICollection<OtpChallenge> OtpChallenges { get; set; } = new List<OtpChallenge>();
+    public virtual ICollection<Session> Sessions { get; set; } = new List<Session>();
+    
+    // KYC navigation
+    public virtual ICollection<KycSession> KycSessions { get; set; } = new List<KycSession>();
 }

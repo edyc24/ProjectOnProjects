@@ -1,4 +1,4 @@
-﻿namespace ProjectOnProjects.BusinessLogic.Implementation.Account
+﻿namespace MoneyShop.BusinessLogic.Implementation.Account
 {
     public class LoginModel
     {

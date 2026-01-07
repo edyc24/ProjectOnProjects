@@ -1,4 +1,4 @@
-﻿namespace ProjectOnProjects.Common;
+﻿namespace MoneyShop.Common;
 
 public interface IEntity
 {

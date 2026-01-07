@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Alegerea Brokerului";
+    Layout = "_Layout";
+    dynamic[] brokers = ViewBag.Brokers as dynamic[] ?? Array.Empty<dynamic>();
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">🏦 Alege brokerul tău autorizat</h2>
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        Poți alege să trimiți analiza ta financiară către un broker de credite autorizat, selectat din lista publică ANPC.
+                    </p>
+
+                    <div class="alert alert-info">
+                        <strong>ℹ️ Doar brokerii verificați (KYC) sunt afișați în platformă.</strong>
+                    </div>
+
+                    <form method="post" asp-action="Step3">
+                        <div class="mb-4">
+                            <label class="form-label">Selectează broker (opțional):</label>
+                            <select name="brokerId" class="form-select">
+                                <option value="">-- Nu vreau să selectez un broker acum --</option>
+                                @foreach (var broker in brokers)
+                                {
+                                    <option value="@broker.Id">
+                                        @broker.Name - @broker.Email
+                                    </option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mt-4">
+                            <a href="@Url.Action("Step2", "Mandate")" class="btn btn-outline-secondary">Înapoi</a>
+                            <button type="submit" class="btn btn-primary float-end">Continuă</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

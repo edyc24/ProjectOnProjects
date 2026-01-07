@@ -4,12 +4,9 @@
     {
         var userRoles = new Dictionary<int, string>
         {
-
             { 1, "Utilizator"},
-            { 2 , "Administrator"},
-            { 3 , "Arbitru"},
-            { 4 , "Observator"},
-            { 5 , "Arbitru Asistent"}
+            { 2, "Administrator"},
+            { 3, "Broker"}
         };
 
         return userRoles;

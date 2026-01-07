@@ -1,4 +1,4 @@
-﻿namespace ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models
+﻿namespace MoneyShop.BusinessLogic.Implementation.ProjectService.Models
 {
     public class ProjectModel
     {

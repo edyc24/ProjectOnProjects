@@ -6,17 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using ProjectOnProjects.Common;
-using ProjectOnProjects.DataAccess.EntityFramework;
+using MoneyShop.Common;
+using MoneyShop.DataAccess.EntityFramework;
 
-namespace ProjectOnProjects.DataAccess
+namespace MoneyShop.DataAccess
 {
     public class BaseRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IEntity
     {
-        private readonly ProjectOnProjectsContext Context;
+        private readonly MoneyShopContext Context;
 
-        public BaseRepository(ProjectOnProjectsContext context)
+        public BaseRepository(MoneyShopContext context)
         {
             this.Context = context;
         }

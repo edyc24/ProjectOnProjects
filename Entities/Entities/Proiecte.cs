@@ -1,8 +1,8 @@
-﻿using ProjectOnProjects.Common;
+﻿using MoneyShop.Common;
 using System;
 using System.Collections.Generic;
 
-namespace ProjectOnProjects.Entities.Entities;
+namespace MoneyShop.Entities.Entities;
 
 public partial class Proiecte : IEntity
 {

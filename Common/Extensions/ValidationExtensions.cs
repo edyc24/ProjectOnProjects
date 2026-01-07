@@ -1,7 +1,7 @@
-﻿using ProjectOnProjects.Common.Exceptions;
+﻿using MoneyShop.Common.Exceptions;
 using FluentValidation.Results;
 
-namespace ProjectOnProjects.Common.Extensions;
+namespace MoneyShop.Common.Extensions;
 
 public static class ValidationExtensions
 {

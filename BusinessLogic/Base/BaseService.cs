@@ -1,6 +1,6 @@
 ﻿
-using ProjectOnProjects.Common.DTOs;
-using ProjectOnProjects.DataAccess;
+using MoneyShop.Common.DTOs;
+using MoneyShop.DataAccess;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace ProjectOnProjects.BusinessLogic.Base
+namespace MoneyShop.BusinessLogic.Base
 {
     public class BaseService
     {

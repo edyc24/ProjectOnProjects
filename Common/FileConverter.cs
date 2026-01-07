@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Http;
 
-namespace ProjectOnProjects.Common;
+namespace MoneyShop.Common;
 
 public class PdfConverter
 {

@@ -1,4 +1,4 @@
-﻿namespace ProjectOnProjects.BusinessLogic.Implementation.Account.Models
+﻿namespace MoneyShop.BusinessLogic.Implementation.Account.Models
 {
     public class ForgotPasswordViewModel
     {

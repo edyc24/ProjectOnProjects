@@ -1,8 +1,8 @@
-using ProjectOnProjects.BusinessLogic.Implementation.ProjectService.Models;
-using ProjectOnProjects.Entities.Entities;
+using MoneyShop.BusinessLogic.Implementation.ProjectService.Models;
+using MoneyShop.Entities.Entities;
 using System.Collections.Generic;
 
-namespace ProjectOnProjects.Models
+namespace MoneyShop.Models
 {
     public class FavoriteListModels
     {

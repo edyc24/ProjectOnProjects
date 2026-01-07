@@ -1,9 +1,9 @@
-﻿using ProjectOnProjects.BusinessLogic.Base;
-using ProjectOnProjects.BusinessLogic.Implementation.BacDocumentService.Models;
+﻿using MoneyShop.BusinessLogic.Base;
+using MoneyShop.BusinessLogic.Implementation.BacDocumentService.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProjectOnProjects.BusinessLogic.Implementation.BacDocumentService
+namespace MoneyShop.BusinessLogic.Implementation.BacDocumentService
 {
     public class BacDocumentService : BaseService
     {

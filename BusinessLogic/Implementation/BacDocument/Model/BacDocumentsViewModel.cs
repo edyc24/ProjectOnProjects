@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ProjectOnProjects.BusinessLogic.Implementation.BacDocumentService.Models
+namespace MoneyShop.BusinessLogic.Implementation.BacDocumentService.Models
 {
     public class BacDocumentsViewModel
     {

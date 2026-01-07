@@ -1,10 +1,10 @@
-﻿using ProjectOnProjects.BusinessLogic.Implementation.Account.Models;
-using ProjectOnProjects.BusinessLogic.Implementation.Account;
+﻿using MoneyShop.BusinessLogic.Implementation.Account.Models;
+using MoneyShop.BusinessLogic.Implementation.Account;
 using AutoMapper;
 using System;
-using ProjectOnProjects.Entities.Entities;
+using MoneyShop.Entities.Entities;
 
-namespace ProjectOnProjects.BusinessLogic.Implementation.Account
+namespace MoneyShop.BusinessLogic.Implementation.Account
 {
     public class UserProfile : Profile
     {
@@ -26,7 +26,7 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.Account
                 .ForMember(a => a.BirthDay, a => a.MapFrom(s => s.DataNastere))
                 .ForMember(a => a.RegistrationDay, a => a.MapFrom(s => s.DataIncepere))
                 .ForMember(a => a.Email, a => a.MapFrom(s => s.Mail))
-                .ForMember(a => a.Role, a => a.MapFrom(s => userRoles[s.IdRol]))
+                .ForMember(a => a.Role, a => a.MapFrom(s => userRoles.ContainsKey(s.IdRol) ? userRoles[s.IdRol] : "Utilizator"))
                 .ForMember(a => a.FirstName, a => a.MapFrom(s => s.Nume))
                 .ForMember(a => a.LastName, a => a.MapFrom(s => s.Prenume));
 

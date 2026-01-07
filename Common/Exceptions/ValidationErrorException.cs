@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace ProjectOnProjects.Common.Exceptions;
+namespace MoneyShop.Common.Exceptions;
 
 public class ValidationErrorException : Exception
 {

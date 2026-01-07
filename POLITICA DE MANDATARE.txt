@@ -1,0 +1,119 @@
+POLITICA DE MANDATARE – MONEYSHOP.RO
+Ultima actualizare: [data]
+________________________________________
+1. INTRODUCERE. NATURA JURIDICĂ A DOCUMENTULUI
+Prezenta Politică de Mandatare stabilește condițiile în care utilizatorii platformei www.MoneyShop.ro și ai aplicațiilor mobile MoneyShop (denumite în continuare, în mod colectiv, „Platforma”) acordă un mandat expres, limitat și temporar societății POPIX BROKERAGE CONSULTING S.R.L., denumită în continuare „MoneyShop” sau „Mandatarul”.
+Documentul are natura juridică a unui contract de mandat, în sensul art. 2009 și următoarele din Codul Civil al României, fiind aplicabil exclusiv în relația dintre utilizator (mandant) și MoneyShop (mandatar).
+Prezenta Politică se interpretează coroborat cu:
+•	Termenii și Condițiile MoneyShop;
+•	Politica de Confidențialitate (GDPR);
+•	legislația română și europeană aplicabilă.
+________________________________________
+2. IDENTITATEA MANDATARULUI
+Mandatarul este:
+POPIX BROKERAGE CONSULTING S.R.L.
+•	Nr. ONRC: J2024018340008
+•	EUID: ROONRC.J2024018340008
+•	CUI: 50477260
+•	Sediu social: Mun. Râmnicu Vâlcea, Str. Constantin Brâncuși nr. 8, jud. Valcea
+•	Telefon: 031 434 0940
+•	E-mail: office@moneyshop.ro
+Societatea desfășoară activități de intermediere de credite, în conformitate cu OUG nr. 52/2016, fără a avea calitatea de instituție de credit sau instituție financiară nebancară (IFN).
+________________________________________
+3. ACORDAREA MANDATULUI. CONSIMȚĂMÂNT EXPRES
+Prin acceptarea expresă a prezentei Politici:
+•	utilizatorul își exprimă consimțământul liber, informat și neechivoc;
+•	mandatează MoneyShop să acționeze în numele și pe seama sa, exclusiv în scopurile prevăzute mai jos;
+•	confirmă că a fost informat cu privire la natura, limitele și durata mandatului.
+Mandatul este acordat:
+•	electronic;
+•	la distanță;
+•	prin acțiune explicită (checkbox / confirmare digitală).
+________________________________________
+4. OBIECTUL STRICT AL MANDATULUI
+Mandatul acordat MoneyShop are un obiect limitat și determinat, constând exclusiv în:
+a) interogarea veniturilor utilizatorului prin Agenția Națională de Administrare Fiscală (ANAF);
+b) interogarea situației utilizatorului în evidențele Biroului de Credit S.A.;
+c) analiza eligibilității de credit și a bonității financiare;
+d) realizarea analizei MoneyShop pe baza datelor obținute;
+e) transmiterea datelor și analizelor exclusiv către brokeri de credite autorizați sau instituții financiare, la solicitarea expresă a utilizatorului.
+________________________________________
+5. DURATA LIMITATĂ A MANDATULUI (CLAUZĂ-CHEIE ANAF)
+Mandatul acordat MoneyShop este strict temporar, fiind valabil pentru o perioadă maximă de 30 (treizeci) de zile calendaristice, calculate de la data acordării consimțământului.
+La expirarea termenului:
+•	mandatul încetează de drept;
+•	MoneyShop nu mai poate efectua interogări noi către ANAF sau Biroul de Credit;
+•	orice nouă interogare necesită un nou mandat expres.
+Această limitare este instituită pentru a garanta caracterul nepermanent și punctual al mandatului, conform art. 5 alin. (1) lit. b și e GDPR.
+________________________________________
+6. LIMITAREA SCOPULUI ȘI INTERDICȚII EXPRESE
+Datele obținute în baza mandatului sunt utilizate exclusiv pentru:
+•	analiza eligibilității de credit;
+•	evaluarea bonității;
+•	intermedierea solicitării utilizatorului.
+🔒 Este expres interzis ca datele:
+•	să fie vândute;
+•	să fie cesionate;
+•	să fie utilizate în scopuri comerciale sau de marketing;
+•	să fie utilizate pentru profilare comercială;
+•	să fie transmise către terți neimplicați.
+________________________________________
+7. COSTURI ȘI PLATA INTEROGĂRILOR
+Utilizatorul este informat și acceptă în mod expres că:
+•	interogările ANAF și Biroul de Credit nu sunt gratuite;
+•	analiza MoneyShop presupune costuri operaționale;
+•	aceste costuri sunt suportate de utilizator, în mod transparent.
+MoneyShop acționează ca mandatar tehnic și operațional, nu ca furnizor gratuit de rapoarte.
+________________________________________
+8. LISTA PUBLICĂ ANPC – BROKERI AUTORIZAȚI
+MoneyShop utilizează lista publică a intermediarilor de credite autorizați, publicată de ANPC, ca bază de referință pentru identificarea brokerilor eligibili.
+Această listă publică conține informații precum:
+•	numele persoanei;
+•	calitatea (legat / nelegat de creditor);
+•	forma de organizare (PFA / SRL);
+•	afiliere (franciză / independent);
+•	relația cu entitatea sub care operează.
+________________________________________
+9. IDENTIFICAREA ȘI VERIFICAREA BROKERILOR (KYC)
+Pentru a fi vizibili în Platformă, brokerii:
+•	trebuie să fie înscriși în lista publică ANPC;
+•	trebuie să treacă printr-un proces de identificare și verificare (KYC);
+•	trebuie să confirme că sunt deținătorii adresei de e-mail și/sau numărului de telefon utilizat.
+MoneyShop își rezervă dreptul de a refuza sau elimina brokeri care nu pot fi verificați temeinic.
+________________________________________
+10. TRANSMITEREA DATELOR CĂTRE BROKERI – ACORDUL CLIENTULUI
+Utilizatorul:
+•	alege în mod liber brokerul autorizat;
+•	solicită expres transmiterea datelor către acesta;
+•	își asumă în mod expres transmiterea:
+o	analizei MoneyShop;
+o	unei copii a raportului ANAF;
+o	unei copii a raportului Biroului de Credit.
+MoneyShop nu decide către cine se transmit datele și nu își asumă răspunderea pentru utilizarea acestora de către brokerul ales de client.
+________________________________________
+11. PROTECȚIA MONEYSHOP FAȚĂ DE TRANSMITEREA DATELOR
+Transmiterea datelor are loc:
+•	exclusiv la inițiativa utilizatorului;
+•	exclusiv cu acordul expres al acestuia;
+•	în baza mandatului limitat în timp.
+MoneyShop este exonerat de orice răspundere privind utilizarea ulterioară a datelor de către brokerul ales de utilizator.
+________________________________________
+12. CONFORMITATE GDPR
+Prelucrarea datelor se realizează în baza:
+•	art. 6 alin. (1) lit. b, c și f GDPR;
+•	art. 9 alin. (2) lit. g GDPR, unde este aplicabil.
+________________________________________
+13. REVOCAREA MANDATULUI
+Utilizatorul poate revoca mandatul:
+•	în orice moment;
+•	fără justificare;
+•	cu efect pentru viitor.
+________________________________________
+14. LEGEA APLICABILĂ
+Prezenta Politică este guvernată de:
+•	legislația României;
+•	legislația Uniunii Europene aplicabilă.
+________________________________________
+15. DISPOZIȚII FINALE
+Acceptarea prezentului document este condiție obligatorie pentru utilizarea serviciilor MoneyShop.
+

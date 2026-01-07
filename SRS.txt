@@ -1,0 +1,735 @@
+.
+ 
+🚀 
+CAIET DE SARCINI – FAZA 1 (VERSIUNEA COMPLETĂ)
+
+MoneyShop.ro – Platformă Fintech (MVP Web + iOS + Android)
+Cu Site Web, Aplicații Mobile, Back-Office, Simulatoare, OCR, Acorduri, Lead-uri, Bănci, Rapoarte, Comisioane
+ 
+🟦 0. CONTEXT TEHNIC ȘI DE BUSINESS
+
+0.1. Brand & Companie
+•	Brand: MoneyShop®
+•	Companie: Popix Brokerage Consulting SRL
+•	Activitate: broker autorizat ANPC/BNR prin parteneriate bancare directe sau prin Kingstone Management
+
+0.2. Infrastructură obligatorie
+•	Azure App Services pentru backend + frontend
+•	Azure SQL / PostgreSQL pentru DB
+•	Azure Blob Storage pentru documente, OCR, semnături, PDF-uri
+•	Cloudflare Free Plan pentru DNS, SSL, proxy, caching
+•	Microsoft 365 SMTP pentru email (no-reply@moneyshop.ro)
+
+0.3. Output Faza 1
+•	Website complet
+•	Portal client
+•	Panou Admin complet
+•	Aplicații mobile iOS + Android
+•	Simulator credit + scoring logic
+•	OCR CI + generare PDF acorduri + semnătură touchscreen
+•	Lead Rapid + Social Login
+•	Structură pregătită pentru Faza 2 (KYC, ANAF, BC, scoring automat)
+ 
+🟦 1. ARHITECTURĂ GENERALĂ
+
+1.1. Tehnologii recomandate
+
+Backend:
+•	NodeJS (NestJS) / PHP (Laravel) / Python (FastAPI) / .NET Core
+•	trebuie suport pentru API REST + Swagger/OpenAPI
+
+Frontend Web:
+•	React / NextJS
+•	Mobile responsive
+
+Mobile:
+•	Flutter (recomandat)
+sau
+•	React Native
+→ Un singur cod pentru iOS + Android
+ 
+🟦 2. MODUL SITE WEB PUBLIC
+
+Pagini obligatorii
+•	Home
+•	Cum funcționează
+•	Tipuri credite
+•	Despre noi
+•	Contact
+•	Lead Rapid (formular Google Ads)
+•	Legal: Termeni & Condiții, Privacy, Cookie
+
+Integrare Social Login
+•	Google OAuth2
+•	Apple ID
+•	Yahoo OAuth2
+
+Tracking
+•	GA4 events:
+o	click form
+o	submit form
+o	click register
+o	submit cerere
+ 
+🟦 3. PORTAL CLIENT
+
+3.1. Înregistrare / Autentificare
+•	email + parolă
+•	confirmare email
+•	login social (Google/Apple/Yahoo)
+•	reset parolă
+
+3.2. Dashboard client
+•	stare cereri
+•	notificări
+•	mesaje broker–client
+
+3.3. Creare cerere (wizard în 6–8 pași)
+
+Pas 1 – Date personale
+
+Pas 2 – Venituri
+
+Pas 3 – Credite existente
+
+Pas 4 – Tip credit
+
+Pas 5 – Upload documente
+
+Pas 6 – Acorduri + OCR + Semnătură
+
+Pas 7 – Confirmare
+ 
+🟦 4. FUNCȚIONALITATE: OCR ID + ACORDURI + SEMNĂTURĂ
+
+4.1. OCR ID (doar extragere date – fără verificare identitate)
+•	client fotografiază CI
+•	sistemul extrage automat:
+o	nume
+o	prenume
+o	CNP
+o	serie + număr
+o	adresa
+•	completare automată în formulare
+
+4.2. Documente generabile PDF automat
+•	Acord marketing Popix
+•	Consimțământ GDPR
+•	Acord intermediere credite (OUG 52/2016 – fără comision)
+•	Mandat brokeraj (Popix)
+•	Mandat Kingstone (dacă e colaborare)
+
+4.3. Semnătură digitală simplă
+•	touchscreen signature pad
+•	atașată în PDF
+•	salvată în Azure Blob
+ 
+🟦 5. SISTEM SIMULATOR CREDIT (FAZA 1)
+
+Scop:
+Clientul vede „șansele generale de eligibilitate”, FĂRĂ să afișăm bănci, procente, dobânzi sau produse → ca să nu se ducă singur la bancă.
+ 
+5.1. Input-uri necesare în simulator (în ordine)
+
+1. Salariul net (cât intră pe card) aici si optiune da a bifa daca are bonuri de masa , daca DA sa scrie suma lunara sau 40 Lei/zi ( si se face calcul la 20’zile lucratoare si iese 800 lei in plus fata de salariu)
+•	câmp numeric
+•	validare > 500 lei
+
+2. Vechime la locul de muncă
+•	numeric (luni)
+•	minim 3 luni → altfel „șanse scăzute”
+
+3. Câte credite bancare active are?
+•	numeric
+•	apare listă bănci cu checkbox (din DB banks):
+o	client selectează BRD, BT, BCR, ING etc.
+
+4. Câte IFN-uri active?
+•	numeric
+
+5. A avut poprire în 5 ani?
+•	DA/NU
+•	dacă DA → scor foarte redus
+
+6. Sold total rămas la credite (lei)
+•	numeric
+•	acest sold influențează gradul de îndatorare
+
+7. Tip credit dorit:
+•	Ipotecar
+•	Nevoi personale
+
+8. Tip:
+•	Nou
+•	Refinanțare
+
+9. Întârzieri la rate
+•	DA / NU
+•	dacă DA:
+o	1 lună
+o	2 luni
+o	3 luni
+o	30 zile: câte episoade?
+
+	1 dată
+	2 ori
+	7 ori
+	30+ insuficient → status „Foarte scăzut”
+
+10. Carduri de credit / carduri de cumpărături
+•	DA / NU
+•	Dacă DA: Aici sa apara si cate la numar are ( daca alege 3 carduri active sa fie cate un chenar unde alege banca si scrie limita, cardul 2 CC :Banca si limita acordata etc)
+o	banca
+o	limita totală (lei)
+
+11. Descoperit de cont
+•	DA / NU
+•	Dacă DA: aici la fel ca la CC , daca are 2 descoperi de cont sa apara pt fiecare.
+o	banca
+o	limita totală (lei)
+
+
+12. Codebitori (0, 1 sau 2)
+
+Pentru fiecare codebitor:
+•	toate întrebările de mai sus (1–11)
+•	relația cu solicitantul:
+o	Sot/Sotie
+o	Mama
+o	Tata
+o	Frate
+o	Sora
+o	Ruda grad 2-3
+o	Prieten
+o	Altele
+ 
+5.2. Logica de scoring – DTI 40% / 50% / 55%
+
+A. Grad standard de îndatorare (DTI)
+•	default 40%
+•	dacă:
+o	fără întârzieri
+o	vechime > 12 luni
+o	venit stabil (salariat)
+o	nu are popriri
+→ poate primi scor pe 50%
+•	dacă:
+o	venit mare + istoric excelent
+o	fără IFN
+o	credite puține
+o	scor general “foarte bun”
+→ scor pe 55% (băncile care permit)
+
+B. Output simulator
+•	NU afișăm bănci
+•	Afișăm doar mesaj tip scor:
+
+1️⃣ Șanse foarte mari
+2️⃣ Șanse bune
+3️⃣ Posibile, dar cu condiții
+4️⃣ Scăzute
+5️⃣ Foarte scăzute
+
+C. Buton final:
+
+“Aplica acum – trimite dosarul spre analiză completă”
+
+Acest buton trimite utilizatorul către wizard-ul de creare dosar.
+ 
+🟦 6. BACK-OFFICE (ADMIN)
+
+6.1. Creare manuală client
+•	email
+•	nume
+•	telefon
+•	creare parolă automată
+
+6.2. Creare manuală dosar
+•	aceleași câmpuri ca la client
+•	upload documente
+•	generare acorduri manuale (cu semnătură client adusă fizic sau trimisă prin WhatsApp)
+ 
+🟦 7. MOD BĂNCI + COMISIOANE
+
+7.1. Tabel DB: 
+banks
+•	id
+•	bank_name
+•	commission_percentage
+•	active
+
+7.2. În dosar:
+
+Adminul selectează:
+•	banca 1
+•	banca 2 (opțional)
+•	comisionul aplicabil (auto-populat)
+ 
+🟦 8. STATUSURI DOSAR (ACTUALIZATE)
+•	INREGISTRAT
+•	IN_ANALIZA
+•	NEVOIE_DOCUMENTE
+•	PREAPROBAT
+•	RESPINS
+•	OFERTA_TRANSMISA
+•	ACCEPTAT_CLIENT
+•	TRIMIS_LA_BANCA
+•	APROBAT_BANCA
+•	DISBURSAT → FINAL
+
+La DISBURSAT:
+•	se completează manual:
+o	sumă final aprobată
+o	comision
+o	dată disbursare
+ 
+🟦 9. RAPOARTE LUNARE
+
+Filtre:
+•	data
+•	banca
+•	tip credit
+•	status
+
+Export XLS cu:
+•	nume client
+•	tip credit
+•	bancă
+•	sumă aprobată
+•	comision
+•	dată disbursare
+ 
+🟦 10. INTEGRARE OBLIO (Faza 1)
+
+Nu integrăm API direct încă, doar generăm:
+•	raport lunar exportabil compatibil Oblio
+•	selectarea clientului (Kingstone)
+•	suma comisionului
+•	facturare ulterior manuală
+ 
+🟦 11. LEAD RAPID – PAGINA /LEAD
+
+Câmpuri:
+•	nume
+•	prenume
+•	oraș/județ
+•	tip credit
+•	email
+•	telefon
+•	GDPR checkbox
+
+Back-office:
+•	transformare lead → cont client
+•	transformare lead → cerere nouă
+ 
+🟦 12. GDPR (OBLIGATORIU FAZA 1)
+
+Conform documentului ANSPDCP (pe care l-am citit)  
+
+12.1. Prelucrare legală:
+•	art. 6(1)(a) – consimțământ
+•	art. 6(1)(b) – demersuri înainte de contract
+
+12.2. Permis:
+•	OCR CI
+•	semnătură digitală
+•	acorduri
+•	transfer către Kingstone
+
+12.3. Condiție obligatorie:
+
+În front-end trebuie să apară:
+
+„Popix Brokerage Consulting SRL colectează datele și le poate transmite către Kingstone Management SRL, în scopul analizei eligibilității pentru un credit bancar.”
+
+12.4. Log consimțământ
+
+În DB:
+•	IP
+•	timestamp
+•	versiune document
+•	semnătură
+
+12.5. Drepturi utilizator
+
+Portalul trebuie să permită:
+•	ștergerea contului
+•	solicitări GDPR
+ 
+🟦 13. ARHITECTURĂ API
+
+Endpointuri must-have:
+•	auth
+•	users
+•	leads
+•	applications
+•	banks
+•	documents
+•	agreements
+•	simulator
+•	scoring
+
+Pregătite pentru Faza 2:
+•	/kyc/start
+•	/kyc/status
+•	/anaf/check
+•	/bc/check
+ 
+🟦 14. APLICAȚII MOBILE (iOS/Android)
+
+Funcționalități:
+•	login/register + social
+•	dashboard
+•	creare cerere
+•	upload documente
+•	OCR ID
+•	semnare acorduri
+•	simulator
+•	push notifications (opțional Faza 1)
+ 
+🟦 15. LIVRABILE OBLIGATORII FAZA 1
+1.	Site complet
+2.	Portal client
+3.	Panou Admin (complet)
+4.	Aplicații mobile iOS & Android
+5.	Simulator credit + scoring
+6.	OCR ID + semnături PDF
+7.	Lead Rapid + Social Login
+8.	Modul bănci + comisioane
+9.	Rapoarte lunare
+10.	Export Oblio
+11.	Structură DB pregătită pentru Faza 2
+12.	Documentație tehnică completă
+13.	Arhitectură Azure + Cloudflare gata de producție
+ 
+🟩 URMĂTORII PAȘI
+
+VERSIUNEA EXTREM DE TEHNICĂ, completă, ca pentru arhitecți software seniori:
+✔ tabele DB desenate (ASCII ERD)
+✔ structuri JSON pentru API
+✔ modele complete scoring
+✔ diagrame logice (ASCII flowcharts)
+✔ totul în format text, clar și implementabil imediat
+ 
+🟩 
+1. ARHITECTURĂ BAZĂ DE DATE (ERD – EXTREM DE DETALIAT)
+
+Format ASCII, ca să poată fi implementat direct din acest document.
+ 
+🔶 
+1.1. ERD PRINCIPAL – MoneyShop Faza 1
+┌───────────────────────────┐
+│          USERS             │
+├───────────────────────────┤
+│ id (PK)                   │
+│ email                     │
+│ password_hash             │
+│ name                      │
+│ phone                     │
+│ created_at                │
+│ updated_at                │
+└─────────────┬─────────────┘
+              │ 1..*
+              │
+┌─────────────▼─────────────┐
+│        APPLICATIONS        │
+├────────────────────────────┤
+│ id (PK)                    │
+│ user_id (FK USERS.id)      │
+│ status                     │
+│ type_credit                │
+│ tip_operatiune             │
+│ salariu_net                │
+│ vechime_luni               │
+│ nr_credite_banci           │
+│ lista_banci_active (JSON)  │
+│ nr_ifn                     │
+│ poprire                    │
+│ sold_total                 │
+│ intarzieri                 │
+│ intarzieri_numar           │
+│ card_credit (JSON)         │
+│ overdraft (JSON)           │
+│ codebitori (JSON ARRAY)    │
+│ scoring                    │
+│ dti                        │
+│ recommended_level          │
+│ created_at                 │
+│ updated_at                 │
+└─────────────┬──────────────┘
+              │ 1..*
+┌─────────────▼──────────────┐
+│         DOCUMENTS           │
+├────────────────────────────┤
+│ id (PK)                    │
+│ application_id (FK)        │
+│ doc_type                   │
+│ azure_blob_path            │
+│ created_at                 │
+└────────────────────────────┘
+
+
+┌───────────────────────────┐
+│          BANKS             │
+├───────────────────────────┤
+│ id (PK)                   │
+│ name                      │
+│ commission_percent         │
+│ active                    │
+└───────┬───────────────────┘
+        │  (chosen manually)
+        │
+┌───────▼───────────────────┐
+│     APPLICATION_BANKS      │
+├───────────────────────────┤
+│ id (PK)                   │
+│ application_id (FK)       │
+│ bank_id (FK)              │
+│ commission_percent         │
+└───────────────────────────┘
+
+
+┌───────────────────────────┐
+│       AGREEMENTS           │
+├───────────────────────────┤
+│ id (PK)                   │
+│ application_id (FK)       │
+│ agreement_type            │
+│ pdf_blob_path             │
+│ version                   │
+│ signed_at                 │
+└───────────────────────────┘
+
+
+┌───────────────────────────┐
+│           LEADS            │
+├───────────────────────────┤
+│ id (PK)                   │
+│ name                      │
+│ phone                     │
+│ email                     │
+│ judet                     │
+│ type_credit               │
+│ gdpr_consent              │
+│ created_at                │
+└───────────────────────────┘
+ 
+🟩 
+2. STRUCTURI JSON – API MODELE COMPLETE
+ 
+🔶 
+2.1. /auth/register – BODY
+{
+  "email": "test@example.com",
+  "password": "Parola123!",
+  "name": "Alex Moore",
+  "phone": "07xxxxxxxx"
+}
+🔶 
+Response
+{
+  "status": "success",
+  "user_id": 124,
+  "token": "jwt_token_here"
+}
+ 
+🔶 
+2.2. /applications – CREATE (Faza 1)
+
+Request JSON
+{
+  "type_credit": "nevoi_personale",
+  "tip_operatiune": "nou",
+  "salariu_net": 4500,
+  "vechime_luni": 18,
+  "nr_credite_banci": 1,
+  "lista_banci_active": ["BRD"],
+  "nr_ifn": 0,
+  "poprire": false,
+  "sold_total": 12000,
+  "intarzieri": true,
+  "intarzieri_numar": 2,
+  "card_credit": {
+      "active": true,
+      "banca": "ING",
+      "limita": 8000
+  },
+  "overdraft": {
+      "active": true,
+      "banca": "BT",
+      "limita": 2000
+  },
+  "codebitori": [
+    {
+      "nume": "Maria Ion",
+      "venit": 3500,
+      "relatie": "Sotie",
+      "nr_credite": 0,
+      "ifn": 0
+    }
+  ]
+}
+Response
+{
+  "application_id": 9991,
+  "status": "INREGISTRAT"
+}
+ 
+🔶 
+2.3. /applications/{id}/scoring – RESPONSE
+{
+  "application_id": 9991,
+  "dti": 0.38,
+  "scoring_level": "bun",
+  "recommended_level": "40%",
+  "reasoning": [
+    "venit stabil",
+    "intarzieri mici",
+    "sold credite moderat",
+    "vechime buna"
+  ]
+}
+ 
+🟩 
+3. MODEL DE SCORING – EXTREM DE TEHNIC
+
+🔶 3.1. Formula de DTI (Debt-to-Income)
+DTI = (Rata_total_existenta + Rata_estimativa_noua) / Venit_total
+Pentru Faza 1, Rata_estimativa_noua este un placeholder fix:
+Rata_estimativa_noua = venit_total * 0.15
+ 
+🔶 3.2. Nivele DTI
+IF DTI ≤ 0.40   => "eligibil (40%)"
+IF DTI ≤ 0.50   => "eligibil (50%)" (fara intarzieri si venit stabil)
+IF DTI ≤ 0.55   => "eligibil (55%)" (istoric excelent)
+ELSE            => "neeligibil"
+ 
+🔶 3.3. Penalizări pe întârzieri
+if intarzieri == false:
+    penalty = 0
+elif 1 <= intarzieri_numar <= 2:
+    penalty = +0.05 DTI
+elif 3 <= intarzieri_numar <= 6:
+    penalty = +0.10 DTI
+else:
+    scoring = "foarte_scazut"
+ 
+🔶 3.4. Penalizări IFN-uri
+DTI += (nr_ifn * 0.02)
+ 
+🔶 3.5. Impact codebitori
+Venit_total = Venit_solicitant + SUM(venit_codebitori)
+Nr_total_credite = nr_credite + SUM(credite_codebitori)
+Doar venitul se adaugă, nu și penalizările.
+ 
+🔶 3.6. Output final scoring
+IF poprire == true          => "foarte_scazut"
+IF DTI_final > 0.55         => "foarte_scazut"
+IF intarzieri >= 7 ori      => "foarte_scazut"
+
+IF 0.0–0.30 => "foarte_mare"
+IF 0.30–0.40 => "mare"
+IF 0.40–0.50 => "bun"
+IF 0.50–0.55 => "conditii_speciale"
+IF >0.55 => "foarte_scazut"
+ 
+🟩 
+4. DIAGRAME EXTREM-DE-TEHNICE (ASCII)
+ 
+🔶 4.1. Flow – Creare cerere client
+User -> Register/Login
+          |
+          v
+    Dashboard
+          |
+          v
+   Start Simulator ---------------------------+
+          |                                   |
+          v                                   |
+  Scoring calculat                            |
+          |                                   |
+          +---------[ Aplica Acum ]-----------+
+                          |
+                          v
+                 Wizard Cerere
+                          |
+          +---------------+---------------+
+          |               |               |
+          v               v               v
+     Date Personale   Venituri      Credite Existente
+          |               |               |
+          +---------------+---------------+
+                          |
+                          v
+                 Upload Documente (Blob)
+                          |
+                          v
+            OCR CI -> autocomplete date
+                          |
+                          v
+                Semneaza Acorduri PDF
+                          |
+                          v
+                      Trimite
+                          |
+                          v
+                    Status: INREGISTRAT
+ 
+🔶 4.2. Flow – Admin (Flux complet)
+Admin Login
+     |
+     v
+Dashboard
+     |
+     +---------------------------+
+     |                           |
+     v                           v
+Lista Dosare                Lista Useri
+     |                           |
+     v                           |
+Selecteaza Dosar                 |
+     |                           |
+     v                           |
+   VERIFICA                      |
+     |                           |
+     v                           |
+Schimba Status -> IN_ANALIZA     |
+     |                           |
+     v                           |
+Solicita documente suplimentare  |
+     |                           |
+     v                           |
+PREAPROBAT -----------------------+
+     |
+     v
+Trimite la banca
+     |
+     v
+Aprobat banca
+     |
+     v
+Status -> DISBURSAT
+     |
+     v
+Raport Luna -> Export Oblio
+ 
+🔶 4.3. Flow – OCR + Acorduri
+User face poza CI
+       |
+       v
+OCR Engine -> extrage date
+       |
+       v
+Pre-populate formulare
+       |
+       v
+Genereaza acorduri PDF
+       |
+       v
+User semneaza touchscreen
+       |
+       v
+PDF final in Azure Blob
+ 
+
+

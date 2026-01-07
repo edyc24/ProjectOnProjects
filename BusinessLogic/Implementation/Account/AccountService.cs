@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using System.Text.Json;
-using ProjectOnProjects.Entities.Entities;
+using MoneyShop.Entities.Entities;
 using AutoMapper;
-using ProjectOnProjects.BusinessLogic.Base;
-using ProjectOnProjects.BusinessLogic.Implementation.Account.Models;
-using ProjectOnProjects.Common.DTOs;
-using ProjectOnProjects.Common.Extensions;
-using ProjectOnProjects.DataAccess;
-using ProjectOnProjects.Entities.Entities;
-using ProjectOnProjects.Models;
+using MoneyShop.BusinessLogic.Base;
+using MoneyShop.BusinessLogic.Implementation.Account.Models;
+using MoneyShop.Common.DTOs;
+using MoneyShop.Common.Extensions;
+using MoneyShop.DataAccess;
+using MoneyShop.Entities.Entities;
+using MoneyShop.Models;
 
-namespace ProjectOnProjects.BusinessLogic.Implementation.Account
+namespace MoneyShop.BusinessLogic.Implementation.Account
 {
     public class AccountService : BaseService
     {
@@ -63,13 +63,16 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.Account
 
             if (isAuthenticated)
             {
+                // Safely get role, default to "Utilizator" if role not found
+                string role = userRoles.ContainsKey(user.IdRol) ? userRoles[user.IdRol] : "Utilizator";
+                
                 return new CurrentUserDto
                 {
                     Id = user.IdUtilizator,
                     Email = user.Mail,
                     FirstName = user.Nume + " " + user.Prenume,
                     IsAuthenticated = true,
-                    Role = userRoles[user.IdRol]
+                    Role = role
                 };
             }
             else
@@ -80,13 +83,37 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.Account
         {
             RegisterUserValidator.Validate(model).ThenThrow(model);
 
-
             var user = Mapper.Map<RegisterModel, Utilizatori>(model);
             user.Mail = model.Email;
             user.Username = model.FirstName + model.LastName;
             user.Parola = HashPassword(user.Parola);
-            user.IdRol = model.Role;
+            
+            // Set default role to 1 (Utilizator) if Role is 0 or not provided
+            // First, verify that role 1 exists in the database
+            var roleExists = UnitOfWork.Roles.Get().Any(r => r.IdRol == 1);
+            if (!roleExists)
+            {
+                // If role 1 doesn't exist, try to find the first available role
+                var firstRole = UnitOfWork.Roles.Get().OrderBy(r => r.IdRol).FirstOrDefault();
+                if (firstRole != null)
+                {
+                    user.IdRol = firstRole.IdRol;
+                }
+                else
+                {
+                    throw new Exception("No roles found in database. Please run PopulateRoles.sql script first.");
+                }
+            }
+            else
+            {
+                user.IdRol = model.Role > 0 ? model.Role : 1;
+            }
+            
             user.IsDeleted = false;
+            
+            // Set email and phone verification to true by default (will be changed later)
+            user.EmailVerified = true;
+            user.PhoneVerified = true;
 
             UnitOfWork.Users.Insert(user);
 
@@ -214,6 +241,9 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.Account
             user.Prenume = model.LastName;
             UnitOfWork.Users.Update(user);
             UnitOfWork.SaveChanges();
+            // Safely get role, default to "Utilizator" if role not found
+            string role = userRoles.ContainsKey(user.IdRol) ? userRoles[user.IdRol] : "Utilizator";
+            
             return new CurrentUserDto()
             {
                 Email = user.Mail,
@@ -221,7 +251,7 @@ namespace ProjectOnProjects.BusinessLogic.Implementation.Account
                 FirstName = user.Nume,
                 LastName = user.Prenume,
                 IsAuthenticated = true,
-                Role = userRoles[user.IdRol]
+                Role = role
             };
         }
 

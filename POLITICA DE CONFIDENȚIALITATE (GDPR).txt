@@ -1,0 +1,131 @@
+POLITICA DE CONFIDENȚIALITATE (GDPR) – MONEYSHOP.RO
+(versiune completă, extinsă, armonizată DUAL CONSENT, conform legislației române și europene)
+Ultima actualizare: [data]
+________________________________________
+1. INTRODUCERE. SCOPUL DOCUMENTULUI
+Prezenta Politică de Confidențialitate are rolul de a informa utilizatorii platformei www.MoneyShop.ro, precum și ai aplicațiilor mobile MoneyShop (denumite în continuare, în mod colectiv, „Platforma”), cu privire la modul în care sunt colectate, utilizate, prelucrate și protejate datele cu caracter personal.
+Această politică este redactată în conformitate cu:
+•	Regulamentul (UE) 2016/679 privind protecția persoanelor fizice în ceea ce privește prelucrarea datelor cu caracter personal („GDPR”);
+•	Legea nr. 190/2018 privind măsuri de punere în aplicare a GDPR în România;
+•	legislația națională și europeană aplicabilă activităților de intermediere de credite;
+•	actele normative privind protecția consumatorilor și serviciile digitale.
+MoneyShop acordă o importanță deosebită respectării confidențialității, securității și utilizării controlate a datelor cu caracter personal.
+________________________________________
+2. OPERATORUL DE DATE CU CARACTER PERSONAL
+Operatorul datelor cu caracter personal este:
+POPIX BROKERAGE CONSULTING S.R.L.
+•	Nr. ONRC: J2024018340008
+•	EUID: ROONRC.J2024018340008
+•	CUI: 50477260
+•	Sediu social: Mun. Râmnicu Vâlcea, Str. Constantin Brâncuși nr. 8, jud.Valcea
+•	Telefon: 031 434 0940
+•	E-mail general: office@moneyshop.ro
+•	E-mail GDPR: gdpr@moneyshop.ro
+•	Responsabil cu protecția datelor (DPO): dpo@moneyshop.ro
+________________________________________
+3. PRINCIPIILE PRELUCRĂRII DATELOR
+MoneyShop prelucrează datele cu caracter personal în conformitate cu principiile prevăzute la art. 5 GDPR:
+•	legalitate, echitate și transparență;
+•	limitarea scopului;
+•	minimizarea datelor;
+•	exactitate;
+•	limitarea stocării;
+•	integritate și confidențialitate;
+•	responsabilitate.
+Datele sunt colectate și utilizate strict în scopuri determinate, explicite și legitime, fără extindere ulterioară incompatibilă.
+________________________________________
+4. SCOPURILE PRELUCRĂRII DATELOR
+Datele cu caracter personal sunt prelucrate exclusiv pentru:
+•	analiza eligibilității financiare a utilizatorului;
+•	realizarea analizelor MoneyShop;
+•	intermedierea solicitărilor de credit;
+•	îndeplinirea obligațiilor legale aplicabile operatorului;
+•	prevenirea fraudelor și utilizării neautorizate;
+•	apărarea drepturilor și intereselor legitime ale operatorului.
+⚠️ Datele NU sunt utilizate pentru scopuri incompatibile cu cele declarate.
+________________________________________
+5. CATEGORII DE DATE PRELUCRATE
+MoneyShop poate prelucra:
+•	date de identificare (nume, prenume, CNP – strict unde este necesar);
+•	date de contact (telefon, e-mail, adresă);
+•	date financiare (venituri, obligații);
+•	date fiscale obținute de la ANAF;
+•	date privind istoricul de credit obținute de la Biroul de Credit;
+•	date tehnice (IP, device, log-uri);
+•	date rezultate din utilizarea Platformei.
+MoneyShop nu solicită și nu prelucrează date excesive.
+________________________________________
+6. TEMEIURILE LEGALE ALE PRELUCRĂRII
+Prelucrarea se realizează în baza:
+•	art. 6 alin. (1) lit. b GDPR – demersuri precontractuale / executare contract;
+•	art. 6 alin. (1) lit. c GDPR – obligații legale;
+•	art. 6 alin. (1) lit. f GDPR – interes legitim;
+•	art. 9 alin. (2) lit. g GDPR – AML/KYC, unde este aplicabil.
+________________________________________
+7. PRELUCRAREA DATELOR ÎN BAZA MANDATULUI ANAF / BIROUL DE CREDIT
+(FĂRĂ TRANSMITERE CĂTRE BROKERI – NIVEL 1 CONSIMȚĂMÂNT)
+Datele obținute de la:
+•	Agenția Națională de Administrare Fiscală (ANAF);
+•	Biroul de Credit S.A.
+sunt prelucrate:
+•	exclusiv pentru analiza eligibilității de credit;
+•	în baza mandatului temporar acordat de utilizator (max. 30 zile);
+•	fără transmitere către brokeri sau alți terți neimplicați.
+🔒 Aceste date:
+•	NU sunt vândute;
+•	NU sunt cesionate;
+•	NU sunt utilizate în scopuri de marketing;
+•	NU sunt utilizate pentru profilare comercială.
+👉 Această prelucrare NU implică transmiterea datelor către brokeri.
+________________________________________
+8. TRANSMITEREA DATELOR CĂTRE BROKER ALES DE UTILIZATOR
+(CONSENT DISTINCT, VOLUNTAR – NIVEL 2 CONSIMȚĂMÂNT)
+Transmiterea analizei MoneyShop și a copiilor documentelor ANAF / Biroul de Credit către un broker de credite:
+•	se face exclusiv cu consimțământ separat și distinct;
+•	este inițiată doar de utilizator;
+•	nu este condiție pentru utilizarea Platformei;
+•	nu afectează accesul la serviciile MoneyShop în cazul refuzului.
+Temei legal:
+•	art. 6 alin. (1) lit. a GDPR – consimțământ explicit.
+Utilizatorul poate:
+•	accepta sau refuza transmiterea;
+•	alege brokerul autorizat;
+•	retrage consimțământul în orice moment, fără consecințe.
+________________________________________
+9. DESTINATARII DATELOR
+Datele pot fi comunicate:
+•	instituțiilor financiare partenere (în procesul de creditare);
+•	brokerilor aleși de utilizator (doar cu consimțământ distinct);
+•	furnizorilor IT;
+•	autorităților publice, când există obligație legală.
+________________________________________
+10. TRANSFERURI INTERNAȚIONALE
+MoneyShop nu transferă datele în afara UE.
+Excepțiile respectă art. 44–49 GDPR.
+________________________________________
+11. DURATA STOCĂRII DATELOR
+Datele sunt stocate:
+•	strict pe durata necesară scopurilor;
+•	conform obligațiilor legale;
+•	ulterior, șterse sau anonimizate.
+Datele KYC sunt șterse automat după 30 zile.
+________________________________________
+12. DREPTURILE PERSOANEI VIZATE
+Utilizatorul beneficiază de drepturile prevăzute la art. 12–22 GDPR.
+Solicitări: gdpr@moneyshop.ro / dpo@moneyshop.ro
+________________________________________
+13. SECURITATEA DATELOR
+MoneyShop aplică măsuri conforme art. 32 GDPR:
+•	criptare;
+•	control acces;
+•	audit intern;
+•	log juridic de consimțământ.
+________________________________________
+14. MODIFICAREA POLITICII
+Politica poate fi actualizată; versiunea publicată este aplicabilă de la data publicării.
+________________________________________
+15. LEGEA APLICABILĂ
+Prezenta Politică este guvernată de:
+•	legislația României;
+•	legislația Uniunii Europene aplicabilă. 
+
