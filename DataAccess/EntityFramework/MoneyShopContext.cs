@@ -58,6 +58,20 @@ public partial class MoneyShopContext : DbContext
     
     // User Financial Data Entity
     public virtual DbSet<UserFinancialData> UserFinancialData { get; set; }
+    
+    // Eligibility Entities
+    public virtual DbSet<RatesRulesConfig> RatesRulesConfigs { get; set; }
+    public virtual DbSet<AnafReport> AnafReports { get; set; }
+    public virtual DbSet<BcReport> BcReports { get; set; }
+    
+    // Chat Entities
+    public virtual DbSet<ChatRateLimit> ChatRateLimits { get; set; }
+    public virtual DbSet<ChatUsage> ChatUsages { get; set; }
+    public virtual DbSet<FaqItem> FaqItems { get; set; }
+    
+    // Lead Capture Entities
+    public virtual DbSet<LeadCapture> LeadCaptures { get; set; }
+    public virtual DbSet<LeadSession> LeadSessions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -488,6 +502,151 @@ public partial class MoneyShopContext : DbContext
 
             entity.HasIndex(e => e.UserId);
             entity.HasIndex(e => e.LastUpdated);
+        });
+
+        // Eligibility Entities Configuration
+        modelBuilder.Entity<RatesRulesConfig>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("RatesRulesConfigs");
+
+            entity.Property(e => e.Version).HasMaxLength(50).IsRequired();
+            entity.Property(e => e.ConfigJson).HasColumnType("nvarchar(max)").IsRequired();
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime2");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime2");
+
+            entity.HasIndex(e => e.IsActive);
+            entity.HasIndex(e => e.Version);
+        });
+
+        modelBuilder.Entity<AnafReport>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("AnafReports");
+
+            entity.Property(e => e.ReportId).HasMaxLength(100).IsRequired();
+            entity.Property(e => e.BlobPath).HasMaxLength(1000);
+            entity.Property(e => e.FileContentBase64).HasColumnType("nvarchar(max)");
+            entity.Property(e => e.FileName).HasMaxLength(255);
+            entity.Property(e => e.AvgNet6Months).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.AvgMeal6Months).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.ParseWarnings).HasMaxLength(2000);
+            entity.Property(e => e.ParserVersion).HasMaxLength(50);
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime2");
+            entity.Property(e => e.ParsedAt).HasColumnType("datetime2");
+
+            entity.HasOne(d => d.User)
+                .WithMany()
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(e => e.ReportId).IsUnique();
+            entity.HasIndex(e => e.UserId);
+        });
+
+        modelBuilder.Entity<BcReport>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("BcReports");
+
+            entity.Property(e => e.ReportId).HasMaxLength(100).IsRequired();
+            entity.Property(e => e.BlobPath).HasMaxLength(1000);
+            entity.Property(e => e.FileContentBase64).HasColumnType("nvarchar(max)");
+            entity.Property(e => e.FileName).HasMaxLength(255);
+            entity.Property(e => e.FicoScore).HasColumnType("int");
+            entity.Property(e => e.ExistingMonthlyObligations).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.ParseWarnings).HasMaxLength(2000);
+            entity.Property(e => e.ParserVersion).HasMaxLength(50);
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime2");
+            entity.Property(e => e.ParsedAt).HasColumnType("datetime2");
+
+            entity.HasOne(d => d.User)
+                .WithMany()
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(e => e.ReportId).IsUnique();
+            entity.HasIndex(e => e.UserId);
+        });
+
+        // Chat Rate Limiting Configuration
+        modelBuilder.Entity<ChatRateLimit>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("ChatRateLimits");
+            entity.Property(e => e.RateLimitKey).HasMaxLength(255).IsRequired();
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.ExpiresAt).HasColumnType("datetime2");
+            entity.HasIndex(e => e.RateLimitKey).IsUnique();
+            entity.HasIndex(e => e.ExpiresAt);
+        });
+
+        // Chat Usage / Cost Control Configuration
+        modelBuilder.Entity<ChatUsage>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("ChatUsages");
+            entity.Property(e => e.MonthKey).HasMaxLength(10).IsRequired(); // YYYY-MM
+            entity.Property(e => e.UsdSpent).HasColumnType("decimal(10,4)").HasDefaultValue(0);
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.MetaLast).HasMaxLength(1000);
+            entity.HasIndex(e => e.MonthKey).IsUnique();
+        });
+
+        // FAQ Cache Configuration
+        modelBuilder.Entity<FaqItem>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("FaqItems");
+            entity.Property(e => e.Question).HasMaxLength(500).IsRequired();
+            entity.Property(e => e.Answer).HasColumnType("nvarchar(max)").IsRequired();
+            entity.Property(e => e.AliasesJson).HasColumnType("nvarchar(max)");
+            entity.Property(e => e.TagsJson).HasColumnType("nvarchar(max)");
+            entity.Property(e => e.Priority).HasDefaultValue(0);
+            entity.Property(e => e.Enabled).HasDefaultValue(true);
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.HasIndex(e => e.Enabled);
+            entity.HasIndex(e => e.Question);
+        });
+
+        // Lead Capture Configuration
+        modelBuilder.Entity<LeadCapture>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("LeadCaptures");
+            entity.Property(e => e.NumePrenume).HasMaxLength(120).IsRequired();
+            entity.Property(e => e.Telefon).HasMaxLength(20).IsRequired();
+            entity.Property(e => e.Email).HasMaxLength(200).IsRequired();
+            entity.Property(e => e.Oras).HasMaxLength(80).IsRequired();
+            entity.Property(e => e.SoldTotalAprox).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.TipCreditor).HasMaxLength(20);
+            entity.Property(e => e.VenitNetLunar).HasColumnType("decimal(18,2)").IsRequired();
+            entity.Property(e => e.BonuriMasaAprox).HasColumnType("decimal(18,2)");
+            entity.Property(e => e.Source).HasMaxLength(50).HasDefaultValue("api");
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.HasIndex(e => e.UserId);
+            entity.HasIndex(e => e.CreatedAt);
+        });
+
+        // Lead Session Configuration
+        modelBuilder.Entity<LeadSession>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("LeadSessions");
+            entity.Property(e => e.SessionKey).HasMaxLength(255).IsRequired();
+            entity.Property(e => e.ConversationId).HasMaxLength(100);
+            entity.Property(e => e.SessionDataJson).HasColumnType("nvarchar(max)");
+            entity.Property(e => e.CreatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.UpdatedAt).HasColumnType("datetime2").HasDefaultValueSql("GETUTCDATE()");
+            entity.Property(e => e.ExpiresAt).HasColumnType("datetime2");
+            entity.HasIndex(e => e.SessionKey).IsUnique();
+            entity.HasIndex(e => e.UserId);
+            entity.HasIndex(e => e.ExpiresAt);
         });
 
         OnModelCreatingPartial(modelBuilder);

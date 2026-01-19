@@ -11,11 +11,13 @@ namespace MoneyShop.DataAccess
 {
     public class UnitOfWork
     {
-        private readonly MoneyShopContext Context;
+        private readonly MoneyShopContext _context;
+
+        public MoneyShopContext Context => _context;
 
         public UnitOfWork(MoneyShopContext context)
         {
-            this.Context = context;
+            this._context = context;
         }
 
         private IRepository<Utilizatori>? users;
@@ -88,9 +90,19 @@ namespace MoneyShop.DataAccess
         private IRepository<UserFinancialData>? userFinancialData;
         public IRepository<UserFinancialData> UserFinancialData => userFinancialData ?? (userFinancialData = new BaseRepository<UserFinancialData>(Context));
 
+        // Eligibility Repositories
+        private IRepository<RatesRulesConfig>? ratesRulesConfigs;
+        public IRepository<RatesRulesConfig> RatesRulesConfigs => ratesRulesConfigs ?? (ratesRulesConfigs = new BaseRepository<RatesRulesConfig>(Context));
+
+        private IRepository<AnafReport>? anafReports;
+        public IRepository<AnafReport> AnafReports => anafReports ?? (anafReports = new BaseRepository<AnafReport>(Context));
+
+        private IRepository<BcReport>? bcReports;
+        public IRepository<BcReport> BcReports => bcReports ?? (bcReports = new BaseRepository<BcReport>(Context));
+
         public void SaveChanges()
         {
-            Context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

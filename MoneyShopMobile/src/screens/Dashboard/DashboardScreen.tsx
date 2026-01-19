@@ -305,7 +305,7 @@ const DashboardScreen: React.FC<Props> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: '#FAFAFA',
   },
   scrollView: {
     flex: 1,
@@ -324,13 +324,13 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#212121',
     fontSize: 28,
     letterSpacing: -0.5,
     marginBottom: 6,
   },
   subtitleText: {
-    color: '#64748B',
+    color: '#757575',
     fontSize: 15,
     fontWeight: '400',
   },
@@ -341,8 +341,8 @@ const styles = StyleSheet.create({
     elevation: 4,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.12,
-    shadowRadius: 16,
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
     backgroundColor: '#FFFFFF',
     borderWidth: 0,
     overflow: 'hidden',
@@ -369,18 +369,18 @@ const styles = StyleSheet.create({
   },
   simulatorTitle: {
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#212121',
     fontSize: 22,
     marginBottom: 4,
   },
   simulatorDescription: {
-    color: '#64748B',
+    color: '#757575',
     fontSize: 14,
     lineHeight: 20,
   },
   simulatorFooter: {
     borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
+    borderTopColor: '#E0E0E0',
     paddingTop: 16,
     marginTop: 8,
   },
@@ -420,12 +420,12 @@ const styles = StyleSheet.create({
   },
   statNumberSmall: {
     fontWeight: '700',
-    color: '#1A1A1A',
+    color: '#212121',
     fontSize: 24,
     marginBottom: 4,
   },
   statLabelSmall: {
-    color: '#64748B',
+    color: '#757575',
     fontSize: 12,
     textAlign: 'center',
   },
@@ -462,7 +462,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   quickActionText: {
-    color: '#1A1A1A',
+    color: '#212121',
     fontWeight: '600',
     fontSize: 13,
     textAlign: 'center',
@@ -473,7 +473,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     marginBottom: 16,
     fontWeight: '600',
-    color: '#1A1A1A',
+    color: '#212121',
     fontSize: 18,
   },
   applicationCard: {

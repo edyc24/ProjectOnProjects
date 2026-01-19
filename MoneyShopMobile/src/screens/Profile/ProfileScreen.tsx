@@ -24,7 +24,7 @@ const ProfileScreen = ({navigation}: Props) => {
         <Card style={styles.card}>
           <Card.Content>
             <View style={styles.profileHeader}>
-              <Icon name="account-circle" size={64} color="#6200ee" />
+              <Icon name="account-circle" size={64} color="#1976D2" />
               <Text variant="headlineSmall" style={styles.name}>
                 {user?.name}
               </Text>

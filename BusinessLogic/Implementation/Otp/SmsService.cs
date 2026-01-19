@@ -1,55 +1,66 @@
 using Microsoft.Extensions.Configuration;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
-using Twilio.Types;
+using System.Net.Http.Json;
 
 namespace MoneyShop.BusinessLogic.Implementation.Otp
 {
     public class SmsService
     {
         private readonly IConfiguration _configuration;
-        private readonly string _accountSid;
-        private readonly string _authToken;
-        private readonly string _fromPhoneNumber;
+        private readonly HttpClient _httpClient;
+        private readonly string _apiKey;
+        private readonly string _senderName;
 
-        public SmsService(IConfiguration configuration)
+        public SmsService(IConfiguration configuration, HttpClient httpClient)
         {
             _configuration = configuration;
-            _accountSid = _configuration["Twilio:AccountSid"] ?? "";
-            _authToken = _configuration["Twilio:AuthToken"] ?? "";
-            _fromPhoneNumber = _configuration["Twilio:FromPhoneNumber"] ?? "";
+            _httpClient = httpClient;
+            _apiKey = _configuration["Brevo:ApiKey"] ?? "";
+            _senderName = _configuration["Brevo:SmsSenderName"] ?? "MoneyShop";
+
+            // Configure HttpClient for Brevo API
+            if (!string.IsNullOrEmpty(_apiKey))
+            {
+                _httpClient.BaseAddress = new Uri("https://api.brevo.com/v3/");
+                _httpClient.DefaultRequestHeaders.Add("api-key", _apiKey);
+            }
         }
 
         public async Task<bool> SendVerificationCodeAsync(string toPhoneNumber, string code)
         {
             try
             {
-                if (string.IsNullOrEmpty(_accountSid) || string.IsNullOrEmpty(_authToken))
+                if (string.IsNullOrEmpty(_apiKey))
                 {
                     // In development, just log the code
                     System.Diagnostics.Debug.WriteLine($"[DEV] SMS verification code for {toPhoneNumber}: {code}");
                     return true;
                 }
 
-                // Initialize Twilio client
-                TwilioClient.Init(_accountSid, _authToken);
+                var message = $"Codul dvs. de verificare MoneyShop este: {code}. Expiră în 10 minute.";
 
-                // Send SMS via Twilio
-                var message = await MessageResource.CreateAsync(
-                    body: $"Codul dvs. de verificare MoneyShop este: {code}. Expiră în 10 minute.",
-                    from: new PhoneNumber(_fromPhoneNumber),
-                    to: new PhoneNumber(toPhoneNumber)
-                );
-
-                if (message.Status == MessageResource.StatusEnum.Failed || 
-                    message.Status == MessageResource.StatusEnum.Undelivered)
+                var smsRequest = new
                 {
-                    System.Diagnostics.Debug.WriteLine($"[SmsService] Failed to send SMS to {toPhoneNumber}. Status: {message.Status}");
+                    sender = _senderName,
+                    recipient = toPhoneNumber,
+                    content = message,
+                    type = "transactional"
+                };
+
+                var response = await _httpClient.PostAsJsonAsync("transactionalSMS/sms", smsRequest);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[SmsService] SMS sent successfully to {toPhoneNumber}");
+                    return true;
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine($"[SmsService] Failed to send SMS to {toPhoneNumber}. Status: {response.StatusCode}, Error: {errorContent}");
+                    // In case of error, still log the code for development
+                    System.Diagnostics.Debug.WriteLine($"[DEV] SMS verification code for {toPhoneNumber}: {code}");
                     return false;
                 }
-
-                System.Diagnostics.Debug.WriteLine($"[SmsService] SMS sent successfully to {toPhoneNumber}. Status: {message.Status}");
-                return true;
             }
             catch (Exception ex)
             {

@@ -1,130 +1,667 @@
 ﻿@{
-    ViewData["Title"] = "Acasă - MoneyShop";
+    ViewData["Title"] = "MoneyShop - Broker de Credite Autorizat";
     Layout = "_Layout";
 }
 
-<div class="hero-section">
+<!-- Hero Section with Calculator -->
+<section class="hero-section-landing">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="hero-title">Simuleaza. Intelege. Decide Informat.</h1>
+                <p class="hero-description">
+                    Credite rapide, simplu si transparent cu un broker autorizat.
+                </p>
+                <div class="hero-badge">
+                    <span class="badge-text">FARA COMISION (complet gratuit)</span>
+                </div>
+                <div class="hero-buttons mt-4">
+                    <button class="btn btn-primary btn-lg" onclick="scrollToCalculator()">
+                        Calculeaza Creditul
+                    </button>
+                    <button class="btn btn-outline-light btn-lg">
+                        Vorbeste cu un Broker
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-6 hero-visual">
+                <div class="calculator-preview">
+                    <div class="desktop-preview">
+                        <div class="preview-header">Eligibilitatea ta</div>
+                        <div class="preview-amount" id="previewEligibility">85,000 Lei</div>
+                        <div class="preview-score">
+                            <i class="fas fa-check-circle text-success"></i>
+                            <span>Scor de Credit <strong id="previewScore">721</strong> Bun</span>
+                        </div>
+                        <div class="preview-rate">Rata Estimata <strong id="previewRate">1,250</strong> Lei/luna</div>
+                        <div class="preview-dti">
+                            <div class="dti-label">Grad indatorare</div>
+                            <div class="progress">
+                                <div class="progress-bar" id="previewDtiBar" style="width: 32%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-preview">
+                        <div class="mobile-content">
+                            <div class="mobile-item">44,800 Lei</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Calculator Section -->
+<section class="calculator-section" id="calculator">
+    <div class="container">
+        <div class="calculator-card">
+            <div class="calculator-tabs">
+                <button class="tab-btn active" data-loan-type="NP">Credit de Nevoi Personale</button>
+                <button class="tab-btn" data-loan-type="IPOTECAR">Credit Ipotecar</button>
+                <button class="tab-btn" data-loan-type="REFINANTARE">Refinantare</button>
+            </div>
+            
+            <div class="calculator-content">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="calculator-inputs">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Venit Net Lunar</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="salaryNet" value="9000" min="0" step="100">
+                                        <span class="input-group-text">Lei</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Bonuri de Masa</label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" id="mealTickets" value="0" min="0" step="50">
+                                        <span class="input-group-text">Lei</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Perioada</label>
+                                    <select class="form-select" id="termMonths">
+                                        <option value="12">1 an</option>
+                                        <option value="24">2 ani</option>
+                                        <option value="36">3 ani</option>
+                                        <option value="48">4 ani</option>
+                                        <option value="60" selected>5 ani</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Tip Credit</label>
+                                    <select class="form-select" id="creditType" disabled>
+                                        <option>Selecteaza tip credit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <button class="btn btn-primary btn-lg w-100" id="calculateBtn" onclick="calculateEligibility()">
+                                    Vezi Analiza Completa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="calculator-results">
+                            <h5 class="results-title">Rezultate Estimate</h5>
+                            <div class="result-item">
+                                <div class="result-label">Suma Estimata</div>
+                                <div class="result-value" id="resultAmount">75,000 Lei</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Rata Lunara</div>
+                                <div class="result-value" id="resultRate">1.250 Lei</div>
+                            </div>
+                            <div class="result-item">
+                                <div class="result-label">Grad Indatorare</div>
+                                <div class="result-value">
+                                    <span id="resultDti">32%</span>
+                                    <span class="badge badge-estimativ">Estimativ</span>
+                                </div>
+                                <div class="progress mt-2">
+                                    <div class="progress-bar" id="resultDtiBar" style="width: 32%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partners Section -->
+<section class="partners-section">
+    <div class="container">
+        <h2 class="section-title text-center">Lucram cu cele mai mari institutii financiare</h2>
+        <div class="partners-logos">
+            <div class="partner-logo">BCR</div>
+            <div class="partner-logo">BT</div>
+            <div class="partner-logo">BRD</div>
+            <div class="partner-logo">ING</div>
+            <div class="partner-logo">UniCredit</div>
+            <div class="partner-logo">Garanti BBVA</div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose MoneyShop Section -->
+<section class="features-section">
+    <div class="container">
+        <h2 class="section-title text-center">De ce sa alegi MoneyShop</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>Transparenta Totala</h4>
+                    <p>Vezi exact ce date sunt folosite, pentru ce scop si cand. Fara surprize, fara ascunzaturi.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4>Raspuns Rapid</h4>
+                    <p>Analiza completa in cateva minute. Fara birocratie, fara asteptari. Totul digital si transparent.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4>Educatie Financiara</h4>
+                    <p>Invatam despre credite, DTI, si cum sa faci alegeri financiare inteligente pentru viitorul tau.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Date Protejate</h4>
+                    <p>Datele tale sunt protejate conform GDPR. Mandat temporar de maximum 30 zile, revocabil oricand.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Help Section -->
+<section class="help-section">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1>MoneyShop<sup>®</sup></h1>
-                <p class="tagline">Simplu. Rapid. Transparent.</p>
-                <p class="lead mb-4">
-                    Platformă digitală de intermediere credite. Analizează eligibilitatea ta de credit 
-                    în câteva minute, cu transparență totală.
+                <h2 class="section-title">Ai nevoie de ajutor?</h2>
+                <p class="section-description">
+                    Discuta cu un broker autorizat pentru cea mai buna solutie.
                 </p>
-                @if (User.Identity?.IsAuthenticated != true)
-                {
-                    <div class="d-flex gap-3">
-                        <a href="@Url.Action("Register", "Account")" class="btn btn-success btn-lg">Începe Acum</a>
-                        <a href="@Url.Action("Login", "Account")" class="btn btn-outline-light btn-lg">Autentificare</a>
-                    </div>
-                }
-                else
-                {
-                    <div class="d-flex gap-3 flex-wrap">
-                        <a href="@Url.Action("Step1", "Mandate")" class="btn btn-success btn-lg">Acordă Mandat ANAF/BC</a>
-                        <a href="@Url.Action("Index", "Applications")" class="btn btn-outline-light btn-lg">Vezi Aplicațiile Mele</a>
-                        <a href="@Url.Action("Index", "Simulator")" class="btn btn-outline-light btn-lg">Simulator Credit</a>
-                    </div>
-                }
+                <div class="help-buttons mt-4">
+                    <button class="btn btn-primary btn-lg">Programeaza un Apel</button>
+                    <button class="btn btn-outline-primary btn-lg">Chat cu un Broker</button>
+                </div>
             </div>
             <div class="col-lg-6 text-center">
-                <div class="mt-4 mt-lg-0">
-                    <i class="fas fa-chart-line" style="font-size: 8rem; opacity: 0.3;"></i>
+                <div class="help-image">
+                    <i class="fas fa-headset" style="font-size: 8rem; opacity: 0.3; color: #0d6efd;"></i>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="container my-5">
-    <div class="row mb-5">
-        <div class="col-12 text-center">
-            <h2 class="mb-4">De ce să alegi MoneyShop?</h2>
-        </div>
-    </div>
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        :root {
+            --moneyshop-primary: #0d6efd;
+            --moneyshop-dark: #1a1a2e;
+            --moneyshop-light: #f8f9fa;
+        }
 
-    <div class="row g-4 mb-5">
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <div class="mb-3">
-                        <i class="fas fa-shield-alt text-moneyshop-blue" style="font-size: 3rem;"></i>
-                    </div>
-                    <h4 class="card-title">Securitate Totală</h4>
-                    <p class="card-text">
-                        Datele tale sunt protejate conform GDPR. Mandat temporar de maximum 30 zile, 
-                        revocabil oricând.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <div class="mb-3">
-                        <i class="fas fa-bolt text-moneyshop-green" style="font-size: 3rem;"></i>
-                    </div>
-                    <h4 class="card-title">Rapid și Simplu</h4>
-                    <p class="card-text">
-                        Analiză completă în câteva minute. Fără birocrație, fără așteptări. 
-                        Totul digital și transparent.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body text-center">
-                    <div class="mb-3">
-                        <i class="fas fa-eye text-moneyshop-blue" style="font-size: 3rem;"></i>
-                    </div>
-                    <h4 class="card-title">Transparență Completă</h4>
-                    <p class="card-text">
-                        Vezi exact ce date sunt folosite, pentru ce scop și când. 
-                        Fără surprize, fără ascunzături.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+        body {
+            background-color: var(--moneyshop-dark);
+            color: #fff;
+        }
 
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="mb-0">Cum funcționează?</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 text-center mb-3 mb-md-0">
-                            <div class="badge bg-moneyshop-blue rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">1</div>
-                            <h5 class="mt-3">Înregistrare</h5>
-                            <p>Creează contul tău în câteva secunde</p>
-                        </div>
-                        <div class="col-md-3 text-center mb-3 mb-md-0">
-                            <div class="badge bg-moneyshop-green rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">2</div>
-                            <h5 class="mt-3">Mandatare</h5>
-                            <p>Acordă mandat temporar pentru interogare ANAF/BC</p>
-                        </div>
-                        <div class="col-md-3 text-center mb-3 mb-md-0">
-                            <div class="badge bg-moneyshop-blue rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">3</div>
-                            <h5 class="mt-3">Analiză</h5>
-                            <p>Obține analiza completă de eligibilitate</p>
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <div class="badge bg-moneyshop-green rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem;">4</div>
-                            <h5 class="mt-3">Alegere</h5>
-                            <p>Alege brokerul și continuă procesul</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        /* Hero Section */
+        .hero-section-landing {
+            background: linear-gradient(135deg, var(--moneyshop-dark) 0%, #16213e 100%);
+            padding: 80px 0;
+            min-height: 600px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(13, 110, 253, 0.2);
+            border: 2px solid var(--moneyshop-primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            margin-bottom: 1rem;
+        }
+
+        .badge-text {
+            color: var(--moneyshop-primary);
+            font-weight: 600;
+        }
+
+        /* Calculator Preview */
+        .calculator-preview {
+            position: relative;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .desktop-preview {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            min-width: 300px;
+            backdrop-filter: blur(10px);
+        }
+
+        .preview-header {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .preview-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--moneyshop-primary);
+            margin-bottom: 15px;
+        }
+
+        .preview-score {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+
+        .preview-rate {
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .preview-dti {
+            margin-top: 15px;
+        }
+
+        .dti-label {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .mobile-preview {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            width: 150px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-content {
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 60px 0;
+        }
+
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .calculator-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--moneyshop-primary);
+            border-bottom-color: var(--moneyshop-primary);
+        }
+
+        .calculator-inputs .form-label {
+            color: #fff;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .calculator-inputs .form-control,
+        .calculator-inputs .form-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .calculator-inputs .form-control:focus,
+        .calculator-inputs .form-select:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--moneyshop-primary);
+            color: #fff;
+        }
+
+        .calculator-results {
+            background: rgba(13, 110, 253, 0.1);
+            border: 2px solid var(--moneyshop-primary);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .results-title {
+            color: var(--moneyshop-primary);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .result-item {
+            margin-bottom: 20px;
+        }
+
+        .result-label {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .badge-estimativ {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 10px;
+        }
+
+        .progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .progress-bar {
+            background: var(--moneyshop-primary);
+        }
+
+        /* Partners Section */
+        .partners-section {
+            padding: 60px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+
+        .partners-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .partner-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #aaa;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .partner-logo:hover {
+            color: var(--moneyshop-primary);
+            background: rgba(13, 110, 253, 0.1);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            height: 100%;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--moneyshop-primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h4 {
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #ccc;
+        }
+
+        /* Help Section */
+        .help-section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .help-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--moneyshop-primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #0b5ed7;
+        }
+
+        .btn-outline-light,
+        .btn-outline-primary {
+            border-color: var(--moneyshop-primary);
+            color: var(--moneyshop-primary);
+        }
+
+        .btn-outline-light:hover,
+        .btn-outline-primary:hover {
+            background: var(--moneyshop-primary);
+            color: #fff;
+        }
+
+        @@media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .calculator-preview {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .partners-logos {
+                gap: 20px;
+            }
+        }
+    </style>
+}
 
 @section Scripts {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script>
+        let currentLoanType = 'NP';
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentLoanType = this.dataset.loanType;
+            });
+        });
+
+        // Auto-calculate on input change
+        ['salaryNet', 'mealTickets', 'termMonths'].forEach(id => {
+            document.getElementById(id).addEventListener('input', debounce(calculateEligibility, 500));
+        });
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        async function calculateEligibility() {
+            const salaryNet = parseFloat(document.getElementById('salaryNet').value) || 0;
+            const mealTickets = parseFloat(document.getElementById('mealTickets').value) || 0;
+            const termMonths = parseInt(document.getElementById('termMonths').value) || 60;
+
+            if (salaryNet <= 0) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/eligibility/simple', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        loanType: currentLoanType,
+                        salaryNetUser: salaryNet,
+                        mealTicketsUser: mealTickets,
+                        termMonths: termMonths
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    updateResults(data);
+                } else {
+                    console.error('Error calculating eligibility');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function updateResults(data) {
+            // Update results
+            if (data.offers?.maxLoanAmountUsed) {
+                const amount = Math.round(data.offers.maxLoanAmountUsed).toLocaleString('ro-RO');
+                document.getElementById('resultAmount').textContent = amount + ' Lei';
+                document.getElementById('previewEligibility').textContent = amount + ' Lei';
+            }
+
+            if (data.offers?.affordability?.paymentMax) {
+                const rate = Math.round(data.offers.affordability.paymentMax).toLocaleString('ro-RO');
+                document.getElementById('resultRate').textContent = rate + ' Lei';
+                document.getElementById('previewRate').textContent = rate;
+            }
+
+            if (data.dti?.dtiUsed) {
+                const dtiPercent = Math.round(data.dti.dtiUsed * 100);
+                document.getElementById('resultDti').textContent = dtiPercent + '%';
+                document.getElementById('resultDtiBar').style.width = dtiPercent + '%';
+                document.getElementById('previewDtiBar').style.width = dtiPercent + '%';
+            }
+
+            // Update preview score (mock for now)
+            if (data.decision?.rating) {
+                const scoreMap = { 'A': 750, 'B': 650, 'C': 550, 'D': 450 };
+                const score = scoreMap[data.decision.rating] || 650;
+                document.getElementById('previewScore').textContent = score;
+            }
+        }
+
+        function scrollToCalculator() {
+            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initial calculation
+        calculateEligibility();
+    </script>
 }

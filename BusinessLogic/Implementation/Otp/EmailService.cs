@@ -1,35 +1,37 @@
 using Microsoft.Extensions.Configuration;
-using System.Net;
-using System.Net.Mail;
+using System.Net.Http.Json;
 
 namespace MoneyShop.BusinessLogic.Implementation.Otp
 {
     public class EmailService
     {
         private readonly IConfiguration _configuration;
-        private readonly string _smtpHost;
-        private readonly int _smtpPort;
-        private readonly string _smtpUsername;
-        private readonly string _smtpPassword;
+        private readonly HttpClient _httpClient;
+        private readonly string _apiKey;
         private readonly string _fromEmail;
         private readonly string _fromName;
 
-        public EmailService(IConfiguration configuration)
+        public EmailService(IConfiguration configuration, HttpClient httpClient)
         {
             _configuration = configuration;
-            _smtpHost = _configuration["Email:SmtpHost"] ?? "smtp-mail.outlook.com";
-            _smtpPort = int.Parse(_configuration["Email:SmtpPort"] ?? "587");
-            _smtpUsername = _configuration["Email:SmtpUsername"] ?? "";
-            _smtpPassword = _configuration["Email:SmtpPassword"] ?? "";
-            _fromEmail = _configuration["Email:FromEmail"] ?? _smtpUsername;
-            _fromName = _configuration["Email:FromName"] ?? "MoneyShop";
+            _httpClient = httpClient;
+            _apiKey = _configuration["Brevo:ApiKey"] ?? "";
+            _fromEmail = _configuration["Brevo:FromEmail"] ?? "";
+            _fromName = _configuration["Brevo:FromName"] ?? "MoneyShop";
+
+            // Configure HttpClient for Brevo API
+            if (!string.IsNullOrEmpty(_apiKey))
+            {
+                _httpClient.BaseAddress = new Uri("https://api.brevo.com/v3/");
+                _httpClient.DefaultRequestHeaders.Add("api-key", _apiKey);
+            }
         }
 
         public async Task<bool> SendVerificationCodeAsync(string toEmail, string code)
         {
             try
             {
-                if (string.IsNullOrEmpty(_smtpUsername) || string.IsNullOrEmpty(_smtpPassword))
+                if (string.IsNullOrEmpty(_apiKey) || string.IsNullOrEmpty(_fromEmail))
                 {
                     // In development, just log the code
                     System.Diagnostics.Debug.WriteLine($"[DEV] Email verification code for {toEmail}: {code}");
@@ -50,25 +52,34 @@ namespace MoneyShop.BusinessLogic.Implementation.Otp
     <p style=""margin-top: 30px; color: #666; font-size: 12px;"">Echipa MoneyShop</p>
 </div>";
 
-                using var client = new SmtpClient(_smtpHost, _smtpPort)
+                var emailRequest = new
                 {
-                    EnableSsl = true,
-                    Credentials = new NetworkCredential(_smtpUsername, _smtpPassword),
-                    DeliveryMethod = SmtpDeliveryMethod.Network
+                    sender = new
+                    {
+                        name = _fromName,
+                        email = _fromEmail
+                    },
+                    to = new[]
+                    {
+                        new { email = toEmail }
+                    },
+                    subject = subject,
+                    htmlContent = body
                 };
 
-                using var message = new MailMessage
+                var response = await _httpClient.PostAsJsonAsync("smtp/email", emailRequest);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    From = new MailAddress(_fromEmail, _fromName),
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true
-                };
-
-                message.To.Add(toEmail);
-
-                await client.SendMailAsync(message);
-                return true;
+                    System.Diagnostics.Debug.WriteLine($"[EmailService] Email sent successfully to {toEmail}");
+                    return true;
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    System.Diagnostics.Debug.WriteLine($"[EmailService] Failed to send email to {toEmail}. Status: {response.StatusCode}, Error: {errorContent}");
+                    return false;
+                }
             }
             catch (Exception ex)
             {

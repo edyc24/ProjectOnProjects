@@ -5,12 +5,14 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Image,
 } from 'react-native';
 import {TextInput, Button, Text, Snackbar} from 'react-native-paper';
 import {useAuthStore} from '../../store/authStore';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../navigation/AuthNavigator';
-import Logo from '../../components/Logo';
+
+const logoImage = require('../../../assets/images/logo/Logo.PNG');
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
@@ -57,10 +59,17 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
           <View style={styles.logoContainer}>
-            <Logo size="large" showTagline />
+            <Image 
+              source={logoImage} 
+              style={styles.logo}
+              resizeMode="contain"
+            />
           </View>
-          <Text variant="titleLarge" style={styles.subtitle}>
-            Autentificare
+          <Text variant="headlineMedium" style={styles.title}>
+            Bine ai revenit!
+          </Text>
+          <Text variant="bodyMedium" style={styles.subtitle}>
+            Autentifică-te pentru a continua
           </Text>
 
           <TextInput
@@ -128,27 +137,39 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#FFFFFF',
   },
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
+    paddingVertical: 40,
   },
   content: {
     padding: 24,
-    maxWidth: 400,
+    maxWidth: 450,
     alignSelf: 'center',
     width: '100%',
   },
   logoContainer: {
     alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: 40,
+  },
+  logo: {
+    width: 560,
+    height: 200,
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: 8,
+    color: '#212121',
+    fontWeight: '700',
+    fontSize: 28,
   },
   subtitle: {
     textAlign: 'center',
     marginBottom: 32,
-    color: '#666',
-    fontWeight: '500',
+    color: '#757575',
+    fontSize: 16,
   },
   input: {
     marginBottom: 16,
@@ -156,13 +177,21 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 8,
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderRadius: 12,
+    backgroundColor: '#1976D2',
+    elevation: 2,
+    shadowColor: '#1976D2',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   otpButton: {
     marginTop: 16,
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderRadius: 12,
+    borderColor: '#1976D2',
+    borderWidth: 1.5,
   },
   linkButton: {
     marginTop: 12,

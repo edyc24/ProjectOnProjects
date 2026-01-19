@@ -6,13 +6,15 @@ import {
   Platform,
   ScrollView,
   TextInput as RNTextInput,
+  Image,
 } from 'react-native';
 import {TextInput, Button, Text, Snackbar} from 'react-native-paper';
 import {otpApi} from '../../services/api/otpApi';
 import {useAuthStore} from '../../store/authStore';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../navigation/AuthNavigator';
-import Logo from '../../components/Logo';
+
+const logoImage = require('../../../assets/images/logo/Logo.PNG');
 
 type OtpLoginScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
@@ -119,10 +121,17 @@ const OtpLoginScreen: React.FC<Props> = ({navigation}) => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
           <View style={styles.logoContainer}>
-            <Logo size="large" showTagline />
+            <Image 
+              source={logoImage} 
+              style={styles.logo}
+              resizeMode="contain"
+            />
           </View>
-          <Text variant="titleLarge" style={styles.subtitle}>
+          <Text variant="headlineMedium" style={styles.title}>
             Autentificare cu cod SMS
+          </Text>
+          <Text variant="bodyMedium" style={styles.subtitle}>
+            Introdu numărul de telefon pentru a primi codul
           </Text>
 
           {!otpId ? (
@@ -223,15 +232,16 @@ const OtpLoginScreen: React.FC<Props> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: '#FFFFFF',
   },
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
+    paddingVertical: 40,
   },
   content: {
     padding: 24,
-    maxWidth: 400,
+    maxWidth: 450,
     alignSelf: 'center',
     width: '100%',
   },
@@ -239,11 +249,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 32,
   },
+  logo: {
+    width: 560,
+    height: 200,
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: 8,
+    color: '#212121',
+    fontWeight: '700',
+    fontSize: 28,
+  },
   subtitle: {
     textAlign: 'center',
     marginBottom: 32,
-    color: '#666',
-    fontWeight: '500',
+    color: '#757575',
+    fontSize: 16,
   },
   input: {
     marginBottom: 16,
@@ -251,8 +272,14 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 8,
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderRadius: 12,
+    backgroundColor: '#1976D2',
+    elevation: 2,
+    shadowColor: '#1976D2',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   linkButton: {
     marginTop: 12,
@@ -260,26 +287,29 @@ const styles = StyleSheet.create({
   infoText: {
     textAlign: 'center',
     marginBottom: 24,
-    color: '#666',
+    color: '#757575',
+    fontSize: 15,
   },
   countdownText: {
     textAlign: 'center',
     marginBottom: 16,
     color: '#FF9800',
     fontWeight: '600',
+    fontSize: 14,
   },
   devOtpContainer: {
     marginTop: 16,
     padding: 16,
     backgroundColor: '#E3F2FD',
     borderRadius: 12,
-    borderLeftWidth: 4,
-    borderLeftColor: '#2196F3',
+    borderWidth: 1,
+    borderColor: '#1976D2',
   },
   devOtpLabel: {
     fontSize: 12,
     color: '#1976D2',
     marginBottom: 8,
+    fontWeight: '600',
   },
   devOtpCode: {
     fontSize: 24,

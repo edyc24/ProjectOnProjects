@@ -365,3 +365,9 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 DataAccess/EntityFramework/ProjectOnProjectsContext.cs
+
+# User Secrets and Development Settings
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
+**/secrets.json

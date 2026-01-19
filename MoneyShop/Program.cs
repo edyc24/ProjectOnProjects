@@ -22,6 +22,12 @@ using Microsoft.ApplicationInsights.Extensibility;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add User Secrets for development (secrets stored locally, not in Git)
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
 // Configure Kestrel to listen on all network interfaces for development
 if (builder.Environment.IsDevelopment())
 {

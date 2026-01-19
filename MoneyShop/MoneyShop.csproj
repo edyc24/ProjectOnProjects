@@ -7,6 +7,7 @@
     <EnableDefaultStaticWebAssets>false</EnableDefaultStaticWebAssets>
     <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
     <DisableMvcStaticFiles>true</DisableMvcStaticFiles>
+    <UserSecretsId>MoneyShop-UserSecrets-2024</UserSecretsId>
   </PropertyGroup>
   
   <ItemGroup>

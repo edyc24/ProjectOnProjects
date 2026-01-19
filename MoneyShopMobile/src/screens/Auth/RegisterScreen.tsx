@@ -5,6 +5,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  Image,
 } from 'react-native';
 import {TextInput, Button, Text, Snackbar} from 'react-native-paper';
 import {useAuthStore} from '../../store/authStore';
@@ -12,6 +13,8 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AuthStackParamList} from '../../navigation/AuthNavigator';
 import {kycApi} from '../../services/api/kycApi';
 import {appInsightsService} from '../../services/telemetry/appInsightsService';
+
+const logoImage = require('../../../assets/images/logo/Logo.PNG');
 
 type RegisterScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
@@ -93,8 +96,18 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
-          <Text variant="headlineLarge" style={styles.title}>
-            Înregistrare
+          <View style={styles.logoContainer}>
+            <Image 
+              source={logoImage} 
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+          <Text variant="headlineMedium" style={styles.title}>
+            Creează cont nou
+          </Text>
+          <Text variant="bodyMedium" style={styles.subtitle}>
+            Completează datele pentru a începe
           </Text>
 
           <TextInput
@@ -183,29 +196,57 @@ const RegisterScreen: React.FC<Props> = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
   },
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
+    paddingVertical: 40,
   },
   content: {
-    padding: 20,
+    padding: 24,
+    maxWidth: 450,
+    alignSelf: 'center',
+    width: '100%',
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  logo: {
+    width: 560,
+    height: 200,
   },
   title: {
     textAlign: 'center',
-    marginBottom: 30,
-    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#212121',
+    fontWeight: '700',
+    fontSize: 28,
+  },
+  subtitle: {
+    textAlign: 'center',
+    marginBottom: 32,
+    color: '#757575',
+    fontSize: 16,
   },
   input: {
-    marginBottom: 15,
+    marginBottom: 16,
+    backgroundColor: '#FFFFFF',
   },
   button: {
-    marginTop: 10,
-    paddingVertical: 5,
+    marginTop: 8,
+    paddingVertical: 8,
+    borderRadius: 12,
+    backgroundColor: '#1976D2',
+    elevation: 2,
+    shadowColor: '#1976D2',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   linkButton: {
-    marginTop: 10,
+    marginTop: 12,
   },
 });
 

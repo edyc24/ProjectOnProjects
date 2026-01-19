@@ -21,6 +21,7 @@ import BrokerDirectoryScreen from '../screens/Broker/BrokerDirectoryScreen';
 import FinancialDataScreen from '../screens/Profile/FinancialDataScreen';
 import KycFormScreen from '../screens/Kyc/KycFormScreen';
 import KycAdminScreen from '../screens/Kyc/KycAdminScreen';
+import ChatScreen from '../screens/Chat/ChatScreen';
 import CustomHeader from '../components/CustomHeader';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -126,8 +127,10 @@ const MainNavigator = () => {
             iconName = focused ? 'view-dashboard' : 'view-dashboard-outline';
           } else if (route.name === 'Simulator') {
             iconName = focused ? 'calculator' : 'calculator-outline';
-          } else if (route.name === 'Profile') {
+          } else           if (route.name === 'Profile') {
             iconName = focused ? 'account' : 'account-outline';
+          } else if (route.name === 'Chat') {
+            iconName = focused ? 'robot' : 'robot-outline';
           } else {
             iconName = 'help-circle';
           }
@@ -171,7 +174,26 @@ const MainNavigator = () => {
         component={ProfileStack}
         options={{title: 'Profil'}}
       />
+      <Tab.Screen 
+        name="Chat" 
+        component={ChatStack}
+        options={{title: 'Chat'}}
+      />
     </Tab.Navigator>
+  );
+};
+
+const ChatStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen
+        name="ChatHome"
+        component={ChatScreen}
+      />
+    </Stack.Navigator>
   );
 };
 

@@ -21,6 +21,11 @@ using KycService = MoneyShop.BusinessLogic.Implementation.Kyc.KycService;
 using PdfGenerationService = MoneyShop.BusinessLogic.Implementation.Document.PdfGenerationService;
 using BrokerDirectoryService = MoneyShop.BusinessLogic.Implementation.Broker.BrokerDirectoryService;
 using UserFinancialDataService = MoneyShop.BusinessLogic.Implementation.User.UserFinancialDataService;
+using MoneyShop.BusinessLogic.Implementation.Eligibility;
+using MoneyShop.BusinessLogic.Implementation.Oblio;
+using MoneyShop.BusinessLogic.Implementation.Chat;
+using MoneyShop.BusinessLogic.Implementation.Lead;
+using MoneyShop.BusinessLogic.Implementation.OpenAIPlugin;
 using MoneyShop.Services;
 
 namespace MoneyShop.WebApp.Code.ExtensionMethods
@@ -46,8 +51,10 @@ namespace MoneyShop.WebApp.Code.ExtensionMethods
             services.AddScoped<BankService>();
             services.AddScoped<LeadService>();
             services.AddScoped<JwtService>();
-            services.AddScoped<MoneyShop.BusinessLogic.Implementation.Otp.EmailService>();
-            services.AddScoped<MoneyShop.BusinessLogic.Implementation.Otp.SmsService>();
+            
+            // Brevo Services (Email and SMS)
+            services.AddHttpClient<MoneyShop.BusinessLogic.Implementation.Otp.EmailService>();
+            services.AddHttpClient<MoneyShop.BusinessLogic.Implementation.Otp.SmsService>();
             services.AddScoped<OtpService>();
             services.AddScoped<ConsentService>();
             services.AddScoped<MandateService>();
@@ -56,6 +63,27 @@ namespace MoneyShop.WebApp.Code.ExtensionMethods
             services.AddScoped<PdfGenerationService>();
             services.AddScoped<BrokerDirectoryService>();
             services.AddScoped<UserFinancialDataService>();
+            
+            // Eligibility Services
+            services.AddScoped<EligibilityConfigService>();
+            services.AddScoped<SimpleEligibilityEngine>();
+            
+            // Oblio API Service
+            services.AddHttpClient<OblioApiService>();
+            services.AddScoped<OblioApiService>();
+            
+            // Chat Services
+            services.AddScoped<OpenAIChatService>();
+            services.AddScoped<RateLimitService>();
+            services.AddScoped<CostControlService>();
+            services.AddScoped<FaqCacheService>();
+            
+            // Lead Capture Services
+            services.AddScoped<LeadCaptureService>();
+            
+            // Azure OpenAI Plugin Service (HW4 - separate from existing ChatService)
+            services.AddHttpClient<AzureOpenAIPluginService>();
+            
             return services;
         }
 
