@@ -1,565 +1,427 @@
 ﻿@{
-    ViewData["Title"] = "MoneyShop - Broker de Credite Autorizat";
+    ViewData["Title"] = "MoneyShop - Simulează și Decide Informat";
     Layout = "_Layout";
 }
 
-<!-- Hero Section with Calculator -->
-<section class="hero-section-landing">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 hero-content">
-                <h1 class="hero-title">Simuleaza. Intelege. Decide Informat.</h1>
-                <p class="hero-description">
-                    Credite rapide, simplu si transparent cu un broker autorizat.
-                </p>
-                <div class="hero-badge">
-                    <span class="badge-text">FARA COMISION (complet gratuit)</span>
-                </div>
-                <div class="hero-buttons mt-4">
-                    <button class="btn btn-primary btn-lg" onclick="scrollToCalculator()">
+<div class="bg-dark-bg text-gray-100 antialiased selection:bg-blue-500 selection:text-white" style="min-height: 100vh;">
+<nav class="absolute w-full z-50 top-0 border-b border-white/5 bg-dark-bg/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-20">
+<div class="flex-shrink-0 flex items-center gap-1">
+<span class="text-2xl font-bold tracking-tight text-white">MoneyShop<span class="text-gray-400 text-xs align-top ml-0.5">®</span></span>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-1 nav-link" href="#calculator">
+                    Calculator Credite <span class="material-icons-outlined text-[16px]">expand_more</span>
+</a>
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-1 nav-link" href="#features">
+                    Cum Functioneaza <span class="material-icons-outlined text-[16px]">expand_more</span>
+</a>
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-1 nav-link" href="#features">
+                    Educatie Financiara <span class="material-icons-outlined text-[16px]">expand_more</span>
+</a>
+<a class="text-gray-300 hover:text-white text-sm font-medium transition-colors nav-link" href="#help">Contact</a>
+</div>
+<div class="flex items-center gap-3">
+<a href="/Account/Login" class="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-md text-sm font-medium transition-all shadow-lg shadow-blue-900/20">
+                    Conecteaza-te
+                </a>
+<button class="p-2 rounded-md border border-gray-700 bg-gray-800/50 hover:bg-gray-700 transition-colors text-gray-300">
+<span class="material-icons-outlined text-sm">person_outline</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<section class="relative pt-32 pb-32 lg:pt-44 lg:pb-40 overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[800px] bg-gradient-to-b from-[#111827] via-[#1e293b] to-[#0f172a] -z-20"></div>
+<div class="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[120px] -z-10"></div>
+<div class="absolute bottom-0 left-[-10%] w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[100px] -z-10"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8">
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.15]">
+                    Simuleaza. Intelege.<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-200">Decide Informat.</span>
+</h1>
+<div class="space-y-4">
+<p class="text-lg text-gray-300 font-light max-w-lg leading-relaxed">
+                        Credite rapide, simplu si transparent cu un broker autorizat.
+                    </p>
+<p class="text-lg text-white font-semibold">
+                        FARA COMISION <span class="text-gray-400 font-normal">(complet gratuit)</span>
+</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button onclick="scrollToCalculator()" class="bg-[#1e3a8a] hover:bg-blue-800 border border-blue-800/50 text-white px-8 py-3.5 rounded-md text-base font-medium shadow-lg shadow-blue-900/20 transition-all">
                         Calculeaza Creditul
                     </button>
-                    <button class="btn btn-outline-light btn-lg">
+<button class="bg-[#2563EB] hover:bg-blue-600 text-white px-8 py-3.5 rounded-md text-base font-medium transition-all shadow-lg shadow-blue-500/20">
                         Vorbeste cu un Broker
                     </button>
-                </div>
-            </div>
-            <div class="col-lg-6 hero-visual">
-                <div class="calculator-preview">
-                    <div class="desktop-preview">
-                        <div class="preview-header">Eligibilitatea ta</div>
-                        <div class="preview-amount" id="previewEligibility">85,000 Lei</div>
-                        <div class="preview-score">
-                            <i class="fas fa-check-circle text-success"></i>
-                            <span>Scor de Credit <strong id="previewScore">721</strong> Bun</span>
-                        </div>
-                        <div class="preview-rate">Rata Estimata <strong id="previewRate">1,250</strong> Lei/luna</div>
-                        <div class="preview-dti">
-                            <div class="dti-label">Grad indatorare</div>
-                            <div class="progress">
-                                <div class="progress-bar" id="previewDtiBar" style="width: 32%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mobile-preview">
-                        <div class="mobile-content">
-                            <div class="mobile-item">44,800 Lei</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+</div>
+<div class="relative lg:h-[500px] flex items-center justify-center lg:justify-end">
+<div class="relative z-10 w-full max-w-[600px]">
+<div class="relative bg-gray-900 rounded-t-xl border-t-8 border-x-8 border-gray-800 shadow-2xl">
+<div class="bg-dark-surface aspect-video rounded-t-sm p-4 relative overflow-hidden flex flex-col">
+<div class="flex justify-between items-center mb-4 border-b border-gray-700/50 pb-2">
+<span class="text-[10px] text-gray-400">MoneyShop •</span>
+<div class="flex gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+</div>
+</div>
+<div class="flex gap-4 h-full">
+<div class="w-1/4 h-full bg-gray-800/30 rounded flex flex-col gap-2 p-2">
+<div class="h-1.5 w-12 bg-gray-700 rounded mb-2"></div>
+<div class="h-1.5 w-full bg-blue-600/40 rounded"></div>
+<div class="h-1.5 w-3/4 bg-gray-700/50 rounded"></div>
+<div class="h-1.5 w-5/6 bg-gray-700/50 rounded"></div>
+</div>
+<div class="flex-1 relative">
+<p class="text-[10px] text-gray-400 mb-1">Eligibilitatea ta</p>
+<h3 class="text-3xl font-bold text-white mb-6" id="previewEligibility">85,000 <span class="text-sm font-normal text-gray-400">Lei</span></h3>
+<div class="flex gap-6">
+<div>
+<p class="text-[10px] text-gray-500">Rată Estimată</p>
+<p class="text-sm font-bold text-white" id="previewRate">1,250 <span class="text-[10px] font-normal text-gray-400">Lei/lună</span></p>
+</div>
+<div>
+<p class="text-[10px] text-gray-500">Grad Indatorare</p>
+<p class="text-sm font-bold text-white" id="previewDti">32%</p>
+</div>
+</div>
+<div class="absolute right-0 top-4 bg-[#1e293b] border border-gray-700 p-3 rounded-lg shadow-xl w-40 transform translate-x-4">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-[10px] text-gray-400 mb-0.5">Scor de Credit</p>
+<p class="text-lg font-bold text-white" id="previewScore">721 <span class="text-[10px] font-normal text-green-400 ml-1">Bun</span></p>
+</div>
+<div class="h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center border-2 border-blue-400">
+<span class="material-icons-outlined text-white text-[14px]">check</span>
+</div>
+</div>
+<div class="w-full bg-gray-800 h-1 rounded-full mt-2 overflow-hidden">
+<div class="bg-gradient-to-r from-green-500 to-green-400 h-full w-3/4" id="previewDtiBar"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mx-auto w-32 h-12 bg-gradient-to-b from-gray-700 to-gray-800"></div>
+<div class="mx-auto w-48 h-3 bg-gray-800 rounded-full shadow-xl -mt-1"></div>
+</div>
+<div class="absolute left-0 bottom-0 md:left-10 md:bottom-10 w-[140px] z-20 transform translate-y-4">
+<div class="bg-black rounded-[20px] border-[4px] border-gray-800 shadow-2xl overflow-hidden aspect-[9/19]">
+<div class="bg-[#0f172a] h-full p-2 flex flex-col">
+<div class="flex justify-between items-center mb-4 pt-1">
+<div class="w-8 h-1 bg-gray-700 rounded-full"></div>
+</div>
+<div class="bg-blue-600/20 p-2 rounded mb-2">
+<div class="w-6 h-6 rounded bg-blue-500 mb-1"></div>
+</div>
+<div class="space-y-2">
+<div class="h-2 w-full bg-gray-800 rounded"></div>
+<div class="h-2 w-full bg-gray-800 rounded"></div>
+<div class="h-2 w-2/3 bg-gray-800 rounded"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
-<!-- Calculator Section -->
-<section class="calculator-section" id="calculator">
-    <div class="container">
-        <div class="calculator-card">
-            <div class="calculator-tabs">
-                <button class="tab-btn active" data-loan-type="NP">Credit de Nevoi Personale</button>
-                <button class="tab-btn" data-loan-type="IPOTECAR">Credit Ipotecar</button>
-                <button class="tab-btn" data-loan-type="REFINANTARE">Refinantare</button>
-            </div>
-            
-            <div class="calculator-content">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="calculator-inputs">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Venit Net Lunar</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" id="salaryNet" value="9000" min="0" step="100">
-                                        <span class="input-group-text">Lei</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Bonuri de Masa</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" id="mealTickets" value="0" min="0" step="50">
-                                        <span class="input-group-text">Lei</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Perioada</label>
-                                    <select class="form-select" id="termMonths">
-                                        <option value="12">1 an</option>
-                                        <option value="24">2 ani</option>
-                                        <option value="36">3 ani</option>
-                                        <option value="48">4 ani</option>
-                                        <option value="60" selected>5 ani</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Tip Credit</label>
-                                    <select class="form-select" id="creditType" disabled>
-                                        <option>Selecteaza tip credit</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mt-4">
-                                <button class="btn btn-primary btn-lg w-100" id="calculateBtn" onclick="calculateEligibility()">
-                                    Vezi Analiza Completa
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="calculator-results">
-                            <h5 class="results-title">Rezultate Estimate</h5>
-                            <div class="result-item">
-                                <div class="result-label">Suma Estimata</div>
-                                <div class="result-value" id="resultAmount">75,000 Lei</div>
-                            </div>
-                            <div class="result-item">
-                                <div class="result-label">Rata Lunara</div>
-                                <div class="result-value" id="resultRate">1.250 Lei</div>
-                            </div>
-                            <div class="result-item">
-                                <div class="result-label">Grad Indatorare</div>
-                                <div class="result-value">
-                                    <span id="resultDti">32%</span>
-                                    <span class="badge badge-estimativ">Estimativ</span>
-                                </div>
-                                <div class="progress mt-2">
-                                    <div class="progress-bar" id="resultDtiBar" style="width: 32%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<section class="relative z-20 -mt-24 px-4 pb-20 sm:px-6 lg:px-8" id="calculator">
+<div class="max-w-6xl mx-auto calculator-shadow rounded-xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10">
+<div class="flex flex-wrap border-b border-white/5 bg-white/5">
+<button class="px-8 py-4 text-sm font-medium text-gray-900 bg-gray-300 tab-btn active" data-loan-type="NP">
+                Credit de Nevoi Personale
+            </button>
+<button class="px-8 py-4 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors bg-[#1a2333] tab-btn" data-loan-type="IPOTECAR">
+                Credit Ipotecar
+            </button>
+<button class="px-8 py-4 text-sm font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors bg-[#1a2333] tab-btn" data-loan-type="REFINANTARE">
+                Refinantare
+            </button>
+</div>
+<div class="flex flex-col lg:flex-row bg-[#e2e8f0]/90">
+<div class="flex-1 p-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div>
+<label class="block text-xs font-semibold text-gray-600 mb-2">VENIT NET LUNAR</label>
+<div class="relative">
+<input class="block w-full rounded border-0 bg-white text-gray-900 shadow-sm py-2.5 pl-3 pr-8 focus:ring-2 focus:ring-blue-500 text-sm" type="number" id="salaryNet" value="9000" min="0" step="100"/>
+<span class="absolute right-2 top-2.5 text-gray-400 material-icons-outlined text-sm pointer-events-none">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-600 mb-2">BONURI DE MASA</label>
+<div class="relative">
+<input class="block w-full rounded border-0 bg-white text-gray-900 shadow-sm py-2.5 pl-3 pr-8 focus:ring-2 focus:ring-blue-500 text-sm" type="number" id="mealTickets" value="0" min="0" step="50"/>
+<span class="absolute right-2 top-2.5 text-gray-400 material-icons-outlined text-sm pointer-events-none">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-600 mb-2">PERIOADA</label>
+<div class="relative">
+<select class="block w-full rounded border-0 bg-white text-gray-900 shadow-sm py-2.5 pl-3 pr-8 focus:ring-2 focus:ring-blue-500 text-sm" id="termMonths">
+<option value="12">1 an</option>
+<option value="24">2 ani</option>
+<option value="36">3 ani</option>
+<option value="48">4 ani</option>
+<option value="60" selected>5 ani</option>
+</select>
+<span class="absolute right-2 top-2.5 text-gray-400 material-icons-outlined text-sm pointer-events-none">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block text-xs font-semibold text-gray-600 mb-2">TIP CREDIT</label>
+<div class="h-[42px] flex items-center text-gray-500 text-sm italic">Selectat automat</div>
+</div>
+</div>
+<div class="flex justify-end pt-4 border-t border-gray-300/50">
+<button class="bg-[#2e4c85] hover:bg-[#1e3a6a] text-white px-8 py-3 rounded-md text-sm font-medium transition-colors shadow-sm w-full sm:w-auto" id="calculateBtn" onclick="calculateEligibility()">
+                        Vezi Analiza Completa
+                    </button>
+</div>
+</div>
+<div class="w-full lg:w-80 bg-[#161e2e] p-6 relative flex flex-col justify-center border-l border-white/5">
+<div class="space-y-5 relative z-10">
+<div class="flex justify-between items-center border-b border-gray-700/50 pb-3">
+<span class="text-gray-300 text-sm font-light">Suma Estimata</span>
+<span class="text-xl font-bold text-white" id="resultAmount">75.000 <span class="text-xs font-normal text-gray-400">Lei</span></span>
+</div>
+<div class="flex justify-between items-center border-b border-gray-700/50 pb-3">
+<span class="text-gray-300 text-sm font-light">Rata Lunara</span>
+<span class="text-xl font-bold text-white" id="resultRate">1.250 <span class="text-xs font-normal text-gray-400">Lei</span></span>
+</div>
+<div class="flex justify-between items-center border-b border-gray-700/50 pb-3">
+<span class="text-gray-300 text-sm font-light">Grad Indatorare</span>
+<div class="flex items-center gap-2">
+<span class="text-xl font-bold text-white" id="resultDti">32%</span>
+<span class="w-6 h-6 rounded bg-blue-600 flex items-center justify-center text-[10px] text-white font-bold">
+<span class="material-icons-outlined text-[14px]">close</span>
+</span>
+</div>
+</div>
+</div>
+<div class="mt-4 text-right">
+<button class="text-xs text-gray-400 hover:text-white flex items-center justify-end w-full gap-1 transition-colors bg-[#232d3f] py-1.5 px-3 rounded ml-auto w-max">
+<span class="material-icons-outlined text-xs">info</span> Estimativ
+                    </button>
+</div>
+</div>
+</div>
+</div>
 </section>
-
-<!-- Partners Section -->
-<section class="partners-section">
-    <div class="container">
-        <h2 class="section-title text-center">Lucram cu cele mai mari institutii financiare</h2>
-        <div class="partners-logos">
-            <div class="partner-logo">BCR</div>
-            <div class="partner-logo">BT</div>
-            <div class="partner-logo">BRD</div>
-            <div class="partner-logo">ING</div>
-            <div class="partner-logo">UniCredit</div>
-            <div class="partner-logo">Garanti BBVA</div>
-        </div>
-    </div>
+<section class="py-12 border-b border-white/5 relative">
+<div class="absolute inset-0 bg-dark-bg"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+<div class="flex items-center justify-center gap-4 mb-10">
+<div class="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent w-24"></div>
+<p class="text-sm text-gray-400 font-light tracking-wide">Lucram cu cele mai mari institutii financiare</p>
+<div class="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent w-24"></div>
+</div>
+<div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-90">
+<div class="h-8 flex items-center">
+<span class="text-blue-500 font-bold text-xl tracking-tighter">BCR</span>
+<div class="ml-1 w-4 h-4 bg-red-600 rounded-sm"></div>
+</div>
+<div class="h-8 flex items-center">
+<div class="w-8 h-8 rounded-full border-2 border-yellow-500 flex items-center justify-center">
+<span class="text-yellow-500 font-bold text-xs">BT</span>
+</div>
+</div>
+<div class="h-8 flex items-center gap-1">
+<div class="w-4 h-4 bg-red-600 transform rotate-45"></div>
+<div class="w-4 h-4 bg-black border border-white transform rotate-45 -ml-2"></div>
+<span class="text-white font-serif font-bold text-lg ml-1">BRD</span>
+</div>
+<div class="h-8 flex items-center gap-1 text-orange-500 font-bold text-xl">
+                ING <span class="material-icons-outlined">pets</span>
+</div>
+<div class="h-8 flex items-center gap-1 text-red-600 font-bold text-xl italic">
+<div class="w-6 h-6 rounded-full bg-red-600 flex items-center justify-center text-white">
+<span class="material-icons-outlined text-sm transform rotate-45">arrow_upward</span>
+</div>
+<span class="text-white">UniCredit</span>
+</div>
+<div class="h-8 flex items-center gap-1">
+<span class="text-green-500 material-icons-outlined">eco</span>
+<span class="text-white font-bold text-lg">Garanti BBVA</span>
+</div>
+</div>
+</div>
 </section>
-
-<!-- Why Choose MoneyShop Section -->
-<section class="features-section">
-    <div class="container">
-        <h2 class="section-title text-center">De ce sa alegi MoneyShop</h2>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h4>Transparenta Totala</h4>
-                    <p>Vezi exact ce date sunt folosite, pentru ce scop si cand. Fara surprize, fara ascunzaturi.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h4>Raspuns Rapid</h4>
-                    <p>Analiza completa in cateva minute. Fara birocratie, fara asteptari. Totul digital si transparent.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4>Educatie Financiara</h4>
-                    <p>Invatam despre credite, DTI, si cum sa faci alegeri financiare inteligente pentru viitorul tau.</p>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h4>Date Protejate</h4>
-                    <p>Datele tale sunt protejate conform GDPR. Mandat temporar de maximum 30 zile, revocabil oricand.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Help Section -->
-<section class="help-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h2 class="section-title">Ai nevoie de ajutor?</h2>
-                <p class="section-description">
-                    Discuta cu un broker autorizat pentru cea mai buna solutie.
+<section class="py-20 relative bg-gradient-to-b from-[#111827] to-[#0B1120]" id="features">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center mb-16 relative">
+<div class="absolute top-1/2 left-0 w-full h-px bg-gray-800 -z-10"></div>
+<h2 class="text-2xl font-bold text-white bg-[#111827] inline-block px-6 relative z-10">De ce sa alegi MoneyShop</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-[#151f32] p-6 rounded shadow-lg border border-white/5 hover:border-blue-500/30 transition-all duration-300 group">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-blue-900/40 flex items-center justify-center text-blue-400">
+<span class="material-icons-outlined">visibility</span>
+</div>
+<h3 class="text-base font-semibold text-white">Transparenta<br/>Totala</h3>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed border-t border-gray-700 pt-3">
+                    Costuri clar afișate, fără comisioane ascunse. Înțelegi exact ce plătești.
                 </p>
-                <div class="help-buttons mt-4">
-                    <button class="btn btn-primary btn-lg">Programeaza un Apel</button>
-                    <button class="btn btn-outline-primary btn-lg">Chat cu un Broker</button>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center">
-                <div class="help-image">
-                    <i class="fas fa-headset" style="font-size: 8rem; opacity: 0.3; color: #0d6efd;"></i>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+<div class="bg-[#151f32] p-6 rounded shadow-lg border border-white/5 hover:border-blue-500/30 transition-all duration-300 group">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-blue-900/40 flex items-center justify-center text-blue-400">
+<span class="material-icons-outlined">schedule</span>
+</div>
+<h3 class="text-base font-semibold text-white">Raspuns<br/>Rapid</h3>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed border-t border-gray-700 pt-3">
+                    Primești ofertele în timp real. Proces rapid de aplicare și aprobare.
+                </p>
+</div>
+<div class="bg-[#151f32] p-6 rounded shadow-lg border border-white/5 hover:border-blue-500/30 transition-all duration-300 group">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-blue-900/40 flex items-center justify-center text-blue-400">
+<span class="material-icons-outlined">school</span>
+</div>
+<h3 class="text-base font-semibold text-white">Educatie<br/>Financiara</h3>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed border-t border-gray-700 pt-3">
+                    Resurse gratuite pentru a lua decizii financiare inteligente pe termen lung.
+                </p>
+</div>
+<div class="bg-[#151f32] p-6 rounded shadow-lg border border-white/5 hover:border-blue-500/30 transition-all duration-300 group">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-blue-900/40 flex items-center justify-center text-blue-400">
+<span class="material-icons-outlined">verified_user</span>
+</div>
+<h3 class="text-base font-semibold text-white">Date<br/>Protejate</h3>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed border-t border-gray-700 pt-3">
+                    Sistem de securitate avansat. Datele tale sunt confidențiale și în siguranță.
+                </p>
+</div>
+</div>
+</div>
 </section>
+<section class="py-10 pb-20 bg-[#0B1120]" id="help">
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-[#162032] rounded-lg shadow-2xl overflow-hidden relative border border-gray-800">
+<div class="absolute left-0 top-0 w-full h-full bg-gradient-to-r from-[#162032] via-[#162032] to-transparent z-0"></div>
+<div class="flex flex-col md:flex-row items-end relative z-10">
+<div class="p-10 md:p-12 md:w-3/5">
+<h2 class="text-3xl font-bold text-white mb-3">Ai nevoie de ajutor?</h2>
+<p class="text-gray-400 mb-8 max-w-md text-base font-light">
+                        Discuta cu un broker autorizat pentru cea mai buna solutie.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 mb-8">
+<button class="bg-[#254ea0] hover:bg-blue-700 text-white px-6 py-2.5 rounded text-sm font-medium transition-colors shadow-lg">
+                            Programeaza un Apel
+                        </button>
+<button class="bg-transparent border border-gray-600 hover:border-gray-400 text-gray-300 hover:text-white px-6 py-2.5 rounded text-sm font-medium transition-colors">
+                            Chat cu un Broker
+                        </button>
+</div>
+<p class="text-[10px] text-gray-500">MoneyShop® - Broker de credite autorizat. FARA COMISION (complet gratuit)</p>
+</div>
+<div class="md:w-2/5 h-64 md:h-[320px] w-full relative overflow-hidden flex items-end justify-center md:justify-end">
+<div class="absolute inset-0 bg-gradient-to-t from-[#162032] via-transparent to-transparent z-10"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-[#162032] via-transparent to-transparent z-10"></div>
+<img alt="Consultant profesionist financiar zâmbind și lucrând la laptop" class="object-cover h-full w-full object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD27xv0wmxKL8htH4KRX22JkjjSVT_nALbf2WmAGtvrOtp5S0-Z_fSdDrzo-Gd2k4C3Y3786xYCzNGKviAbiR7ix2kTH_1PDeveGBZz-QSb1YS3QsuZ5rrwIehVALrg0EMR8to5NkCUzIrSHdyO0HI4-JUMrCEzylpiIMhRICe9xcKSROfCy0M11640-GTNINgBTH8ICPh7iEuF_JfGWn-AHCfB5kamN_Jzy3qCe0QJURMqfYRdTG1kCVRvqcmEHnfSTB66zojyEHmb"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
 
 @section Styles {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1d4ed8",
+                        secondary: "#1e3a8a",
+                        "dark-bg": "#0B1120",
+                        "dark-surface": "#131C2E",
+                        "dark-surface-lighter": "#1e293b",
+                        "accent": "#3b82f6",
+                        "text-dim": "#94a3b8",
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'hero-gradient': 'linear-gradient(to bottom, #0f172a 0%, #1e293b 100%)',
+                        'card-gradient': 'linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%)',
+                        'btn-primary-gradient': 'linear-gradient(180deg, #2563EB 0%, #1D4ED8 100%)',
+                        'btn-secondary-gradient': 'linear-gradient(180deg, #334155 0%, #1E293B 100%)',
+                    }
+                },
+            },
+        };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
     <style>
-        :root {
-            --moneyshop-primary: #0d6efd;
-            --moneyshop-dark: #1a1a2e;
-            --moneyshop-light: #f8f9fa;
-        }
-
         body {
-            background-color: var(--moneyshop-dark);
-            color: #fff;
+            font-family: 'Inter', sans-serif;
+            background-color: #0B1120;
         }
-
-        /* Hero Section */
-        .hero-section-landing {
-            background: linear-gradient(135deg, var(--moneyshop-dark) 0%, #16213e 100%);
-            padding: 80px 0;
-            min-height: 600px;
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #fff;
-        }
-
-        .hero-description {
-            font-size: 1.25rem;
-            color: #ccc;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: rgba(13, 110, 253, 0.2);
-            border: 2px solid var(--moneyshop-primary);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            margin-bottom: 1rem;
-        }
-
-        .badge-text {
-            color: var(--moneyshop-primary);
-            font-weight: 600;
-        }
-
-        /* Calculator Preview */
-        .calculator-preview {
+        .nav-link {
             position: relative;
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: flex-end;
         }
-
-        .desktop-preview {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            min-width: 300px;
-            backdrop-filter: blur(10px);
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s;
         }
-
-        .preview-header {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 10px;
+        .nav-link:hover::after {
+            width: 100%;
         }
-
-        .preview-amount {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--moneyshop-primary);
-            margin-bottom: 15px;
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        .preview-score {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            color: #ccc;
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
         }
-
-        .preview-rate {
-            color: #ccc;
-            margin-bottom: 15px;
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
         }
-
-        .preview-dti {
-            margin-top: 15px;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
         }
-
-        .dti-label {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .mobile-preview {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 20px;
-            width: 150px;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .mobile-content {
-            color: #fff;
-            font-size: 1.2rem;
-        }
-
-        /* Calculator Section */
-        .calculator-section {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 60px 0;
-        }
-
-        .calculator-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-        }
-
-        .calculator-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .tab-btn {
-            background: none;
+        .input-dark {
+            background-color: #f8fafc;
             border: none;
-            color: #aaa;
-            padding: 15px 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
+            color: #0f172a;
         }
-
+        .calculator-shadow {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
         .tab-btn.active {
-            color: var(--moneyshop-primary);
-            border-bottom-color: var(--moneyshop-primary);
-        }
-
-        .calculator-inputs .form-label {
-            color: #fff;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .calculator-inputs .form-control,
-        .calculator-inputs .form-select {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-        }
-
-        .calculator-inputs .form-control:focus,
-        .calculator-inputs .form-select:focus {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: var(--moneyshop-primary);
-            color: #fff;
-        }
-
-        .calculator-results {
-            background: rgba(13, 110, 253, 0.1);
-            border: 2px solid var(--moneyshop-primary);
-            border-radius: 15px;
-            padding: 25px;
-        }
-
-        .results-title {
-            color: var(--moneyshop-primary);
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .result-item {
-            margin-bottom: 20px;
-        }
-
-        .result-label {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        .result-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .badge-estimativ {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            margin-left: 10px;
-        }
-
-        .progress {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        .progress-bar {
-            background: var(--moneyshop-primary);
-        }
-
-        /* Partners Section */
-        .partners-section {
-            padding: 60px 0;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 40px;
-            color: #fff;
-        }
-
-        .partners-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .partner-logo {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #aaa;
-            padding: 20px 40px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            transition: all 0.3s;
-        }
-
-        .partner-logo:hover {
-            color: var(--moneyshop-primary);
-            background: rgba(13, 110, 253, 0.1);
-        }
-
-        /* Features Section */
-        .features-section {
-            padding: 80px 0;
-        }
-
-        .feature-card {
-            text-align: center;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            height: 100%;
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--moneyshop-primary);
-            margin-bottom: 20px;
-        }
-
-        .feature-card h4 {
-            color: #fff;
-            margin-bottom: 15px;
-        }
-
-        .feature-card p {
-            color: #ccc;
-        }
-
-        /* Help Section */
-        .help-section {
-            padding: 80px 0;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .section-description {
-            font-size: 1.1rem;
-            color: #ccc;
-            margin-bottom: 1.5rem;
-        }
-
-        .help-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: var(--moneyshop-primary);
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background: #0b5ed7;
-        }
-
-        .btn-outline-light,
-        .btn-outline-primary {
-            border-color: var(--moneyshop-primary);
-            color: var(--moneyshop-primary);
-        }
-
-        .btn-outline-light:hover,
-        .btn-outline-primary:hover {
-            background: var(--moneyshop-primary);
-            color: #fff;
-        }
-
-        @@media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .calculator-preview {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .partners-logos {
-                gap: 20px;
-            }
+            background-color: #d1d5db !important;
+            color: #111827 !important;
         }
     </style>
 }
@@ -571,15 +433,23 @@
         // Tab switching
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.add('bg-[#1a2333]', 'text-gray-400');
+                    b.classList.remove('bg-gray-300', 'text-gray-900');
+                });
+                this.classList.add('active', 'bg-gray-300', 'text-gray-900');
+                this.classList.remove('bg-[#1a2333]', 'text-gray-400');
                 currentLoanType = this.dataset.loanType;
             });
         });
 
         // Auto-calculate on input change
         ['salaryNet', 'mealTickets', 'termMonths'].forEach(id => {
-            document.getElementById(id).addEventListener('input', debounce(calculateEligibility, 500));
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', debounce(calculateEligibility, 500));
+            }
         });
 
         function debounce(func, wait) {
@@ -629,31 +499,43 @@
         }
 
         function updateResults(data) {
-            // Update results
+            // Update results panel
             if (data.offers?.maxLoanAmountUsed) {
                 const amount = Math.round(data.offers.maxLoanAmountUsed).toLocaleString('ro-RO');
-                document.getElementById('resultAmount').textContent = amount + ' Lei';
-                document.getElementById('previewEligibility').textContent = amount + ' Lei';
+                document.getElementById('resultAmount').innerHTML = amount + ' <span class="text-xs font-normal text-gray-400">Lei</span>';
+                document.getElementById('previewEligibility').innerHTML = amount + ' <span class="text-sm font-normal text-gray-400">Lei</span>';
             }
 
             if (data.offers?.affordability?.paymentMax) {
                 const rate = Math.round(data.offers.affordability.paymentMax).toLocaleString('ro-RO');
-                document.getElementById('resultRate').textContent = rate + ' Lei';
-                document.getElementById('previewRate').textContent = rate;
+                document.getElementById('resultRate').innerHTML = rate + ' <span class="text-xs font-normal text-gray-400">Lei</span>';
+                const rateText = document.getElementById('previewRate');
+                if (rateText) {
+                    rateText.innerHTML = rate + ' <span class="text-[10px] font-normal text-gray-400">Lei/lună</span>';
+                }
             }
 
             if (data.dti?.dtiUsed) {
                 const dtiPercent = Math.round(data.dti.dtiUsed * 100);
                 document.getElementById('resultDti').textContent = dtiPercent + '%';
-                document.getElementById('resultDtiBar').style.width = dtiPercent + '%';
-                document.getElementById('previewDtiBar').style.width = dtiPercent + '%';
+                const previewDti = document.getElementById('previewDti');
+                if (previewDti) {
+                    previewDti.textContent = dtiPercent + '%';
+                }
+                const previewDtiBar = document.getElementById('previewDtiBar');
+                if (previewDtiBar) {
+                    previewDtiBar.style.width = (dtiPercent * 0.75) + '%';
+                }
             }
 
             // Update preview score (mock for now)
             if (data.decision?.rating) {
                 const scoreMap = { 'A': 750, 'B': 650, 'C': 550, 'D': 450 };
                 const score = scoreMap[data.decision.rating] || 650;
-                document.getElementById('previewScore').textContent = score;
+                const previewScore = document.getElementById('previewScore');
+                if (previewScore) {
+                    previewScore.innerHTML = score + ' <span class="text-[10px] font-normal text-green-400 ml-1">Bun</span>';
+                }
             }
         }
 

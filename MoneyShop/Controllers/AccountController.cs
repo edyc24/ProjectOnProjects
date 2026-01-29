@@ -40,9 +40,56 @@ namespace MoneyShop.WebApp.Controllers
                 return View("Error_NotFound");
             }
 
+            // Capture IP and UserAgent for audit
+            model.IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+            model.UserAgent = HttpContext.Request.Headers["User-Agent"].ToString();
+
             Service.RegisterNewUser(model);
 
-            return RedirectToAction("Index", "Home");
+            // After registration, redirect to OTP verification if phone provided
+            if (!string.IsNullOrEmpty(model.Phone))
+            {
+                // Request OTP for phone verification
+                var otpService = HttpContext.RequestServices.GetService<MoneyShop.BusinessLogic.Implementation.Auth.OtpService>();
+                if (otpService != null)
+                {
+                    try
+                    {
+                        var result = otpService.RequestOtp(
+                            model.Phone,
+                            "PHONE_VERIFY",
+                            null,
+                            model.IpAddress,
+                            null
+                        );
+
+                        return RedirectToAction("VerifyOtp", new { 
+                            otpId = result.OtpId, 
+                            phone = model.Phone, 
+                            purpose = "PHONE_VERIFY",
+                            expires = result.ExpiresInSeconds,
+                            redirect = "/Account/Login"
+                        });
+                    }
+                    catch
+                    {
+                        // If OTP fails, just redirect to login
+                    }
+                }
+            }
+
+            return RedirectToAction("Login");
+        }
+        
+        [HttpGet]
+        public IActionResult VerifyOtp(Guid otpId, string phone, string purpose, int expires = 300, string redirect = "/")
+        {
+            ViewBag.OtpId = otpId;
+            ViewBag.Phone = phone;
+            ViewBag.Purpose = purpose;
+            ViewBag.Expires = expires;
+            ViewBag.Redirect = redirect;
+            return View();
         }
 
         [HttpGet]

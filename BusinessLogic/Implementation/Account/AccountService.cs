@@ -12,8 +12,9 @@ using MoneyShop.BusinessLogic.Implementation.Account.Models;
 using MoneyShop.Common.DTOs;
 using MoneyShop.Common.Extensions;
 using MoneyShop.DataAccess;
-using MoneyShop.Entities.Entities;
 using MoneyShop.Models;
+using ConsentEntity = MoneyShop.Entities.Entities.Consent;
+using MandateEntity = MoneyShop.Entities.Entities.Mandate;
 
 namespace MoneyShop.BusinessLogic.Implementation.Account
 {
@@ -85,6 +86,7 @@ namespace MoneyShop.BusinessLogic.Implementation.Account
 
             var user = Mapper.Map<RegisterModel, Utilizatori>(model);
             user.Mail = model.Email;
+            user.NumarTelefon = model.Phone;
             user.Username = model.FirstName + model.LastName;
             user.Parola = HashPassword(user.Parola);
             
@@ -110,13 +112,167 @@ namespace MoneyShop.BusinessLogic.Implementation.Account
             }
             
             user.IsDeleted = false;
+            user.DataIncepere = DateTime.UtcNow;
             
-            // Set email and phone verification to true by default (will be changed later)
-            user.EmailVerified = true;
-            user.PhoneVerified = true;
+            // Set email and phone verification to false (will be verified via OTP)
+            user.EmailVerified = false;
+            user.PhoneVerified = false;
 
             UnitOfWork.Users.Insert(user);
-
+            UnitOfWork.SaveChanges();
+            
+            // Save consents and mandates
+            SaveUserConsentsAndMandates(user.IdUtilizator, model);
+        }
+        
+        private void SaveUserConsentsAndMandates(int userId, RegisterModel model)
+        {
+            var now = DateTime.UtcNow;
+            var sourceChannel = "web";
+            var deviceHashBytes = !string.IsNullOrEmpty(model.DeviceHash) 
+                ? Encoding.UTF8.GetBytes(model.DeviceHash) 
+                : null;
+            
+            // 1. Terms & Conditions consent
+            if (model.AcceptTerms)
+            {
+                var termsConsent = new ConsentEntity
+                {
+                    ConsentId = Guid.NewGuid(),
+                    UserId = userId,
+                    ConsentType = "TC_ACCEPT",
+                    Status = "granted",
+                    GrantedAt = now,
+                    ConsentTextSnapshot = "Accept Termenii și Condițiile de utilizare a platformei MoneyShop.",
+                    Ip = model.IpAddress,
+                    UserAgent = model.UserAgent,
+                    DeviceHash = deviceHashBytes,
+                    SourceChannel = sourceChannel
+                };
+                UnitOfWork.Consents.Insert(termsConsent);
+            }
+            
+            // 2. GDPR consent
+            if (model.AcceptGdpr)
+            {
+                var gdprConsent = new ConsentEntity
+                {
+                    ConsentId = Guid.NewGuid(),
+                    UserId = userId,
+                    ConsentType = "GDPR_ACCEPT",
+                    Status = "granted",
+                    GrantedAt = now,
+                    ConsentTextSnapshot = "Am citit și înțeleg cum sunt prelucrate datele mele personale conform GDPR.",
+                    Ip = model.IpAddress,
+                    UserAgent = model.UserAgent,
+                    DeviceHash = deviceHashBytes,
+                    SourceChannel = sourceChannel
+                };
+                UnitOfWork.Consents.Insert(gdprConsent);
+            }
+            
+            // 3. Costs consent
+            if (model.AcceptCosts)
+            {
+                var costsConsent = new ConsentEntity
+                {
+                    ConsentId = Guid.NewGuid(),
+                    UserId = userId,
+                    ConsentType = "COSTS_ACCEPT",
+                    Status = "granted",
+                    GrantedAt = now,
+                    ConsentTextSnapshot = "Confirm că am luat la cunoștință că serviciile MoneyShop sunt gratuite pentru utilizatori.",
+                    Ip = model.IpAddress,
+                    UserAgent = model.UserAgent,
+                    DeviceHash = deviceHashBytes,
+                    SourceChannel = sourceChannel
+                };
+                UnitOfWork.Consents.Insert(costsConsent);
+            }
+            
+            // 4. ANAF Mandate
+            if (model.MandateAnaf)
+            {
+                var anafMandate = new MandateEntity
+                {
+                    MandateId = Guid.NewGuid(),
+                    UserId = userId,
+                    MandateType = "ANAF",
+                    Scope = "credit_eligibility_only",
+                    Status = "active",
+                    GrantedAt = now,
+                    ExpiresAt = now.AddDays(30)
+                };
+                UnitOfWork.Mandates.Insert(anafMandate);
+                
+                // Also create the consent record for audit
+                var anafConsent = new ConsentEntity
+                {
+                    ConsentId = Guid.NewGuid(),
+                    UserId = userId,
+                    ConsentType = "MANDATE_ANAF",
+                    Status = "granted",
+                    GrantedAt = now,
+                    ConsentTextSnapshot = "Împuternicesc MoneyShop să interogheze ANAF pentru verificarea veniturilor mele în scopul determinării eligibilității pentru credite. Valabilitate: 30 de zile.",
+                    Ip = model.IpAddress,
+                    UserAgent = model.UserAgent,
+                    DeviceHash = deviceHashBytes,
+                    SourceChannel = sourceChannel
+                };
+                UnitOfWork.Consents.Insert(anafConsent);
+            }
+            
+            // 5. Birou Credit Mandate (optional)
+            if (model.MandateBiroCredit)
+            {
+                var bcMandate = new MandateEntity
+                {
+                    MandateId = Guid.NewGuid(),
+                    UserId = userId,
+                    MandateType = "BC",
+                    Scope = "credit_eligibility_only",
+                    Status = "active",
+                    GrantedAt = now,
+                    ExpiresAt = now.AddDays(30)
+                };
+                UnitOfWork.Mandates.Insert(bcMandate);
+                
+                // Also create the consent record for audit
+                var bcConsent = new ConsentEntity
+                {
+                    ConsentId = Guid.NewGuid(),
+                    UserId = userId,
+                    ConsentType = "MANDATE_BC",
+                    Status = "granted",
+                    GrantedAt = now,
+                    ConsentTextSnapshot = "Împuternicesc MoneyShop să interogheze Biroul de Credit pentru o analiză completă a eligibilității mele. Valabilitate: 30 de zile.",
+                    Ip = model.IpAddress,
+                    UserAgent = model.UserAgent,
+                    DeviceHash = deviceHashBytes,
+                    SourceChannel = sourceChannel
+                };
+                UnitOfWork.Consents.Insert(bcConsent);
+            }
+            
+            // 6. Share to Broker (optional, default OFF)
+            if (model.ShareToBroker)
+            {
+                var brokerConsent = new ConsentEntity
+                {
+                    ConsentId = Guid.NewGuid(),
+                    UserId = userId,
+                    ConsentType = "SHARE_TO_BROKER",
+                    Status = "granted",
+                    GrantedAt = now,
+                    ConsentTextSnapshot = "Accept ca datele mele să fie transmise brokerilor parteneri MoneyShop pentru a primi oferte personalizate.",
+                    Ip = model.IpAddress,
+                    UserAgent = model.UserAgent,
+                    DeviceHash = deviceHashBytes,
+                    SourceChannel = sourceChannel
+                };
+                UnitOfWork.Consents.Insert(brokerConsent);
+            }
+            
             UnitOfWork.SaveChanges();
         }
 

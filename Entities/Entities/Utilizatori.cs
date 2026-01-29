@@ -47,4 +47,8 @@ public partial class Utilizatori : IEntity
     
     // KYC navigation
     public virtual ICollection<KycSession> KycSessions { get; set; } = new List<KycSession>();
+    
+    // Consents & Mandates navigation
+    public virtual ICollection<Consent> Consents { get; set; } = new List<Consent>();
+    public virtual ICollection<Mandate> Mandates { get; set; } = new List<Mandate>();
 }

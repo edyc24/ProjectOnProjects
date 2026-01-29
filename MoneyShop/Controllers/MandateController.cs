@@ -11,6 +11,18 @@ namespace MoneyShop.WebApp.Controllers
         private const string MandateSessionKey = "MandateData";
         private const string ConsentLogSessionKey = "ConsentLog";
 
+        /// <summary>
+        /// Main mandate management page
+        /// </summary>
+        [HttpGet]
+        public IActionResult Index()
+        {
+            // Get user ID from claims
+            var userIdClaim = User.FindFirstValue("Id");
+            ViewBag.UserId = int.TryParse(userIdClaim, out int userId) ? userId : 1;
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Step1()
         {

@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Platform} from 'react-native';
 import {useAuthStore} from '../store/authStore';
 import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
@@ -16,6 +17,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
   const {isAuthenticated, isLoading, checkAuth} = useAuthStore();
+  const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
     checkAuth();
@@ -38,8 +40,14 @@ const AppNavigator = () => {
         </>
       ) : (
         <>
-          <Stack.Screen name="Guest" component={GuestNavigator} />
-          <Stack.Screen name="Auth" component={AuthNavigator} />
+          {isWeb ? (
+            <Stack.Screen name="Auth" component={AuthNavigator} />
+          ) : (
+            <>
+              <Stack.Screen name="Guest" component={GuestNavigator} />
+              <Stack.Screen name="Auth" component={AuthNavigator} />
+            </>
+          )}
         </>
       )}
     </Stack.Navigator>
