@@ -174,9 +174,59 @@ WHERE r.NumeRol = 'CLIENT'
 -- 6. Grant-uri pentru View-uri Mascate
 -- =====================================================
 
-GRANT SELECT ON vw_utilizatori_masked TO moneyshop_readonly_role;
-GRANT SELECT ON vw_aplicatii_masked TO moneyshop_readonly_role;
-GRANT SELECT ON vw_broker_clients_masked TO moneyshop_broker_role;
+-- Acordare privilegii cu prefix dinamic (C## în CDB, fără în PDB)
+DECLARE
+    v_prefix VARCHAR2(10) := '';
+    v_container VARCHAR2(128);
+    v_is_cdb NUMBER;
+    v_readonly_role VARCHAR2(50);
+    v_broker_role VARCHAR2(50);
+BEGIN
+    -- Determinare prefix
+    BEGIN
+        SELECT COUNT(*) INTO v_is_cdb
+        FROM v$database
+        WHERE cdb = 'YES';
+        
+        SELECT SYS_CONTEXT('USERENV', 'CON_NAME') INTO v_container FROM DUAL;
+        
+        IF v_is_cdb > 0 AND v_container = 'CDB$ROOT' THEN
+            v_prefix := 'c##';
+        END IF;
+    EXCEPTION
+        WHEN OTHERS THEN
+            v_prefix := '';
+    END;
+    
+    v_readonly_role := v_prefix || 'moneyshop_readonly_role';
+    v_broker_role := v_prefix || 'moneyshop_broker_role';
+    
+    -- Acordare privilegii
+    BEGIN
+        EXECUTE IMMEDIATE 'GRANT SELECT ON vw_utilizatori_masked TO ' || v_readonly_role;
+        DBMS_OUTPUT.PUT_LINE('✅ Privilegii vw_utilizatori_masked acordate la ' || v_readonly_role);
+    EXCEPTION
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('⚠️  Eroare vw_utilizatori_masked: ' || SUBSTR(SQLERRM, 1, 100));
+    END;
+    
+    BEGIN
+        EXECUTE IMMEDIATE 'GRANT SELECT ON vw_aplicatii_masked TO ' || v_readonly_role;
+        DBMS_OUTPUT.PUT_LINE('✅ Privilegii vw_aplicatii_masked acordate la ' || v_readonly_role);
+    EXCEPTION
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('⚠️  Eroare vw_aplicatii_masked: ' || SUBSTR(SQLERRM, 1, 100));
+    END;
+    
+    BEGIN
+        EXECUTE IMMEDIATE 'GRANT SELECT ON vw_broker_clients_masked TO ' || v_broker_role;
+        DBMS_OUTPUT.PUT_LINE('✅ Privilegii vw_broker_clients_masked acordate la ' || v_broker_role);
+    EXCEPTION
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('⚠️  Eroare vw_broker_clients_masked: ' || SUBSTR(SQLERRM, 1, 100));
+    END;
+END;
+/
 
 -- =====================================================
 -- 7. Testare Mascare

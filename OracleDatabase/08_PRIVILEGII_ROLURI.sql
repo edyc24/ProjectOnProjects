@@ -27,17 +27,112 @@ GRANT CONNECT, RESOURCE, DBA TO moneyshop_admin;
 -- 2. Crearea Rolurilor Oracle
 -- =====================================================
 
--- Rol pentru clienți
-CREATE ROLE moneyshop_client_role;
+-- Verificare container și creare roluri corespunzătoare
+DECLARE
+    v_container VARCHAR2(128);
+    v_is_cdb NUMBER;
+    v_role_prefix VARCHAR2(10) := '';
+BEGIN
+    -- Verificare dacă e CDB
+    BEGIN
+        SELECT COUNT(*) INTO v_is_cdb
+        FROM v$database
+        WHERE cdb = 'YES';
+        
+        SELECT SYS_CONTEXT('USERENV', 'CON_NAME') INTO v_container FROM DUAL;
+        
+        IF v_is_cdb > 0 AND v_container = 'CDB$ROOT' THEN
+            v_role_prefix := 'c##';
+            DBMS_OUTPUT.PUT_LINE('⚠️  Ești în CDB$ROOT - rolurile vor avea prefix C##');
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('✅ Ești în PDB - rolurile vor fi normale');
+        END IF;
+    EXCEPTION
+        WHEN OTHERS THEN
+            v_role_prefix := '';
+    END;
+    
+    DBMS_OUTPUT.PUT_LINE('Container: ' || v_container);
+    DBMS_OUTPUT.PUT_LINE('');
+END;
+/
 
--- Rol pentru brokeri
-CREATE ROLE moneyshop_broker_role;
-
--- Rol pentru administratori
-CREATE ROLE moneyshop_admin_role;
-
--- Rol pentru citire doar
-CREATE ROLE moneyshop_readonly_role;
+-- Creare roluri (cu prefix dacă e necesar)
+DECLARE
+    v_container VARCHAR2(128);
+    v_is_cdb NUMBER;
+    v_prefix VARCHAR2(10) := '';
+BEGIN
+    BEGIN
+        SELECT COUNT(*) INTO v_is_cdb
+        FROM v$database
+        WHERE cdb = 'YES';
+        
+        SELECT SYS_CONTEXT('USERENV', 'CON_NAME') INTO v_container FROM DUAL;
+        
+        IF v_is_cdb > 0 AND v_container = 'CDB$ROOT' THEN
+            v_prefix := 'c##';
+        END IF;
+    EXCEPTION
+        WHEN OTHERS THEN
+            v_prefix := '';
+    END;
+    
+    -- Rol pentru clienți
+    BEGIN
+        EXECUTE IMMEDIATE 'CREATE ROLE ' || v_prefix || 'moneyshop_client_role';
+        DBMS_OUTPUT.PUT_LINE('✅ Rol ' || v_prefix || 'moneyshop_client_role creat');
+    EXCEPTION
+        WHEN OTHERS THEN
+            IF SQLCODE = -1921 THEN
+                DBMS_OUTPUT.PUT_LINE('⚠️  Rol ' || v_prefix || 'moneyshop_client_role există deja');
+            ELSE
+                RAISE;
+            END IF;
+    END;
+    
+    -- Rol pentru brokeri
+    BEGIN
+        EXECUTE IMMEDIATE 'CREATE ROLE ' || v_prefix || 'moneyshop_broker_role';
+        DBMS_OUTPUT.PUT_LINE('✅ Rol ' || v_prefix || 'moneyshop_broker_role creat');
+    EXCEPTION
+        WHEN OTHERS THEN
+            IF SQLCODE = -1921 THEN
+                DBMS_OUTPUT.PUT_LINE('⚠️  Rol ' || v_prefix || 'moneyshop_broker_role există deja');
+            ELSE
+                RAISE;
+            END IF;
+    END;
+    
+    -- Rol pentru administratori
+    BEGIN
+        EXECUTE IMMEDIATE 'CREATE ROLE ' || v_prefix || 'moneyshop_admin_role';
+        DBMS_OUTPUT.PUT_LINE('✅ Rol ' || v_prefix || 'moneyshop_admin_role creat');
+    EXCEPTION
+        WHEN OTHERS THEN
+            IF SQLCODE = -1921 THEN
+                DBMS_OUTPUT.PUT_LINE('⚠️  Rol ' || v_prefix || 'moneyshop_admin_role există deja');
+            ELSE
+                RAISE;
+            END IF;
+    END;
+    
+    -- Rol pentru citire doar
+    BEGIN
+        EXECUTE IMMEDIATE 'CREATE ROLE ' || v_prefix || 'moneyshop_readonly_role';
+        DBMS_OUTPUT.PUT_LINE('✅ Rol ' || v_prefix || 'moneyshop_readonly_role creat');
+    EXCEPTION
+        WHEN OTHERS THEN
+            IF SQLCODE = -1921 THEN
+                DBMS_OUTPUT.PUT_LINE('⚠️  Rol ' || v_prefix || 'moneyshop_readonly_role există deja');
+            ELSE
+                RAISE;
+            END IF;
+    END;
+    
+    DBMS_OUTPUT.PUT_LINE('');
+END;
+/
 
 -- =====================================================
 -- 3. Privilegii Obiect (pe tabele)
